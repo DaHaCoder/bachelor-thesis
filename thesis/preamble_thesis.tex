@@ -1,0 +1,253 @@
+%%%%%%%%%%%%%%%%%%%%
+%%% ALL PACKAGES %%%
+%%% ============ %%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%% GENERAL PACKAGES %%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[utf8]{inputenc}                                         %   for accepting different input encodings [STANDARD PACKAGE] -- https://www.ctan.org/pkg/inputenc
+\usepackage[T1]{fontenc}                                            %   for selecting font encodings [STANDARD PACKAGE] -- https://www.ctan.org/pkg/fontenc
+\usepackage[english]{babel}                                         %   for english language -- https://www.ctan.org/pkg/babel
+\usepackage{datetime}                                               %   for date and time   -- https://www.ctan.org/pkg/datetime
+\usepackage{lmodern}                                                %   for text font as Latin Modern -- https://www.namsu.de/Extra/pakete/Lmodern.html
+\usepackage[left=2cm,right=2cm,top=2cm,bottom=3cm]{geometry}        %   for page/geometry layout -- https://www.ctan.org/pkg/geometry
+\usepackage{fancyhdr}                                               %   for fancy template  -- https://www.ctan.org/pkg/fancyhdr
+\usepackage[Glenn]{fncychap}                                        %   for fancy chapter style -- https://ctan.org/pkg/fncychap
+\usepackage{import}                                                 %   for import of other files, i.e. a .tex file with pgfplots  -- https://www.ctan.org/pkg/import
+\usepackage[backend=biber,style=alphabetic,sorting=ynt]{biblatex}   %   for using bibliography, references and citations -- https://ctan.org/pkg/biblatex
+\usepackage[babel=true]{csquotes}                                   %   for using quotations -- https://ctan.org/pkg/csquotes
+\usepackage{epigraph}                                               %   for quotes at the beginning of a chapter -- https://ctan.org/pkg/epigraph
+\usepackage{comment}                                                %   for extra comment features  -- https://www.ctan.org/pkg/comment
+\usepackage{float}                                                  %   for positioning figures and tables -- https://ctan.org/pkg/float
+\usepackage[section]{placeins}                                      %   for controlling float placement -- https://ctan.org/pkg/placeins
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%% MATH, SCIENCE AND SPECIAL SYMBOL PACKAGES %%%%%%%%%%%%%%%%%%%%%
+\usepackage{amsmath, amsfonts, amssymb, amsthm, nccmath, bbm, mathdots}         %   for mathematics, i.e. bbm for identity matrix
+%   -- https://www.ctan.org/pkg/amsmath                                         %
+%   -- https://www.ctan.org/pkg/amsfonts                                        %
+%   -- https://www.ctan.ebinger.cc/tex-archive/fonts/amsfonts/doc/amssymb.pdf   %
+%   -- https://www.ctan.org/pkg/amsthm                                          %
+%   -- https://www.ctan.org/pkg/nccmath                                         %
+%   -- https://www.ctan.org/pkg/bbm                                             %
+%   -- https://www.ctan.org/pkg/mathdots                                        %
+\usepackage[nointegrals]{wasysym}                                               %   for more symbols, i.e. astronomical symbols -- https://www.ctan.org/pkg/wasysym
+\usepackage{physics}                                                            %   for physics, i.e. brakets -- https://www.ctan.org/pkg/physics
+\usepackage{siunitx}                                                            %   for using si-units -- https://www.ctan.org/pkg/siunitx
+\usepackage{fontawesome}                                                        %   for fontawesome symbols -- https://www.ctan.org/pkg/fontawesome
+                                                                                %   for mathematical enhancements in LaTeX (American Mathematical Society), have a look at https://www.ctan.org/pkg/amslatex
+                                                                                %   for mathematical and scientific symbols, have a look a at 'The Comprehensive LaTeX Symbol List' -- https://ftp.mpi-inf.mpg.de/pub/tex/mirror/ftp.dante.de/pub/tex/info/symbols/comprehensive/symbols-a4.pdf
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%% COLORS AND GRAPHICS PACKAGES %%%
+\usepackage{xcolor}                %   for using colors -- https://www.ctan.org/pkg/xcolor
+\usepackage{empheq}                %   for emphasizing equations -- https://www.ctan.org/pkg/empheq
+\usepackage[most]{tcolorbox}       %   for colored boxes - https://www.ctan.org/pkg/tcolorbox
+\usepackage{realboxes}             %   for more box options -- https://www.ctan.org/pkg/realboxes
+\usepackage{graphicx}              %   for using graphics -- https://www.ctan.org/pkg/graphicx
+\usepackage{eso-pic}               %   for picture options -- https://www.ctan.org/pkg/eso-pic
+\usepackage{transparent}           %   for transparency in pictures -- https://www.ctan.org/pkg/transparent
+\usepackage{standalone}            %   for compiling pictures and graphics in a seperate .tex-file and including it in the main document -- https://www.ctan.org/pkg/standalone
+\usepackage{tikz}                  %   for creating beatiful and precise graphics, i.e. picture of spherical coordinates -- https://www.ctan.org/pkg/pgf
+\usepackage{pgfplots}              %   for creating plots in two or three dimensions -- https://www.ctan.org/pkg/pgfplots
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%% NUMERATE, HYPERLINK AND HIGHLIGHTING PACKAGES %%%
+\usepackage{caption}                                %   for more caption options in graphics -- https://www.ctan.org/pkg/caption
+\usepackage{enumerate}                              %   for numerating, i.e. sections -- https://www.ctan.org/pkg/enumerate
+\usepackage{footnotebackref}                        %   for hyperlinks of footnotes -- https://www.ctan.org/pkg/footnotebackref
+\usepackage{hyperref}                               %   for highlighting/reference of links, i.e. websites -- https://www.ctan.org/pkg/hyperref
+\usepackage{listings}                               %   for typesetting code -- https://www.ctan.org/pkg/listings
+%\usepackage{minted}                                 %   for highlighting code -- https://www.ctan.org/pkg/minted
+%\usepackage{pythonhighlight}                        %   for highlighting python code -- https://www.ctan.org/pkg/pythonhighlight
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\usepackage{blindtext}
+\newcommand{\bt}{\blindtext}
+
+
+%%%%%%%%%%%%%%%%%%%%
+%%% OWN COMMANDS %%%
+%%% ============ %%%
+
+%%% MATH COMMANDS %%%
+% -- own commands for math symbols -- %
+\newcommand{\N}{\mathbb{N}}           %   for the set of natural numbers
+\newcommand{\Z}{\mathbb{Z}}           %   for the set of integers
+\newcommand{\Q}{\mathbb{Q}}           %   for the set of rational numbers
+\newcommand{\R}{\mathbb{R}}           %   for the set of real numbers
+\newcommand{\C}{\mathbb{C}}           %   for the set of complex numbers
+\newcommand{\D}{\mathrm{d}}           %   for mathroman d, i.e. differential d
+\newcommand{\E}{\mathrm{e}}           %   for mathroman e, i.e. Euler's constant
+\newcommand{\I}{\mathrm{i}}           %   for mathroman i, i.e. imaginary unit
+\newcommand{\1}{\mathbbm{1}}          %   for identity matrix
+\newcommand{\bs}{\boldsymbol}         %   for bold math symbols (instead of \textbf{} or \mathbf{}), i.e. for vectors in physcs 
+\DeclareMathOperator{\diag}{diag}     %   for writing a diagonal matrix, i.e. sign convetion of Minkowski metric tensor \eta_{\mu \nu} = \diag(-,+,+,+)
+\newcommand{\latex}{\LaTeX\xspace}    %   for the LaTeX symbol
+% -- own command for theoremstyle, see amsthm -- %
+\theoremstyle{plain}                             %
+\newtheorem{definition}{Definition}              %
+%%%%%%%%%%%%%%%%%%%%%
+
+
+%%% E-MAIL COMMAND %%%
+% -- own command to insert e-mail -- %
+\newcommand{\email}[2]{\href{mailto:#1}{#2}}
+%%%%%%%%%%%%%%%%%%%%%
+
+%%% FOOTNOTE COMMAND %%%
+% -- own command for foonotes -- %
+%\renewcommand*{\thefootnote}{\fnsymbol{footnote}}
+%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%% COMMANDS FOR TITLEPAGE %%%
+\newcommand{\getTitle}{Title of the thesis}
+\newcommand{\getSubtitle}{maybe with some subtitle}
+\newcommand*{\getAuthor}{Danial Hagemann}
+\newcommand*{\getPrintLocation}{Munich}       % Ort der Erstellung
+\newcommand*{\getPrintYear}{\the\year}          % Jahr der Erstellung
+\newcommand*{\getPlaceOfBirth}{Gifhorn}
+\newcommand*{\getSubmissionDate}{Submission date in the dean's office}
+\newcommand*{\getSupervisorOne}{Prof. Dr. Jochen Weller}
+\newcommand*{\getSupervisorTwo}{Dr. Steffen Hagstotz}
+\newcommand*{\getExamDate}{Date of final exam}
+\newcommand*{\lang}{en-US}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%% COMMAND FOR BACKGROUND PICTURE %%%
+% -- have a look at https://tex.stackexchange.com/questions/86500/includegraphics-set-image-opacity -- %
+\newcommand\BackgroundPic{%
+\put(200,200){%
+            \parbox[b][\paperheight]{\paperwidth}{
+            \vfill
+            \centering
+            {
+            \transparent{0.2}
+            \includegraphics[width=\paperwidth, height=\paperheight, keepaspectratio]{figures/lmu-siegel.png}
+            }
+            \vfill
+        }
+    }
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%% COMMAND FOR PRETTY CODE HIGHLIGHTING %%%
+% -- have a look at https://tex.stackexchange.com/questions/140166/making-inline-code-printing-pretty?noredirect=1&lq=1 -- %
+% \newcommand\code[3][]{
+%     \tikz[baseline=(s.base)]{
+%         \node(s)[
+%             rounded corners,
+%             fill=blue!5,        % background color
+%             draw=gray,          % border of box
+%             %text=gray!50!black, % text color
+%             inner xsep =3pt,    % horizontal space between text and border
+%             inner ysep =0pt,    % vertical space between text and border
+%             text height=2ex,    % height of box
+%             text depth =1ex,    % depth of box
+%             #1                  % other options
+%         ]{\mintinline{#2}{#3}};
+%     }
+% }
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%
+%%% PACKAGE SETUPS %%%%
+%%% ============== %%%% 
+
+%%% FANCYHDR SETUP %%%%   
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[RE]{\normalfont\bfseries\sffamily\leftmark}
+\fancyhead[LO]{\normalfont\bfseries\sffamily\rightmark}
+\fancyhead[RO,LE]{\thepage}
+
+\fancypagestyle{plain}{%
+  \fancyhf{}
+  \fancyhead[RO,LE]{\thepage}
+}
+
+\ChTitleVar{\bfseries\Large\rmfamily}
+\ChNameVar{\bfseries\Large\sffamily}
+
+\makeatletter
+\renewcommand\chaptermark[1]{%
+  \markboth{%
+    \ifnum \c@secnumdepth >\m@ne
+      \if@mainmatter
+        %\chaptername
+      \fi
+    \fi
+    #1%
+  }{}
+}
+
+\renewcommand\sectionmark[1]{\markright{\thesection\enspace #1}}
+%\renewcommand\subsectionmark[1]{\markright{\thesubsection\enspace #1}}
+\makeatother          
+%%%%%%%%%%%%%%%%%%%%%%
+
+%%% FONT SETUP %%%
+%\renewcommand{\familydefault}{\sfdefault}
+%%%%%%%%%%%%%%%%%%
+
+%%% HYPER SETUP %%%
+\hypersetup{   
+    pdfpagemode = {UseNone},
+    pdftitle = {\getTitle},
+    pdfauthor = {\getAuthor},
+    pdflang = {\lang},
+    colorlinks = true,     
+    linkcolor = blue,      
+    citecolor = violet,
+    filecolor = magenta,      
+    urlcolor = blue       
+}                        
+%%%%%%%%%%%%%%%%%%%
+
+%%% LISTINGS SETUP %%%
+% \definecolor{mygreen}{rgb}{0,0.6,0}
+% \definecolor{mygrey}{rgb}{0.8,0.8,0.8}
+% \definecolor{mymauve}{rgb}{0.58,0,0.82}
+
+% \lstset{ %
+%   backgroundcolor=\color{mygrey},       % choose the background color
+%   basicstyle=\ttfamily,                 % size of fonts used for the code
+%   breaklines=true,                      % automatic line breaking only at whitespace
+%   captionpos=b,                         % sets the caption-position to bottom
+%   commentstyle=\color{mygreen},         % comment style
+%   escapeinside={\%*}{*)},               % if you want to add LaTeX within your code
+%   keywordstyle=\color{blue},            % keyword style
+%   numbers=left,                         % alignment of numbers
+%   numberstyle={\small \color{black}},    % number style
+%   numbersep=9pt,                        % this defines how far the numbers are from the text
+%   stepnumber=1,
+%   stringstyle=\color{mymauve}           % string literal style
+% }
+%%%%%%%%%%%%%%%%%%%%%%
+
+%%% SI SETUPS %%%
+\sisetup{locale=DE}                     
+\sisetup{per-mode = symbol-or-fraction} 
+%%%%%%%%%%%%%%%%%
+
+%%% TCOLORBOX SETUP %%%
+% \definecolor{mygray}{rgb}{0.8,0.8,0.8}
+% \tcbset{
+%         on line,
+%         boxsep = 2pt,
+%         left = 0pt,
+%         right = 0pt,
+%         top = 0pt,
+%         bottom = 0pt,
+%         colframe = white,
+%         colback = mygray
+% }
+%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%% TIKZ AND PGFPLOTS SETUP %%%
+\usetikzlibrary{intersections}
+\usetikzlibrary{decorations.pathreplacing, decorations.markings}
+\usetikzlibrary{tikzmark}
+\pgfplotsset{every axis/.style={scale only axis}, compat = newest}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

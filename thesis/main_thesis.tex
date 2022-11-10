@@ -1,0 +1,76 @@
+\documentclass[12pt,a4paper]{scrbook}
+
+%%% PREAMBLE   
+\input{preamble_thesis}
+\addbibresource{sources/bib_thesis.bib}
+
+\begin{document}
+
+%%%%%%%%%%%%%%%%%%%%
+%%% FRONT MATTER %%%
+%%% ============ %%%
+
+\frontmatter
+
+%%% TITLEPAGE 
+\include{pages/titlepage}
+
+%%% SECOND SITE
+\include{pages/second-site}
+
+%%% ACKNOWLEDGEMENT 
+\include{pages/acknowledgement}
+
+%%% ABSTRACT
+\include{pages/abstract}
+
+%%% NOTATION AND CONVENTIONS
+\include{pages/notation-and-conventions}
+
+
+%%% TABLE OF CONTENT
+\pdfbookmark{\contentsname}{Contents}
+\tableofcontents 
+
+%%% LIST OF FIGURES
+\listoffigures
+
+%%% LIST OF TABLES
+\listoftables
+
+%%%%%%%%%%%%%%%%%%%%
+%%% MAIN MATTER %%%%
+%%% =========== %%%%
+
+\mainmatter
+
+%%% CHAPTER 01
+\include{chapters/chapter-01}
+
+%%% CHAPTER 02
+\include{chapters/chapter-02}
+
+%%% CHAPTER 03
+\include{chapters/chapter-03}
+
+%%% APPENDIX A
+\include{appendix/appendix}
+
+
+%%%%%%%%%%%%%%%%%%%
+%%% BACK MATTER %%%
+%%% =========== %%%
+
+\backmatter
+
+%%% BIBLIOGRAPHY
+\nocite{*}
+\phantomsection\addcontentsline{toc}{chapter}{Bibliography}
+\printbibliography
+
+
+%%% DECLARATION OF AUTHORSHIP 
+\include{pages/declaration-of-authorship}
+
+
+\end{document}

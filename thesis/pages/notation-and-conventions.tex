@@ -1,0 +1,47 @@
+\chapter*{Notation and conventions}
+\phantomsection\addcontentsline{toc}{chapter}{\protect Notation and conventions}
+
+Here you can write which notation and conventions you want to use in your formulas. \\
+
+\noindent For example, there are two different sign conventions for the metric tensor $\eta_{\mu \nu}$ in Minkowski space. \\
+
+\noindent In (general) relativity, it is common to use the sign convention $\eta_{\mu \nu} = \diag(-,+,+,+)$, which is called the ``mostly plus'', ``space dominant'' or ``east coast'' sign convention. \\
+Therefore, to lower the components of a contravariant vector $\bs{x} = (ct, x, y, z) =: (x^{0}, x^{1}, x^{2}, x^{3})$, we get
+\begin{align*}
+    x_{0} &= \eta_{0 \nu} x^{\nu} = - ct \neq x^{0}, \\
+    x_{1} &= \eta_{1 \nu} x^{\nu} = +x = x^{1}, \\ 
+    x_{2} &= \eta_{2 \nu} x^{\nu} = +y = x^{2}, \\
+    x_{3} &= \eta_{3 \nu} x^{\nu} = +z = x^{3}.
+\end{align*}
+
+
+\noindent On the other hand, in particle physics and quantum field theory, it is common to use the sign convention $\eta_{\mu \nu} = \diag(+,-,-,-)$, which is called the ``mostly minus'', ``time dominant'' or ``west coast'' sign convention. \\
+Therefore, to lower the components of a contravariant vector $\bs{x} = (ct, x, y, z) =: (x^{0}, x^{1}, x^{2}, x^{3})$, we get
+\begin{align*}
+    x_{0} &= \eta_{0 \nu} x^{\nu} = +ct = x^{0}, \\
+    x_{1} &= \eta_{1 \nu} x^{\nu} = -x \neq x^{1}, \\ 
+    x_{2} &= \eta_{2 \nu} x^{\nu} = -y \neq x^{2}, \\
+    x_{3} &= \eta_{3 \nu} x^{\nu} = -z \neq x^{3}.
+\end{align*}
+
+\noindent Personally, I prefer the ``mostly plus'' sign convention $\eta_{\mu \nu} = \diag(-,+,+,+)$, since it is only necessary to flip the sign of one component by lowering the index instead of three -- but that is of course up to you. \\
+
+\noindent Another convention that is often declared at the beginning of a document are the units that are used. \\
+For example, someone might prefer Planck units instead of SI units. 
+Here, I want to show how to convert from SI units to Planck units.
+
+\begin{align*}
+    [ c ]_{\text{SI}} &= \SI{299 792 458}{\frac{\meter}{\second}} \ \Longrightarrow \ \biggl[ \sqrt{\frac{\hbar G}{c^3}} \biggr]_{\text{SI}} \approx \SI{1.616e-35}{\meter} =: l_{P} \\
+    [ \hbar ]_{\text{SI}} &\approx \SI{1.054e-34}{\kilogram \frac{\meter^2}{\second}} \ \Longrightarrow \ \biggl[ \sqrt{\frac{\hbar G}{c^5}} \biggr]_{\text{SI}} \approx \SI{5.391e-44}{\second} =: t_{p} \\
+    [ G ]_{\text{SI}} &\approx \SI{6.674e-11}{\frac{\meter^3}{\kilogram \cdot \second^2}} \ \Longrightarrow \ \biggl[ \sqrt{\frac{\hbar c}{G}} \biggr]_{\text{SI}} \approx \SI{2.176e-8}{\kilogram} =: m_{P} \\
+    \biggl[ \frac{1}{4 \pi \varepsilon_{0}} \biggr]_{\text{SI}} &\approx \SI{8.987e+9}{\kilogram \frac{\meter^3}{\second^2 \cdot \coulomb^2}} \ \Longrightarrow \ \biggl[\sqrt{4 \pi \epsilon_{0} \hbar c} \biggr]_{\text{SI}} \approx \SI{1.875e-18}{\coulomb} =: q_{P} \\
+    [ k_{B} ]_{\text{SI}} &\approx \SI{1.381e-23}{\kilogram \frac{\meter^2}{\second^2 \cdot \kelvin}} \ \Longrightarrow \ \biggl[ \sqrt{\frac{\hbar c^5}{G k_{B}^2}} \biggr]_{\text{SI}} \approx \SI{1.416e+32}{\kelvin} =: T_{P}
+\end{align*}
+
+\noindent In Planck units, we have $[c]_{\text{P}} = 1, [\hbar]_{\text{P}} = 1, [G]_{\text{P}} = 1, \bigl[ \frac{1}{4 \pi \epsilon_{0}} \bigr]_{\text{P}} = 1, [k_{B}]_{\text{P}} = 1$ and therefore $l_{P} = 1, t_{P} = 1, m_{P} = 1, q_{P} = 1, T_{P} = 1$, which is very convienent to express and manipulate equations. \\
+Of course, this ``trick'' demands to remind ourself, which physical quantity we deal with while manipulating equations.
+
+
+
+
+
