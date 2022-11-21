@@ -34,11 +34,15 @@ def main():
     fig, ax = plt.subplots()
     
     ##########
+    
+    # Flat universe (K = 0) without radiation (Omega_r = 0)
+    # =====================================================
+
+    Omega_r0 = 0.0
+    Omega_K0 = 0.0
 
     # Only matter (Einstein-de-Sitter universe)
-    Omega_r0 = 0.0
     Omega_m0 = 1.0
-    Omega_K0 = 0.0
     Omega_Lambda0 = 0.0
 
     time_only_matter = np.array([integral(ai, Omega_r0, Omega_m0, Omega_K0, Omega_Lambda0) for ai in a])
@@ -49,9 +53,7 @@ def main():
     plt.hlines(a0, xmin = 0.0, xmax = age_only_matter, color = 'grey', linestyle = '--')
 
     # Equilibrium between matter and Lambda
-    Omega_r0 = 0.0
     Omega_m0 = 0.5
-    Omega_K0 = 0.0
     Omega_Lambda0 = 0.5 
    
     time_equilibrium = np.array([integral(ai, Omega_r0, Omega_m0, Omega_K0, Omega_Lambda0) for ai in a])
@@ -62,9 +64,7 @@ def main():
     plt.hlines(a0, xmin = 0.0, xmax = age_equilibrium, color = 'grey', linestyle = '--')
 
     # todays values
-    Omega_r0 = 0.0
     Omega_m0 = 0.3
-    Omega_K0 = 0.0
     Omega_Lambda0 = 0.7 
    
     time_today = np.array([integral(ai, Omega_r0, Omega_m0, Omega_K0, Omega_Lambda0) for ai in a])
@@ -75,9 +75,7 @@ def main():
     plt.hlines(a0, xmin = 0.0, xmax = age_today, color = 'grey', linestyle = '--')
 
     # Lambda dominant 
-    Omega_r0 = 0.0
     Omega_m0 = 0.1
-    Omega_K0 = 0.0
     Omega_Lambda0 = 0.9 
    
     time_Lambda_dominant = np.array([integral(ai, Omega_r0, Omega_m0, Omega_K0, Omega_Lambda0) for ai in a])
