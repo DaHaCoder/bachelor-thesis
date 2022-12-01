@@ -30,14 +30,17 @@ def Omega_Lambda(a, Omega_Lambda0, E_squared):
 
 def main():
 
-    a = np.linspace(0,1,int(1e7))
+    a0 = 1.0
+    a = np.linspace(0.0, a0, int(1e7))
     
     fig, ax = plt.subplots()
 
     Omega_r0 = 8.5*10**(-5.0)
     Omega_m0 = 0.3
-    Omega_K0 = 0.0
     Omega_Lambda0 = 0.7
+    # Omega_K0 = 0.0    
+    Omega_K0 = 1.0 - Omega_r0 - Omega_m0 - Omega_Lambda0
+
 
     E_0_square = expansion_rate_squared(a, Omega_r0, Omega_m0, Omega_K0, Omega_Lambda0)
 
@@ -57,12 +60,12 @@ def main():
     plt.legend(loc = 'center left')
     plt.grid(True)
 
-    # plt.show()
+    plt.show()
 
-    # fig.savefig('../thesis/figures/plots/EPS/density-parameters_scale-factor.eps', format = 'eps', bbox_inches = 'tight')
-    fig.savefig('../thesis/figures/plots/PNG/density-parameters_scale-factor.png', format = 'png', bbox_inches = 'tight', dpi = 400)
-    # fig.savefig('../thesis/figures/plots/PDF/density-parameters_scale-factor.pdf', format = 'pdf', bbox_inches = 'tight')
-    # tikzplotlib.save('../thesis/figures/tikz/density-parameters_scale-factor.tex')
+    # fig.savefig('../thesis/figures/plots/EPS/density-parameters_vs_scale-factor.eps', format = 'eps', bbox_inches = 'tight')
+    fig.savefig('../thesis/figures/plots/PNG/density-parameters_vs_scale-factor.png', format = 'png', bbox_inches = 'tight', dpi = 250)
+    # fig.savefig('../thesis/figures/plots/PDF/density-parameters_vs_scale-factor.pdf', format = 'pdf', bbox_inches = 'tight')
+    # tikzplotlib.save('../thesis/figures/tikz/density-parameters_vs_scale-factor.tex')
 
 
 if __name__ == "__main__":

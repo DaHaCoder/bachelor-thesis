@@ -99,7 +99,7 @@ def main():
     plt.show()
 
     # fig.savefig('../thesis/figures/plots/EPS/scale-factor_vs_time.eps', format = 'eps', bbox_inches = 'tight')
-    fig.savefig('../thesis/figures/plots/PNG/scale-factor_vs_time.png', format = 'png', bbox_inches = 'tight', dpi = 400)
+    fig.savefig('../thesis/figures/plots/PNG/scale-factor_vs_time.png', format = 'png', bbox_inches = 'tight', dpi = 250)
     # fig.savefig('../thesis/figures/plots/PDF/scale-factor_vs_time.pdf', format = 'pdf', bbox_inches = 'tight')
     # tikzplotlib.save('../thesis/figures/tikz/scale-factor_vs_time.tex')
 

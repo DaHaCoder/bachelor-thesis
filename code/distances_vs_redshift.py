@@ -15,20 +15,19 @@ plt.rcParams['text.usetex'] = True
 # '''
 
 
-def integrand(x, Omega_r0, Omega_m0, Omega_Lambda0):
+def integrand(x, Omega_r0, Omega_m0, Omega_K0, Omega_Lambda0):
     if x == 0.0:
         return 0.0
-    return 1.0/np.sqrt(Omega_r0*(1.0+x)**(4.0) + Omega_m0*(1.0+x)**(3.0) + (1.0 - Omega_r0 - Omega_m0 - Omega_Lambda0)*(1.0+x)**(2.0) + Omega_Lambda0)
+    return 1.0/np.sqrt(Omega_r0*(1.0+x)**(4.0) + Omega_m0*(1.0+x)**(3.0) + Omega_K0*(1.0+x)**(2.0) + Omega_Lambda0)
 
 
-def integral(z, Omega_r0, Omega_m0, Omega_Lambda0):
+def integral(z, Omega_r0, Omega_m0, Omega_K0, Omega_Lambda0):
     # D_C/D_H = Integrate[1/E(z'), {z',0,z}]
-    return quad(integrand, 0.0, z, args=(Omega_r0, Omega_m0, Omega_Lambda0))[0]
+    return quad(integrand, 0.0, z, args=(Omega_r0, Omega_m0, Omega_K0, Omega_Lambda0))[0]
 
 
-def distances(z, Omega_r0, Omega_m0, Omega_Lambda0, hubble_distance):
-    Omega_K0 = 1.0 - Omega_r0 - Omega_m0 - Omega_Lambda0 
-    I = np.array([integral(zi, Omega_r0, Omega_m0, Omega_Lambda0) for zi in z])
+def distances(z, Omega_r0, Omega_m0, Omega_K0, Omega_Lambda0, hubble_distance):
+    I = np.array([integral(zi, Omega_r0, Omega_m0, Omega_K0, Omega_Lambda0) for zi in z])
 
     if Omega_K0 > 0.0:
         proper_motion_distance = hubble_distance*1.0/np.sqrt(Omega_K0)*np.sinh(np.sqrt(Omega_K0)*I)
@@ -37,7 +36,7 @@ def distances(z, Omega_r0, Omega_m0, Omega_Lambda0, hubble_distance):
         proper_motion_distance = hubble_distance*I
 
     elif Omega_K0 < 0.0:
-        proper_motion_distance = hubble_distance*1.0/np.qrt(abs(Omega_K0))*np.sin(np.sqrt(abs(Omega_K0))*I)
+        proper_motion_distance = hubble_distance*1.0/np.sqrt(abs(Omega_K0))*np.sin(np.sqrt(abs(Omega_K0))*I)
 
     angular_diameter_distance = 1/(1.0 + z)*proper_motion_distance
     luminosity_distance = (1.0 + z)*proper_motion_distance
@@ -53,21 +52,23 @@ def main():
     Omega_r0 = 0.0
     Omega_m0 = 0.3
     Omega_Lambda0 = 0.7
+    # Omega_K0 = 0.0
+    Omega_K0 = 1.0 - Omega_r0 - Omega_m0 - Omega_Lambda0
 
     c = 299792.458
     h = 0.7
     H_0 = h*100 
-    D_H = c/H_0
+    d_H = c/H_0
 
-    D_M = distances(z, Omega_r0, Omega_m0, Omega_Lambda0, D_H)[0]
-    D_A = distances(z, Omega_r0, Omega_m0, Omega_Lambda0, D_H)[1]
-    D_L = distances(z, Omega_r0, Omega_m0, Omega_Lambda0, D_H)[2]
+    d_M = distances(z, Omega_r0, Omega_m0, Omega_K0, Omega_Lambda0, d_H)[0]
+    d_A = distances(z, Omega_r0, Omega_m0, Omega_K0, Omega_Lambda0, d_H)[1]
+    d_L = distances(z, Omega_r0, Omega_m0, Omega_K0, Omega_Lambda0, d_H)[2]
 
     fig, ax = plt.subplots()
     
-    plt.plot(z, D_M, color = 'red', label = 'proper motion distance')
-    plt.plot(z, D_A, color = 'blue', label = 'angular diameter distance')
-    plt.plot(z, D_L, color = 'green', label = 'luminosity distance')
+    plt.plot(z, d_M, color = 'red', label = 'proper motion distance $d_{M}$')
+    plt.plot(z, d_A, color = 'blue', label = 'angular diameter distance $d_{A}$')
+    plt.plot(z, d_L, color = 'green', label = 'luminosity distance $d_{L}$')
 
     ax.set_xscale('log', base = 10)
     ax.set_yscale('log', base = 10)
@@ -81,7 +82,7 @@ def main():
     plt.show()
 
     # fig.savefig('../thesis/figures/plots/EPS/distances_vs_redshift.eps', format = 'eps', bbox_inches = 'tight')
-    fig.savefig('../thesis/figures/plots/PNG/distances_vs_redshift.png', format = 'png', bbox_inches = 'tight', dpi = 400)
+    fig.savefig('../thesis/figures/plots/PNG/distances_vs_redshift.png', format = 'png', bbox_inches = 'tight', dpi = 250)
     # fig.savefig('../thesis/figures/plots/PDF/distances_vs_redshift.pdf', format = 'pdf', bbox_inches = 'tight')
     # tikzplotlib.save('../thesis/figures/tikz/distances_vs_redshift.tex')
 
