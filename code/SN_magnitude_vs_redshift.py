@@ -44,7 +44,7 @@ def distances(z, Omega_r0, Omega_m0, Omega_K0, Omega_Lambda0, hubble_distance):
     return proper_motion_distance, angular_diameter_distance, luminosity_distance 
 
 def magnitude(z, Omega_r0, Omega_m0, Omega_K0, Omega_Lambda0, hubble_distance, absolute_magnitude):
-    # luminosity_distance per Mpc, absolute_Magnitude is at 10 pc (therefor + 25.0)
+    # luminosity_distance per Mpc, absolute_Magnitude is at 10 pc (therefor + 25.0 since 10 pc = 10**(-5.0) Mpc)
     luminosity_distance = distances(z, Omega_r0, Omega_m0, Omega_K0, Omega_Lambda0, hubble_distance)[2] 
     return absolute_magnitude + 5.0*np.log10(luminosity_distance) + 25.0
 
@@ -69,7 +69,7 @@ def main():
     # Cosmological Parameters
     # =======================
     c = 299792.458
-    h = 0.7
+    h = 0.6736
     H_0 = h*100.0 
     d_H = c/H_0
     # =======================
@@ -77,10 +77,10 @@ def main():
 
     # magnitude vs. redshift for several cosmologies
     # ==============================================
-    Omega_r0 = 0.0
    
     # Only matter (Einstein-de-Sitter universe)
     # -----------------------------------------
+    Omega_r0 = 0.0
     Omega_m0 = 1.0
     Omega_Lambda0 = 0.0
     # Omega_K0 = 0.0
@@ -93,6 +93,7 @@ def main():
    
     # Equilibrium between matter and Lambda
     # -------------------------------------
+    Omega_r0 = 0.0
     Omega_m0 = 0.5
     Omega_Lambda0 = 0.5
     # Omega_K0 = 0.0
@@ -105,6 +106,11 @@ def main():
 
     # Todays values
     # -------------
+    # Omega_m0 = 0.3153
+    # Omega_Lambda0 = 0.6847
+    # z_eq = 3402.0
+    # Omega_r0 = 1.0/(1.0 + z_eq)*Omega_m0
+    Omega_r0 = 0.0
     Omega_m0 = 0.3
     Omega_Lambda0 = 0.7
     # Omega_K0 = 0.0
@@ -112,11 +118,13 @@ def main():
     
     m = magnitude(z, Omega_r0, Omega_m0, Omega_K0, Omega_Lambda0, d_H, 0.0)
     
+    # plt.plot(z, m, color = 'red', label = '$\\Omega_r0 = %.4f$, $\\Omega_{m,0} = %.4f$, $\\Omega_{\\Lambda,0} = %.4f$ (todays values)'%(Omega_r0, Omega_m0, Omega_Lambda0))
     plt.plot(z, m, color = 'red', label = '$\\Omega_{m,0} = %.1f$, $\\Omega_{\\Lambda,0} = %.1f$ (todays values)'%(Omega_m0, Omega_Lambda0))
     # -------------    
     
     # Lambda dominant
     # ---------------
+    Omega_r0 = 0.0
     Omega_m0 = 0.1
     Omega_Lambda0 = 0.9
     # Omega_K0 = 0.0
@@ -127,6 +135,7 @@ def main():
     plt.plot(z, m, color = 'orange', label = '$\\Omega_{m,0} = %.1f$, $\\Omega_{\\Lambda,0} = %.1f$ ($\\Lambda$-dominant)'%(Omega_m0, Omega_Lambda0))
     # ---------------
 
+    
     plt.title('Apparent magnitude vs. redshift $m(z)$ for Type Ia supernovae')
     plt.xlabel('redshift $z$')
     plt.ylabel('magnitudes $m$')
@@ -135,10 +144,10 @@ def main():
    
     plt.show()
 
-    # fig.savefig('../thesis/figures/plots/EPS/SN_luminosity-distance_vs_redshift.eps', format = 'eps', bbox_inches = 'tight')
-    fig.savefig('../thesis/figures/plots/PNG/SN_luminosity-distance_vs_redshift.png', format = 'png', bbox_inches = 'tight', dpi = 250)
-    # fig.savefig('../thesis/figures/plots/PDF/SN_luminosity-distance_vs_redshift.pdf', format = 'pdf', bbox_inches = 'tight')
-    # tikzplotlib.save('../thesis/figures/tikz/SN_luminosity-distance_vs_redshift.tex')
+    # fig.savefig('../thesis/figures/plots/EPS/SN_magnitude_vs_redshift.eps', format = 'eps', bbox_inches = 'tight')
+    fig.savefig('../thesis/figures/plots/PNG/SN_magnitude_vs_redshift.png', format = 'png', bbox_inches = 'tight', dpi = 250)
+    # fig.savefig('../thesis/figures/plots/PDF/SN_magnitude_vs_redshift.pdf', format = 'pdf', bbox_inches = 'tight')
+    # tikzplotlib.save('../thesis/figures/tikz/SN_magnitude_vs_redshift.tex')
 
 if __name__ == "__main__":
     main()
