@@ -1,15 +1,15 @@
 ### matplotlib package -- https://matplotlib.org/stable/index.html ###
-from matplotlib import pyplot as plt        #   for plotting 
-from mpl_toolkits.mplot3d import axes3d     #   for plotting in 3d
+from matplotlib import pyplot as plt                                 #   for plotting 
+from mpl_toolkits.mplot3d import axes3d                              #   for plotting in 3d
 
 ### numpy package -- https://numpy.org/doc/stable/ ###
-import numpy as np                      #   for general scientific computation
+import numpy as np                                   #   for general scientific computation
 
 ### scipy package -- https://docs.scipy.org/doc/scipy/index.html ###
-# from scipy import constants as const    #   for physical constants -- https://docs.scipy.org/doc/scipy/reference/constants.html 
-from scipy.integrate import quad          #   for integration -- https://docs.scipy.org/doc/scipy/tutorial/integrate.html
-# from scipy import optimize as opt       #   for optimization and fit -- https://docs.scipy.org/doc/scipy/reference/tutorial/optimize.html
-# from scipy import special as sp         #   for special mathematical functions -- https://docs.scipy.org/doc/scipy/reference/tutorial/special.html
+# from scipy import constants as const                             #   for physical constants -- https://docs.scipy.org/doc/scipy/reference/constants.html 
+from scipy.integrate import quad, dblquad                          #   for integration -- https://docs.scipy.org/doc/scipy/tutorial/integrate.html
+# from scipy import optimize as opt                                #   for optimization and fit -- https://docs.scipy.org/doc/scipy/reference/tutorial/optimize.html
+# from scipy import special as sp                                  #   for special mathematical functions -- https://docs.scipy.org/doc/scipy/reference/tutorial/special.html
 
 plt.rcParams['text.usetex'] = True
 # plt.rcParams['text.latex.preamble'] = r'''
@@ -69,7 +69,61 @@ def chi_square_analytic(redshifts, magnitudes, error_magnitudes, relative_magnit
     return f1 - f0**2.0/c1 
 
 
-def likelihood(Omega_r0, LIST_Omega_m0, LIST_Omega_Lambda0, c, H_0, redshifts, magnitudes, error_magnitudes):
+# def likelihood(Omega_r0, LIST_Omega_m0, LIST_Omega_Lambda0, c, H_0, redshifts, magnitudes, error_magnitudes):
+#     MATRIX = []
+#     j = 0
+#     for j in range(len(LIST_Omega_Lambda0)):
+#         Omega_Lambda0 = LIST_Omega_Lambda0[j]
+#         ROW = []
+#         i = 0
+#         for i in range(len(LIST_Omega_m0)):
+#             Omega_m0 = LIST_Omega_m0[i]
+            
+#             d_L = distances(redshifts, Omega_r0, Omega_m0, Omega_Lambda0, c, H_0)[2]
+#             absolute_magnitude = 0.0
+#             mag = relative_magnitude(d_L, H_0, absolute_magnitude)
+#             # mag = relative_magnitude(d_L, absolute_magnitude)
+
+#             chi_2 = chi_square_analytic(redshifts, magnitudes, error_magnitudes, mag) 
+#             print("===========")
+#             print("chi_2 = ", chi_2)
+#             L = 10**(123.0)*np.exp(-0.5*chi_2)
+#             print("============")
+#             print("L = ", L)
+
+#             ROW.append(L)
+#         MATRIX.append(ROW)
+#     return MATRIX
+
+
+def likelihood(Omega_r0, Omega_m0, Omega_Lambda0, c, H_0, redshifts, magnitudes, error_magnitudes):
+    d_L = distances(redshifts, Omega_r0, Omega_m0, Omega_Lambda0, c, H_0)[2]
+    absolute_magnitude = 0.0
+    mag = relative_magnitude(d_L, H_0, absolute_magnitude)
+    chi_2 = chi_square_analytic(redshifts, magnitudes, error_magnitudes, mag) 
+    # print("===========")
+    # print("chi_2 = ", chi_2)
+    L = np.exp(-0.5*chi_2)
+    # print("============")
+    # print("L = ", L)
+    return L 
+    
+
+def normalization_factor(Omega_r0, LIST_Omega_m0, LIST_Omega_Lambda0, c, H_0, redshifts, magnitudes, error_magnitudes):
+    L = lambda Omega_m0, Omega_Lambda0: likelihood(Omega_r0, Omega_m0, Omega_Lambda0, c, H_0, redshifts, magnitudes, error_magnitudes)
+    x_1 = lambda Omega_Lambda0: min(LIST_Omega_m0)
+    x_2 = lambda Omega_Lambda0: max(LIST_Omega_m0)
+    y_1 = min(LIST_Omega_Lambda0)
+    y_2 = max(LIST_Omega_Lambda0)
+    L0 = dblquad(L, y_1, y_2, x_1, x_2)[0]
+    # print("L0 = ", L0)
+    return L0
+
+
+def MATRIX_normalized_likelihood(Omega_r0, LIST_Omega_m0, LIST_Omega_Lambda0, c, H_0, redshifts, magnitudes, error_magnitudes):
+    
+    L0 = normalization_factor(Omega_r0, LIST_Omega_m0, LIST_Omega_Lambda0, c, H_0, redshifts, magnitudes, error_magnitudes)
+    
     MATRIX = []
     j = 0
     for j in range(len(LIST_Omega_Lambda0)):
@@ -78,24 +132,26 @@ def likelihood(Omega_r0, LIST_Omega_m0, LIST_Omega_Lambda0, c, H_0, redshifts, m
         i = 0
         for i in range(len(LIST_Omega_m0)):
             Omega_m0 = LIST_Omega_m0[i]
-            
-            z = redshifts
-            
-            d_L = distances(z, Omega_r0, Omega_m0, Omega_Lambda0, c, H_0)[2]
-            absolute_magnitude = 0.0
-            mag = relative_magnitude(d_L, H_0, absolute_magnitude)
-            # mag = relative_magnitude(d_L, absolute_magnitude)
-
-            chi_2 = chi_square_analytic(redshifts, magnitudes, error_magnitudes, mag) 
-            print("===========")
-            print("chi_2 = ", chi_2)
-            L = 10**(123.0)*np.exp(-0.5*chi_2)
-            print("============")
-            print("L = ", L)
-
+            L = 1.0/L0*likelihood(Omega_r0, Omega_m0, Omega_Lambda0, c, H_0, redshifts, magnitudes, error_magnitudes)
             ROW.append(L)
         MATRIX.append(ROW)
     return MATRIX
+
+
+def find_best_fit_values(LIST_Omega_m0, LIST_Omega_Lambda0, MATRIX_likelihood):
+    Omega_m0_index = [(index, row.index(np.max(MATRIX_likelihood))) for index, row in enumerate(MATRIX_likelihood) if np.max(MATRIX_likelihood) in row][0][1]
+    Omega_Lambda0_index = [(index, row.index(np.max(MATRIX_likelihood))) for index, row in enumerate(MATRIX_likelihood) if np.max(MATRIX_likelihood) in row][0][0]
+
+    Omega_m0_max_likelihood = LIST_Omega_m0[Omega_m0_index]
+    Omega_Lambda0_max_likelihood = LIST_Omega_Lambda0[Omega_Lambda0_index]
+
+    print("===============================")
+    print("Values for maximum likelihood: ")
+    print("Omega_m0 = ", Omega_m0_max_likelihood)
+    print("Omega_Lambda0 = ", Omega_Lambda0_max_likelihood)
+    print("===============================")
+
+    return Omega_m0_max_likelihood, Omega_m0_max_likelihood
 
 
 def main():    
@@ -118,7 +174,11 @@ def main():
     LIST_Omega_m0 = np.arange(0.0, 1.0, 0.01)
     LIST_Omega_Lambda0 = np.arange(0.0, 1.0, 0.01)
 
-    Z = np.array(likelihood(Omega_r0, LIST_Omega_m0, LIST_Omega_Lambda0, c, H_0, redshifts, magnitudes, error_magnitudes))
+    MATRIX_likelihood = MATRIX_normalized_likelihood(Omega_r0, LIST_Omega_m0, LIST_Omega_Lambda0, c, H_0, redshifts, magnitudes, error_magnitudes)
+
+    find_best_fit_values(LIST_Omega_m0, LIST_Omega_Lambda0, MATRIX_likelihood)
+    
+    Z = np.array(MATRIX_likelihood)
     X, Y = np.meshgrid(LIST_Omega_m0, LIST_Omega_Lambda0)
 
     fig = plt.figure()
