@@ -109,21 +109,37 @@ def likelihood(Omega_r0, Omega_m0, Omega_Lambda0, c, H_0, redshifts, magnitudes,
     return L 
     
 
-def normalization_factor(Omega_r0, LIST_Omega_m0, LIST_Omega_Lambda0, c, H_0, redshifts, magnitudes, error_magnitudes):
+def normalization_factor_by_integration(Omega_r0, LIST_Omega_m0, LIST_Omega_Lambda0, c, H_0, redshifts, magnitudes, error_magnitudes):
     L = lambda Omega_m0, Omega_Lambda0: likelihood(Omega_r0, Omega_m0, Omega_Lambda0, c, H_0, redshifts, magnitudes, error_magnitudes)
     x_1 = lambda Omega_Lambda0: min(LIST_Omega_m0)
     x_2 = lambda Omega_Lambda0: max(LIST_Omega_m0)
     y_1 = min(LIST_Omega_Lambda0)
     y_2 = max(LIST_Omega_Lambda0)
     L0 = dblquad(L, y_1, y_2, x_1, x_2)[0]
-    # print("L0 = ", L0)
+    print('normalization factor by integration: ')
+    print('L0 = ', L0)
+    print('=====================================')
+    return L0
+
+
+def normalization_factor_by_product(error_magnitudes):
+    L0 = 1.0
+    i = 0
+    for i in range(len(error_magnitudes)):
+        sigma = error_magnitudes[i]
+        # print('sigma = ', sigma)
+        L0 *= (2.0*np.pi)**(0.5)*sigma
+        # print('L0 = ', L0)
+    # L0 = 1.0/((2.0*np.pi)**(0.5*float(len(error_magnitudes)))*det_sigma)
+    print('normalization factor by product: ') 
+    print('L0 = ', L0)
+    print('=================================') 
     return L0
 
 
 def MATRIX_normalized_likelihood(Omega_r0, LIST_Omega_m0, LIST_Omega_Lambda0, c, H_0, redshifts, magnitudes, error_magnitudes):
-    
-    L0 = normalization_factor(Omega_r0, LIST_Omega_m0, LIST_Omega_Lambda0, c, H_0, redshifts, magnitudes, error_magnitudes)
-    
+    L0 = normalization_factor_by_integration(Omega_r0, LIST_Omega_m0, LIST_Omega_Lambda0, c, H_0, redshifts, magnitudes, error_magnitudes)
+    # L0 = normalization_factor_by_product(error_magnitudes)
     MATRIX = []
     j = 0
     for j in range(len(LIST_Omega_Lambda0)):
@@ -132,6 +148,10 @@ def MATRIX_normalized_likelihood(Omega_r0, LIST_Omega_m0, LIST_Omega_Lambda0, c,
         i = 0
         for i in range(len(LIST_Omega_m0)):
             Omega_m0 = LIST_Omega_m0[i]
+            # print('Omega_Lambda0 = ', Omega_Lambda0)
+            # print('=====================')
+            # print('Omega_m0 = ', Omega_m0)
+            # print('=====================')
             L = 1.0/L0*likelihood(Omega_r0, Omega_m0, Omega_Lambda0, c, H_0, redshifts, magnitudes, error_magnitudes)
             ROW.append(L)
         MATRIX.append(ROW)
@@ -172,7 +192,7 @@ def main():
     # =======================
 
     LIST_Omega_m0 = np.arange(0.0, 1.0, 0.01)
-    LIST_Omega_Lambda0 = np.arange(0.0, 1.0, 0.01)
+    LIST_Omega_Lambda0 = np.arange(0.0, 1.2, 0.01)
 
     MATRIX_likelihood = MATRIX_normalized_likelihood(Omega_r0, LIST_Omega_m0, LIST_Omega_Lambda0, c, H_0, redshifts, magnitudes, error_magnitudes)
 
