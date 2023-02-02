@@ -228,9 +228,10 @@ def main():
         L = likelihood(absolute_magnitude, d_L, magnitudes, error_magnitudes)
         LIST_likelihood.append(L)
 
-    # --- plot ---
+    # --- fig ---
     fig = plt.figure()
-    
+   
+    # --- plot absolute magnitude vs. likelihood ---
     plt.plot(LIST_absolute_magnitude, LIST_likelihood)
     plt.xlabel('absolute magnitude $M$')
     plt.ylabel('likelihood $L({0:.2f}, {1:.2f}, M)$'.format(Omega_m0_best, Omega_Lambda0_best))
@@ -283,9 +284,10 @@ def main():
     sum_Omega_m0_gauss_fit = gauss_curve(LIST_Omega_m0, *popt_m0)
     sum_Omega_Lambda0_gauss_fit = gauss_curve(LIST_Omega_Lambda0, *popt_Lambda0)
 
-    # --- plot Omega_m0 vs. marginalized likelihood for summed Omega_Lambda0 with gauss fit ---
+    # --- fig ---
     fig = plt.figure()
-    
+   
+    # --- plot Omega_m0 vs. marginalized likelihood for summed Omega_Lambda0 with gauss fit ---
     plt.plot(LIST_Omega_m0, sum_Omega_m0, label='data')
     plt.plot(LIST_Omega_m0, sum_Omega_m0_gauss_fit, linestyle='--', color='tab:orange', label='fit')
     plt.xlabel('$\Omega_{m,0}$')
@@ -300,6 +302,9 @@ def main():
     fig.savefig('../thesis/figures/plots/PNG/[chi_square_likelihood]_Omega_m0_vs_likelihood_summed_Omega_Lambda0.png', format = 'png', bbox_inches = 'tight', dpi = 250)
     # fig.savefig('../thesis/figures/plots/PDF/[chi_square_likelihood]_Omega_m0_vs_likelihood_summed_Omega_Lambda0.pdf', format = 'pdf', bbox_inches = 'tight')
     # tikzplotlib.save('../thesis/figures/tikz/[chi_square_likelihood]_Omega_m0_vs_likelihood_summed_Omega_Lambda0.tex')
+    
+    # --- fig ---
+    fig = plt.figure()
     
     # --- plot Omega_Lambda0 vs. marginalized likelihood for summed Omega_m0 with gauss fit ---
     plt.plot(LIST_Omega_Lambda0, sum_Omega_Lambda0, label='data')
@@ -350,9 +355,10 @@ def main():
     Omega_m0_gauss_fit = gauss_curve(LIST_Omega_m0, *popt_m0)
     Omega_Lambda0_gauss_fit = gauss_curve(LIST_Omega_Lambda0, *popt_Lambda0)
 
-    # --- plot Omega_m0 vs. marginalized likelihood of Omega_m0 at Omega_Lambda0_best with gauss fit ---
+    # --- fig ---
     fig = plt.figure()
     
+    # --- plot Omega_m0 vs. marginalized likelihood of Omega_m0 at Omega_Lambda0_best with gauss fit ---
     plt.plot(LIST_Omega_m0, LIST_Omega_m0_at_Omega_Lambda0_index, label='data')
     plt.plot(LIST_Omega_m0, Omega_m0_gauss_fit, linestyle='--', color='tab:orange', label='fit')
     plt.xlabel('$\Omega_{m,0}$')
@@ -367,6 +373,9 @@ def main():
     fig.savefig('../thesis/figures/plots/PNG/[chi_square_likelihood]_Omega_m0_vs_likelihood_at_Omega_Lambda0_best.png', format = 'png', bbox_inches = 'tight', dpi = 250)
     # fig.savefig('../thesis/figures/plots/PDF/[chi_square_likelihood]_Omega_m0_vs_likelihood_at_Omega_Lambda0_best.pdf', format = 'pdf', bbox_inches = 'tight')
     # tikzplotlib.save('../thesis/figures/tikz/[chi_square_likelihood]_Omega_m0_vs_likelihood_at_Omega_Lambda0_best.tex')
+    
+    # --- fig ---
+    fig = plt.figure()
     
     # --- plot Omega_Lambda0 vs. marginalized likelihood of Omega_Lambda0 at Omega_m0_best with gauss fit ---
     plt.plot(LIST_Omega_Lambda0, LIST_Omega_Lambda0_at_Omega_m0_index, label='data')

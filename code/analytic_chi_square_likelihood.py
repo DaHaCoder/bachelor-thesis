@@ -248,14 +248,15 @@ def main():
     sum_Omega_m0_gauss_fit = gauss_curve(LIST_Omega_m0, *popt_m0)
     sum_Omega_Lambda0_gauss_fit = gauss_curve(LIST_Omega_Lambda0, *popt_Lambda0)
 
-    # --- plot Omega_m0 vs. likelihood for summed Omega_Lambda0 with gauss fit ---
+    # --- fig ---
     fig = plt.figure()
 
+    # --- plot Omega_m0 vs. likelihood for summed Omega_Lambda0 with gauss fit ---
     plt.plot(LIST_Omega_m0, sum_Omega_m0, label='data')
     plt.plot(LIST_Omega_m0, sum_Omega_m0_gauss_fit, linestyle='--', color='tab:orange', label='fit')
     plt.xlabel('$\Omega_{m,0}$')
     plt.ylabel('$L(\Omega_{m,0}, \sum \Omega_{\Lambda,0})$')
-    plt.suptitle('$\\texttt{analytic_chi_square_likelihood.py}$')
+    plt.suptitle('$\\texttt{analytic_chi_square_likelihood.py}$', fontsize=20)
     plt.title('fit values: ($\mu_{{m,0}}, \sigma_{{m,0}}) = ({0:.5f},{1:.5f})$'.format(*popt_m0))
     plt.grid(True)
     plt.show()
@@ -266,12 +267,15 @@ def main():
     # fig.savefig('../thesis/figures/plots/PDF/[analytic_chi_square_likelihood]_Omega_m0_vs_likelihood_summed_Omega_Lambda0.pdf', format = 'pdf', bbox_inches = 'tight')
     # tikzplotlib.save('../thesis/figures/tikz/[analytic_chi_square_likelihood]_Omega_m0_vs_likelihood_summed_Omega_Lambda0.tex')
 
+    # --- fig ---
+    fig = plt.figure()
+    
     # --- plot Omega_Lambda0 vs. likelihood for summed Omega_m0 with gauss fit ---
     plt.plot(LIST_Omega_Lambda0, sum_Omega_Lambda0, label='data')
     plt.plot(LIST_Omega_Lambda0, sum_Omega_Lambda0_gauss_fit, linestyle='--', color='tab:orange', label='fit')
     plt.xlabel('$\Omega_{\Lambda,0}$')
     plt.ylabel('$L(\sum \Omega_{m,0}, \Omega_{\Lambda,0})$')
-    plt.suptitle('$\\texttt{analytic_chi_square_likelihood.py}$')
+    plt.suptitle('$\\texttt{analytic_chi_square_likelihood.py}$', fontsize=20)
     plt.title('fit values: ($\mu_{{\Lambda,0}}, \sigma_{{\Lambda,0}}) = ({0:.5f},{1:.5f})$'.format(*popt_Lambda0))
     plt.grid(True)
     plt.show()
@@ -315,14 +319,15 @@ def main():
     Omega_m0_gauss_fit = gauss_curve(LIST_Omega_m0, *popt_m0)
     Omega_Lambda0_gauss_fit = gauss_curve(LIST_Omega_Lambda0, *popt_Lambda0)
 
-    # --- plot Omega_m0 vs. likelihood of Omega_m0 at Omega_Lambda0_best with gauss fit ---
+    # --- fig ---
     fig = plt.figure()
 
+    # --- plot Omega_m0 vs. likelihood of Omega_m0 at Omega_Lambda0_best with gauss fit ---
     plt.plot(LIST_Omega_m0, LIST_Omega_m0_at_Omega_Lambda0_index, label='data')
     plt.plot(LIST_Omega_m0, Omega_m0_gauss_fit, linestyle='--', color='tab:orange', label='fit')
     plt.xlabel('$\Omega_{m,0}$')
     plt.ylabel('$L(\Omega_{{m,0}}, {0:.2f})$'.format(Omega_Lambda0_best))
-    plt.suptitle('$\\texttt{analytic_chi_square_likelihood.py}$')
+    plt.suptitle('$\\texttt{analytic_chi_square_likelihood.py}$', fontsize=20)
     plt.title('fit values: ($\mu_{{m,0}}, \sigma_{{m,0}}) = ({0:.5f},{1:.5f})$'.format(*popt_m0))
     plt.grid(True)
     plt.show()
@@ -333,12 +338,15 @@ def main():
     # fig.savefig('../thesis/figures/plots/PDF/[analytic_chi_square_likelihood]_Omega_m0_vs_likelihood_at_Omega_Lambda0_best.pdf', format = 'pdf', bbox_inches = 'tight')
     # tikzplotlib.save('../thesis/figures/tikz/[analytic_chi_square_likelihood]_Omega_m0_vs_likelihood_at_Omega_Lambda0_best.tex')
 
+    # --- fig ---
+    fig = plt.figure()
+    
     # --- plot Omega_Lambda0 vs. likelihood of Omega_Lambda0 at Omega_m0_best with gauss fit ---
     plt.plot(LIST_Omega_Lambda0, LIST_Omega_Lambda0_at_Omega_m0_index, label='data')
     plt.plot(LIST_Omega_Lambda0, Omega_Lambda0_gauss_fit, linestyle='--', color='tab:orange', label='fit')
     plt.xlabel('$\Omega_{\Lambda,0}$')
     plt.ylabel('$L({0:.2f}, \Omega_{{\Lambda,0}})$'.format(Omega_m0_best))
-    plt.suptitle('$\\texttt{analytic_chi_square_likelihood.py}$')
+    plt.suptitle('$\\texttt{analytic_chi_square_likelihood.py}$', fontsize=20)
     plt.title('fit values: ($\mu_{{\Lambda,0}}, \sigma_{{\Lambda,0}}) = ({0:.5f},{1:.5f})$'.format(*popt_Lambda0))
     plt.grid(True)
     plt.show()
@@ -378,7 +386,7 @@ def main():
     # ax.set(xlabel='$\Omega_{m,0}$', ylabel='$\Omega_{\Lambda,0}$', zlabel='$L(\Omega_{m,0}, \Omega_{\Lambda,0})$')
     plt.xlabel('$\Omega_{m,0}$')
     plt.ylabel('$\Omega_{\Lambda,0}$')
-    plt.suptitle('$\\texttt{analytic_chi_square_likelihood.py}$')
+    plt.suptitle('$\\texttt{analytic_chi_square_likelihood.py}$', fontsize=20)
     plt.title('best fit values: $(\Omega_{m,0}, \Omega_{\Lambda,0}) = (%.2f, %.2f)$'%(Omega_m0_best, Omega_Lambda0_best))
     plt.grid(True)
     plt.show()
@@ -402,7 +410,7 @@ def main():
     # ax.set(xlabel='$\Omega_{m,0}$', ylabel='$\Omega_{\Lambda,0}$', zlabel='$L(\Omega_{m,0}, \Omega_{\Lambda,0})$')
     plt.xlabel('$\Omega_{m,0}$')
     plt.ylabel('$\Omega_{\Lambda,0}$')
-    plt.suptitle('$\\texttt{analytic_chi_square_likelihood.py}$')
+    plt.suptitle('$\\texttt{analytic_chi_square_likelihood.py}$', fontsize=20)
     plt.title('best fit values: $(\Omega_{m,0}, \Omega_{\Lambda,0}) = (%.2f, %.2f)$'%(Omega_m0_best, Omega_Lambda0_best))
     plt.grid(True)
     plt.show()
