@@ -1,4 +1,4 @@
-\documentclass[12pt,a4paper]{scrbook}
+\documentclass[12pt,a4paper]{book}
 
 %%% PREAMBLE   
 \input{preamble_thesis}
@@ -12,31 +12,43 @@
 
 \frontmatter
 
+%%% FRONTPAGE
+\include{pages/frontpage}
+\thispagestyle{empty}
+
 %%% TITLEPAGE 
-\include{pages/titlepage}
+\include{pages/titlepage_de}
+\thispagestyle{empty}
+\include{pages/titlepage_en}
+\thispagestyle{empty}
 
-%%% SECOND SITE
-\include{pages/second-site}
+%%% SUPERVISORS
+\include{pages/supervisors}
+\thispagestyle{empty}
 
-%%% ACKNOWLEDGEMENT 
-\include{pages/acknowledgement}
+%%% ACKNOWLEDGEMENT
+% \include{pages/danksagung}
+%\include{pages/acknowledgement}
+%\thispagestyle{empty}
 
-%%% ABSTRACT
-\include{pages/abstract}
+%%% MEMORY
+%\include{pages/memory}
+%\thispagestyle{empty}
 
 %%% NOTATION AND CONVENTIONS
 \include{pages/notation-and-conventions}
+\thispagestyle{empty}
 
+%%% ABSTRACT
+\include{pages/abstract}
+\thispagestyle{empty}
 
 %%% TABLE OF CONTENT
 \pdfbookmark{\contentsname}{Contents}
 \tableofcontents 
+\clearpage
+\thispagestyle{empty}
 
-%%% LIST OF FIGURES
-\listoffigures
-
-%%% LIST OF TABLES
-\listoftables
 
 %%%%%%%%%%%%%%%%%%%%
 %%% MAIN MATTER %%%%
@@ -44,14 +56,18 @@
 
 \mainmatter
 
-%%% CHAPTER 01
-\include{chapters/chapter-01}
+%%% INTRODUCTORY CONCEPTS OF ASTROPHYSICS
+\include{chapters/introductory-concepts-of-astrophysics}
 
-%%% CHAPTER 02
-\include{chapters/chapter-02}
+%%% THE STANDARD MODEL OF COSMOLOGY
+\include{chapters/the-standard-model-of-cosmology}
 
-%%% CHAPTER 03
-\include{chapters/chapter-03}
+%%% THE DVALI-GABADADZE-PORRATI MODEL
+\include{chapters/the-dvali-gabadadze-porrati-model}
+
+%%% CONCLUSION
+\include{chapters/conclusion}
+
 
 %%% APPENDIX A
 \include{appendix/appendix}
@@ -67,6 +83,12 @@
 \nocite{*}
 \phantomsection\addcontentsline{toc}{chapter}{Bibliography}
 \printbibliography
+
+%%% LIST OF FIGURES
+% \listoffigures
+
+%%% LIST OF TABLES
+% \listoftables
 
 
 %%% DECLARATION OF AUTHORSHIP 

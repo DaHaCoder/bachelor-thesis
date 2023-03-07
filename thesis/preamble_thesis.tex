@@ -5,18 +5,19 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%% GENERAL PACKAGES %%%%%%%%%%%%%%%%%%%%%%%%%
 \usepackage[utf8]{inputenc}                                         %   for accepting different input encodings [STANDARD PACKAGE] -- https://www.ctan.org/pkg/inputenc
 \usepackage[T1]{fontenc}                                            %   for selecting font encodings [STANDARD PACKAGE] -- https://www.ctan.org/pkg/fontenc
-\usepackage[english]{babel}                                         %   for english language -- https://www.ctan.org/pkg/babel
+\usepackage[english]{babel}                                         %   for english and german language -- https://www.ctan.org/pkg/babel
 \usepackage{datetime}                                               %   for date and time   -- https://www.ctan.org/pkg/datetime
 \usepackage{lmodern}                                                %   for text font as Latin Modern -- https://www.namsu.de/Extra/pakete/Lmodern.html
 \usepackage[left=2cm,right=2cm,top=2cm,bottom=3cm]{geometry}        %   for page/geometry layout -- https://www.ctan.org/pkg/geometry
 \usepackage{fancyhdr}                                               %   for fancy template  -- https://www.ctan.org/pkg/fancyhdr
 \usepackage[Glenn]{fncychap}                                        %   for fancy chapter style -- https://ctan.org/pkg/fncychap
 \usepackage{import}                                                 %   for import of other files, i.e. a .tex file with pgfplots  -- https://www.ctan.org/pkg/import
-\usepackage[backend=biber,style=alphabetic,sorting=ynt]{biblatex}   %   for using bibliography, references and citations -- https://ctan.org/pkg/biblatex
+\usepackage[backend=biber,style=alphabetic,sorting=none]{biblatex}  %   for using bibliography, references and citations -- https://ctan.org/pkg/biblatex
 \usepackage[babel=true]{csquotes}                                   %   for using quotations -- https://ctan.org/pkg/csquotes
 \usepackage{epigraph}                                               %   for quotes at the beginning of a chapter -- https://ctan.org/pkg/epigraph
 \usepackage{comment}                                                %   for extra comment features  -- https://www.ctan.org/pkg/comment
 \usepackage{float}                                                  %   for positioning figures and tables -- https://ctan.org/pkg/float
+\usepackage[leftcaption]{sidecap}                                   %   for positioning caption next to figures -- https://ctan.org/pkg/sidecap
 \usepackage[section]{placeins}                                      %   for controlling float placement -- https://ctan.org/pkg/placeins
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -83,6 +84,10 @@
 \newcommand{\bs}{\boldsymbol}         %   for bold math symbols (instead of \textbf{} or \mathbf{}), i.e. for vectors in physcs 
 \DeclareMathOperator{\diag}{diag}     %   for writing a diagonal matrix, i.e. sign convetion of Minkowski metric tensor \eta_{\mu \nu} = \diag(-,+,+,+)
 \newcommand{\latex}{\LaTeX\xspace}    %   for the LaTeX symbol
+\newcommand\mathbbf[2][.2]{           %   for even bolder mathsymbols
+  \def\thickness{#1}
+  \ThisStyle{\outline{$\mathbf{\SavedStyle#2}$}}
+}
 % -- own command for theoremstyle, see amsthm -- %
 \theoremstyle{plain}                             %
 \newtheorem{definition}{Definition}              %
@@ -97,20 +102,30 @@
 %%% FOOTNOTE COMMAND %%%
 % -- own command for foonotes -- %
 %\renewcommand*{\thefootnote}{\fnsymbol{footnote}}
+\renewcommand*{\thefootnote}{[\arabic{footnote}]}
 %%%%%%%%%%%%%%%%%%%%%%%%
 
 %%% COMMANDS FOR TITLEPAGE %%%
-\newcommand{\getTitle}{Title of the thesis}
-\newcommand{\getSubtitle}{maybe with some subtitle}
 \newcommand*{\getAuthor}{Danial Hagemann}
-\newcommand*{\getPrintLocation}{Munich}       % Ort der Erstellung
-\newcommand*{\getPrintYear}{\the\year}          % Jahr der Erstellung
-\newcommand*{\getPlaceOfBirth}{Gifhorn}
-\newcommand*{\getSubmissionDate}{Submission date in the dean's office}
 \newcommand*{\getSupervisorOne}{Prof. Dr. Jochen Weller}
 \newcommand*{\getSupervisorTwo}{Dr. Steffen Hagstotz}
 \newcommand*{\getExamDate}{Date of final exam}
-\newcommand*{\lang}{en-US}
+% -- english -- %
+\newcommand{\getTitleEN}{Estimation of Cosmological Parameters in $\Lambda$CDM- and DGP-Model using Supernovae Type Ia Data}
+\newcommand{\getSubtitleEN}{maybe with some subtitle}
+\newcommand*{\getPrintLocationEN}{Munich}       % Ort der Erstellung
+\newcommand*{\getPrintYearEN}{\the\year}          % Jahr der Erstellung
+\newcommand*{\getPlaceOfBirthEN}{Gifhorn}
+\newcommand*{\getSubmissionDateEN}{14.03.2023}
+\newcommand*{\langEN}{en-US}
+% -- german -- %
+\newcommand{\getTitleDE}{Abschätzung kosmologischer Parameter im $\Lambda$CDM- and DGP-Modell anhand von Supernovae Typ Ia Daten}
+\newcommand{\getSubtitleDE}{maybe with some subtitle}
+\newcommand*{\getPrintLocationDE}{München}       % Ort der Erstellung
+\newcommand*{\getPrintYearDE}{\the\year}          % Jahr der Erstellung
+\newcommand*{\getPlaceOfBirthDE}{Gifhorn}
+\newcommand*{\getSubmissionDateDE}{14.03.2023}
+%\newcommand*{\langDE}{de}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%% COMMAND FOR BACKGROUND PICTURE %%%
@@ -151,11 +166,27 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-%%%%%%%%%%%%%%%%%%%%%%%
-%%% PACKAGE SETUPS %%%%
-%%% ============== %%%% 
+%%%%%%%%%%%%%%%%%%%%%%
+%%% PACKAGE SETUPS %%%
+%%% ============== %%% 
 
-%%% FANCYHDR SETUP %%%%   
+%%% CLASS SETUP %%%
+\setcounter{secnumdepth}{3}
+\setcounter{tocdepth}{3}
+%%%%%%%%%%%%%%%%%%%
+
+%%% CSQUOTES SETUP %%%
+% have a look at https://tex.stackexchange.com/questions/329334/quote-inline-with-italics
+\DeclareQuoteStyle[american]{english}
+{\itshape\textquotedblleft}
+[\textquotedblleft]
+{\textquotedblright}
+[0.05em]
+{\textquoteleft}
+{\textquoteright}
+%%%%%%%%%%%%%%%%%%%%%%
+
+%%% FANCYHDR SETUP %%% 
 \pagestyle{fancy}
 \fancyhf{}
 \fancyhead[RE]{\normalfont\bfseries\sffamily\leftmark}
@@ -163,12 +194,12 @@
 \fancyhead[RO,LE]{\thepage}
 
 \fancypagestyle{plain}{%
-  \fancyhf{}
-  \fancyhead[RO,LE]{\thepage}
+  %\fancyhf{}
+  %\fancyhead[RO,LE]{\thepage}
 }
 
 \ChTitleVar{\bfseries\Large\rmfamily}
-\ChNameVar{\bfseries\Large\sffamily}
+\ChNameVar{\Large\sffamily}
 
 \makeatletter
 \renewcommand\chaptermark[1]{%
@@ -194,9 +225,9 @@
 %%% HYPER SETUP %%%
 \hypersetup{   
     pdfpagemode = {UseNone},
-    pdftitle = {\getTitle},
+    pdftitle = {\getTitleEN},
     pdfauthor = {\getAuthor},
-    pdflang = {\lang},
+    pdflang = {\langEN},
     colorlinks = true,     
     linkcolor = blue,      
     citecolor = violet,
@@ -227,9 +258,16 @@
 %%%%%%%%%%%%%%%%%%%%%%
 
 %%% SI SETUPS %%%
-\sisetup{locale=DE}                     
-\sisetup{per-mode = symbol-or-fraction} 
+\sisetup{locale=US}                     
+\sisetup{per-mode=symbol-or-fraction} 
+\DeclareSIUnit \au {au}
+\DeclareSIUnit \ly {ly}
+\DeclareSIUnit \parsec {pc}
 %%%%%%%%%%%%%%%%%
+
+%%% SIDECAP SETUP %%%
+\sidecaptionvpos{figure}{t}
+%%%%%%%%%%%%%%%%%%%%%
 
 %%% TCOLORBOX SETUP %%%
 % \definecolor{mygray}{rgb}{0.8,0.8,0.8}
@@ -249,5 +287,23 @@
 \usetikzlibrary{intersections}
 \usetikzlibrary{decorations.pathreplacing, decorations.markings}
 \usetikzlibrary{tikzmark}
-\pgfplotsset{every axis/.style={scale only axis}, compat = newest}
+\pgfplotsset{every axis/.style={scale only axis}, compat=newest}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%% TITLESEC SETUP %%%
+% have a look at https://tex.stackexchange.com/questions/111643/decrease-space-before-and-after-chapter-in-fncychap
+\makeatletter
+\patchcmd{\@makechapterhead}{\vspace*{50\p@}}{\vspace*{-20\p@}}{}{}
+\patchcmd{\@makeschapterhead}{\vspace*{50\p@}}{\vspace*{-20\p@}}{}{}
+\patchcmd{\DOTI}{\vskip 80\p@}{\vskip 40\p@}{}{}
+\patchcmd{\DOTIS}{\vskip 40\p@}{\vskip 0\p@}{}{}
+\makeatother
+% \makeatletter
+% \titleformat{\chapter}[frame]
+%   {\normalfont}{\filright\enspace \@chapapp~\thechapter\enspace}
+%   {8pt}{\LARGE\bfseries\filcenter}
+% \titlespacing*{\chapter}
+%   {0pt}{0pt}{20pt}
+
+% \makeatother
+%%%%%%%%%%%%%%%%%%%%%%
