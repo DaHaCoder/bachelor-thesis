@@ -122,7 +122,7 @@ def DGP_luminosity_distance(z, Omega_m0, alpha):
 @njit
 def relative_magnitude(absolute_magnitude, luminosity_distance):
     # luminosity_distance per Mpc, absolute_magnitude is at 10 pc (therefore + 25.0 since 10 pc = 10^(-5.0) Mpc)
-    return absolute_magnitude + 5.0*np.log10(luminosity_distance) + 25.0
+    return absolute_magnitude + 5.0 * np.log10(luminosity_distance) + 25.0
 
 
 def main():    
@@ -145,7 +145,7 @@ def main():
 
     fig, ax = plt.subplots()   
     
-    plt.errorbar(redshifts, magnitudes, yerr=error_magnitudes, fmt='.', elinewidth=1, alpha=0.4) 
+    plt.errorbar(redshifts, magnitudes, yerr=error_magnitudes, fmt='.', elinewidth=1, alpha=0.4, label='Union2.1') 
    
    
     # magnitude vs. redshift for several cosmologies
@@ -159,7 +159,7 @@ def main():
     d_L = luminosity_distance(z, Omega_m0, Omega_Lambda0)
     m = relative_magnitude(0.0, d_L)
 
-    plt.plot(z, m, color='blue', label='$\\Omega_{{\\text{{m}},0}} = {0:.1f}, \\Omega_{{\\Lambda,0}} = {1:.1f}$ (Einstein-de-Sitter)'.format(Omega_m0, Omega_Lambda0))
+    plt.plot(z, m, color='blue', label='$(\\Omega_{{\\text{{m}},0}}, \\Omega_{{\\Lambda,0}}) = ({0:.1f}, {1:.1f})$ (Einstein-de-Sitter)'.format(Omega_m0, Omega_Lambda0))
     # -----------------------------------------
    
     # Lambda-CDM Model
@@ -170,7 +170,7 @@ def main():
     d_L = luminosity_distance(z, Omega_m0, Omega_Lambda0)
     m = relative_magnitude(0.0, d_L)
     
-    plt.plot(z, m, color='red', label='$\\Omega_{{\\text{{m}},0}} = {0:.1f}, \\Omega_{{\\Lambda,0}} = {1:.1f}$ ($\\Lambda$-CDM)'.format(Omega_m0, Omega_Lambda0))
+    plt.plot(z, m, color='red', label='$(\\Omega_{{\\text{{m}},0}}, \\Omega_{{\\Lambda,0}}) = ({0:.1f}, {1:.1f})$ ($\\Lambda$CDM)'.format(Omega_m0, Omega_Lambda0))
     # ----------------
    
     # # alpha = 0.0
@@ -181,7 +181,7 @@ def main():
     # d_L = DGP_luminosity_distance(z, Omega_m0, alpha)
     # m = relative_magnitude(0.0, d_L)
     
-    # plt.plot(z, m, color='green', linestyle='dashdot', label='$\\Omega_{{\\text{{m}},0}} = {0:.1f}, \\alpha = {1:.1f}$'.format(Omega_m0, alpha))
+    # plt.plot(z, m, color='green', linestyle='dashdot', label='($\\Omega_{{\\text{{m}},0}}, \\alpha) = ({0:.1f}, {1:.1f})$'.format(Omega_m0, alpha))
     # # ---------
     
     # DGP-Model
@@ -192,7 +192,7 @@ def main():
     d_L = DGP_luminosity_distance(z, Omega_m0, alpha)
     m = relative_magnitude(0.0, d_L)
     
-    plt.plot(z, m, color='orange', label='$\\Omega_{{\\text{{m}},0}} = {0:.1f}, \\alpha = {1:.1f}$ (DGP)'.format(Omega_m0, alpha))
+    plt.plot(z, m, color='orange', label='$(\\Omega_{{\\text{{m}},0}}, \\alpha) = ({0:.1f}, {1:.1f})$ (DGP)'.format(Omega_m0, alpha))
     # ---------
 
     # ==============================================
@@ -200,7 +200,7 @@ def main():
     # plt.title('distance modulus $m - M$ vs. redshift $z$ for Type Ia supernovae in several cosmologies')
     plt.xlabel('redshift $z$')
     plt.ylabel('distance modulus $m - M$')
-    plt.legend(loc='upper left')
+    plt.legend(loc='lower right')
     plt.grid(True)
    
     # plt.show()
