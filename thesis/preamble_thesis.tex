@@ -22,7 +22,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%% MATH, SCIENCE AND SPECIAL SYMBOL PACKAGES %%%%%%%%%%%%%%%%%%%%%
-\usepackage{amsmath, amsfonts, amssymb, amsthm, nccmath, bbm, mathdots}         %   for mathematics, i.e. bbm for identity matrix
+\usepackage{amsmath,amsfonts,amssymb,amsthm,nccmath,bbm,mathdots,mathrsfs}      %   for mathematics, i.e. bbm for identity matrix
 %   -- https://www.ctan.org/pkg/amsmath                                         %
 %   -- https://www.ctan.org/pkg/amsfonts                                        %
 %   -- https://www.ctan.ebinger.cc/tex-archive/fonts/amsfonts/doc/amssymb.pdf   %
@@ -30,6 +30,7 @@
 %   -- https://www.ctan.org/pkg/nccmath                                         %
 %   -- https://www.ctan.org/pkg/bbm                                             %
 %   -- https://www.ctan.org/pkg/mathdots                                        %
+%   -- https://www.ctan.org/pkg/mathrsfs                                        %
 \usepackage[nointegrals]{wasysym}                                               %   for more symbols, i.e. astronomical symbols -- https://www.ctan.org/pkg/wasysym
 \usepackage{physics}                                                            %   for physics, i.e. brakets -- https://www.ctan.org/pkg/physics
 \usepackage{siunitx}                                                            %   for using si-units -- https://www.ctan.org/pkg/siunitx
@@ -82,6 +83,7 @@
 \newcommand{\I}{\mathrm{i}}           %   for mathroman i, i.e. imaginary unit
 \newcommand{\1}{\mathbbm{1}}          %   for identity matrix
 \newcommand{\bs}{\boldsymbol}         %   for bold math symbols (instead of \textbf{} or \mathbf{}), i.e. for vectors in physcs 
+\DeclareMathOperator{\arsinh}{arsinh} %   for arsinh 
 \DeclareMathOperator{\diag}{diag}     %   for writing a diagonal matrix, i.e. sign convetion of Minkowski metric tensor \eta_{\mu \nu} = \diag(-,+,+,+)
 \newcommand{\latex}{\LaTeX\xspace}    %   for the LaTeX symbol
 \newcommand\mathbbf[2][.2]{           %   for even bolder mathsymbols
@@ -109,45 +111,44 @@
 \newcommand*{\getAuthor}{Danial Hagemann}
 \newcommand*{\getSupervisorOne}{Prof. Dr. Jochen Weller}
 \newcommand*{\getSupervisorTwo}{Dr. Steffen Hagstotz}
-\newcommand*{\getExamDate}{Date of final exam}
+% \newcommand*{\getExamDate}{Date of final exam}
 % -- english -- %
 \newcommand{\getTitleEN}{Estimation of Cosmological Parameters in $\Lambda$CDM- and DGP-Model using Supernovae Type Ia Data}
 \newcommand{\getSubtitleEN}{maybe with some subtitle}
-\newcommand*{\getPrintLocationEN}{Munich}       % Ort der Erstellung
-\newcommand*{\getPrintYearEN}{\the\year}          % Jahr der Erstellung
+\newcommand*{\getPrintLocationEN}{Munich}
+\newcommand*{\getPrintYearEN}{\the\year}
 \newcommand*{\getPlaceOfBirthEN}{Gifhorn}
-\newcommand*{\getSubmissionDateEN}{14.03.2023}
+\newcommand*{\getSubmissionDateEN}{02.05.2023}
 \newcommand*{\langEN}{en-US}
 % -- german -- %
-\newcommand{\getTitleDE}{Abschätzung kosmologischer Parameter im $\Lambda$CDM- and DGP-Modell anhand von Supernovae Typ Ia Daten}
+\newcommand{\getTitleDE}{Abschätzung kosmologischer Parameter im $\Lambda$CDM- und DGP-Modell anhand von Supernovae Typ Ia Daten}
 \newcommand{\getSubtitleDE}{maybe with some subtitle}
-\newcommand*{\getPrintLocationDE}{München}       % Ort der Erstellung
-\newcommand*{\getPrintYearDE}{\the\year}          % Jahr der Erstellung
+\newcommand*{\getPrintLocationDE}{München} 
+\newcommand*{\getPrintYearDE}{\the\year}
 \newcommand*{\getPlaceOfBirthDE}{Gifhorn}
-\newcommand*{\getSubmissionDateDE}{14.03.2023}
+\newcommand*{\getSubmissionDateDE}{02.05.2023}
 %\newcommand*{\langDE}{de}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%% COMMAND FOR BACKGROUND PICTURE %%%
-% -- have a look at https://tex.stackexchange.com/questions/86500/includegraphics-set-image-opacity -- %
-\newcommand\BackgroundPic{%
-\put(200,200){%
-            \parbox[b][\paperheight]{\paperwidth}{
-            \vfill
-            \centering
-            {
-            \transparent{0.2}
-            \includegraphics[width=\paperwidth, height=\paperheight, keepaspectratio]{figures/lmu-siegel.png}
-            }
-            \vfill
-        }
-    }
-}
+% source: https://tex.stackexchange.com/questions/86500/includegraphics-set-image-opacity
+% \newcommand\BackgroundPic{%
+% \put(200,200){%
+%             \parbox[b][\paperheight]{\paperwidth}{
+%             \vfill
+%             \centering
+%             {
+%             \transparent{0.2}
+%             \includegraphics[width=\paperwidth, height=\paperheight, keepaspectratio]{figures/lmu-siegel.png}
+%             }
+%             \vfill
+%         }
+%     }
+% }
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-
 %%% COMMAND FOR PRETTY CODE HIGHLIGHTING %%%
-% -- have a look at https://tex.stackexchange.com/questions/140166/making-inline-code-printing-pretty?noredirect=1&lq=1 -- %
+% source: https://tex.stackexchange.com/questions/140166/making-inline-code-printing-pretty?noredirect=1&lq=1
 % \newcommand\code[3][]{
 %     \tikz[baseline=(s.base)]{
 %         \node(s)[
@@ -165,10 +166,34 @@
 % }
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+%%% COMMAND FOR EMPTY PAGE %%%
+% source: https://tex.stackexchange.com/questions/34934/add-a-new-empty-page
+%\newcommand*\NewPage{\newpage\null\thispagestyle{empty}\newpage}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%% XCOLOR COMMAND %%%
+%% -- own command for \textcolor{}{} -- %
+%\newcommand{\red}[1]{\textcolor{red}{#1}}
+%\newcommand{\green}[1]{\textcolor{green!50!black}{#1}}
+%\newcommand{\blue}[1]{\textcolor{blue}{#1}}
+%\newcommand{\cyan}[1]{\textcolor{cyan}{#1}}
+%\newcommand{\purple}[1]{\textcolor{red!75!blue}{#1}}
+%\newcommand{\orange}[1]{\textcolor{orange}{#1}}
+%\newcommand{\grey}[1]{\textcolor{white!50!black}{#1}}
+%%%%%%%%%%%%%%%%%%%%%%%
+
 
 %%%%%%%%%%%%%%%%%%%%%%
 %%% PACKAGE SETUPS %%%
 %%% ============== %%% 
+
+%%% BIBLATEX SETUP %%%
+% source: https://tex.stackexchange.com/questions/534565/apply-empty-style-to-the-entire-bibliography
+\renewcommand{\bibsetup}{\thispagestyle{empty}}
+\makeatletter
+\patchcmd{\blx@endenv@bibliography}{\endlist}{\endlist\clearpage}{}{}
+\makeatother
+%%%%%%%%%%%%%%%%%%%%%%
 
 %%% CLASS SETUP %%%
 \setcounter{secnumdepth}{3}
@@ -176,7 +201,7 @@
 %%%%%%%%%%%%%%%%%%%
 
 %%% CSQUOTES SETUP %%%
-% have a look at https://tex.stackexchange.com/questions/329334/quote-inline-with-italics
+% source: https://tex.stackexchange.com/questions/329334/quote-inline-with-italics
 \DeclareQuoteStyle[american]{english}
 {\itshape\textquotedblleft}
 [\textquotedblleft]
@@ -237,25 +262,28 @@
 %%%%%%%%%%%%%%%%%%%
 
 %%% LISTINGS SETUP %%%
-% \definecolor{mygreen}{rgb}{0,0.6,0}
-% \definecolor{mygrey}{rgb}{0.8,0.8,0.8}
-% \definecolor{mymauve}{rgb}{0.58,0,0.82}
+ \definecolor{mygreen}{rgb}{0,0.6,0}
+ \definecolor{mygrey}{rgb}{0.8,0.8,0.8}
+ \definecolor{mymauve}{rgb}{0.58,0,0.82}
 
-% \lstset{ %
-%   backgroundcolor=\color{mygrey},       % choose the background color
-%   basicstyle=\ttfamily,                 % size of fonts used for the code
-%   breaklines=true,                      % automatic line breaking only at whitespace
-%   captionpos=b,                         % sets the caption-position to bottom
-%   commentstyle=\color{mygreen},         % comment style
-%   escapeinside={\%*}{*)},               % if you want to add LaTeX within your code
-%   keywordstyle=\color{blue},            % keyword style
-%   numbers=left,                         % alignment of numbers
-%   numberstyle={\small \color{black}},    % number style
-%   numbersep=9pt,                        % this defines how far the numbers are from the text
-%   stepnumber=1,
-%   stringstyle=\color{mymauve}           % string literal style
-% }
-%%%%%%%%%%%%%%%%%%%%%%
+ \lstset{ %
+   backgroundcolor=\color{mygrey},       % choose the background color
+   basicstyle=\ttfamily,                 % size of fonts used for the code
+   breaklines=true,                      % automatic line breaking only at whitespace
+   captionpos=b,                         % sets the caption-position to bottom
+   commentstyle=\color{mygreen},         % comment style
+   escapeinside={\%*}{*)},               % if you want to add LaTeX within your code
+   keywordstyle=\color{blue},            % keyword style
+   numbers=left,                         % alignment of numbers
+   numberstyle={\small \color{black}},    % number style
+   numbersep=9pt,                        % this defines how far the numbers are from the text
+   stepnumber=1,
+   stringstyle=\color{mymauve}           % string literal style
+ }
+%%%%%%%%%%%%%%%%%%%%%
+
+
+
 
 %%% SI SETUPS %%%
 \sisetup{locale=US}                     
@@ -263,6 +291,7 @@
 \DeclareSIUnit \au {au}
 \DeclareSIUnit \ly {ly}
 \DeclareSIUnit \parsec {pc}
+\DeclareSIUnit \yr {yr}
 %%%%%%%%%%%%%%%%%
 
 %%% SIDECAP SETUP %%%
@@ -291,7 +320,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%% TITLESEC SETUP %%%
-% have a look at https://tex.stackexchange.com/questions/111643/decrease-space-before-and-after-chapter-in-fncychap
+% source: https://tex.stackexchange.com/questions/111643/decrease-space-before-and-after-chapter-in-fncychap
 \makeatletter
 \patchcmd{\@makechapterhead}{\vspace*{50\p@}}{\vspace*{-20\p@}}{}{}
 \patchcmd{\@makeschapterhead}{\vspace*{50\p@}}{\vspace*{-20\p@}}{}{}
@@ -304,6 +333,10 @@
 %   {8pt}{\LARGE\bfseries\filcenter}
 % \titlespacing*{\chapter}
 %   {0pt}{0pt}{20pt}
-
 % \makeatother
 %%%%%%%%%%%%%%%%%%%%%%
+
+%%% TOC SETUP %%%
+% source: https://tex.stackexchange.com/questions/5787/table-of-contents-with-page-style-empty
+\AtBeginDocument{\addtocontents{toc}{\protect\thispagestyle{empty}}}
+%%%%%%%%%%%%%%%%%

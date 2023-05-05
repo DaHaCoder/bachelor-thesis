@@ -1,4 +1,5 @@
 \chapter{Introductory Concepts of Astrophysics}
+\label{chap:introductory-concepts-of-astrophysics}
 \thispagestyle{empty}
 
 In 2011, Saul Perlmutter, Adam G. Riess and Brian P. Schmidt received the Nobel Prize in Physics \enquote{for the discovery of the accelerating expansion of the Universe through observations of distant supernovae}. \footnote{\href{https://www.nobelprize.org/prizes/physics/2011/press-release/}{Press release: https://www.nobelprize.org/prizes/physics/2011/press-release/}} \\
@@ -6,7 +7,7 @@ Since then, we know that the expansion of the universe is accelerating.
 The cause of this accelerated expansion is still unknown, but there are some theoretical models which attempt to explain this phenomenon. \\
 
 \noindent The established model in recent cosmology is the \textbf{$\Lambda$CDM-model}, sometimes referred as the \textit{standard model of cosmology}.
-In this model, the cause of the accelerated expansion is due to the so called \textit{cosmological constant} $\Lambda$, which appears as a physical constant in Einstein's field equations of General Relativity like the Newtonian gravitational constant $G$. \\
+In this model, the cause of the accelerated expansion is due to the so called \textit{cosmological constant} $\Lambda$, which appears as a physical constant in Einstein's field equations of general relativity like the Newtonian gravitational constant $G$. \\
 
 \noindent Another model, published in April 2000 by Gia Dvali, Gregory Gabadadze and Massimo Porrati, -- the \textbf{DGP-model} -- proposes a modification of Einstein's field equations by introducing a fifth dimension to the four-dimensional spacetime, so that gravity behaves equivalently to Newtonian gravity on small distances, but weakens on large scales. \\
 
@@ -15,14 +16,14 @@ In this model, the cause of the accelerated expansion is due to the so called \t
 
 
 
-\section{Distance measurement in Astronomy}
+\section{Distance Measurement in Astronomy}
 
 Essential to astronomical observations and measurements is to determine the distance to objects in space like stars, star clusters, galaxies or even clusters of galaxies. \\
 By looking at night into the sky, the only information perceived by our human eye are the brightness and some color in which objects (mostly stars) appear.
 How do we determine the distance to those objects ?
 
 
-\subsection{The parallax method}
+\subsection{The Parallax Method}
 
 One method to determine the distance to an object is by using the \textit{parallax effect}. \\
 For this method, we assume that the observed object is almost stationary relative to earth.
@@ -44,7 +45,7 @@ The larger the distance to the measured object, the smaller the angle is. \\
     \SI{1}{\parsec} := \frac{\SI{1}{\au}}{\sin \bigl( \frac{1}{3600} \SI{}{\degree} \bigr)} \approx \SI{3.26}{\ly} \approx \SI{3.086e16}{\meter}.
 \end{align}
 
-\noindent This is the usual unit by which cosmological distances or parameters are expressed, for example the \textit{Hubble constant} $H_{0} \approx \SI{67.66}{\frac{\kilo \meter}{\second} \mega \parsec^{-1}}$\footnote{The value of $H_{0}$ according to the Results of the \textit{Planck Collaboration 2018}, \cite[Table 7]{Planck2020} }. \\ 
+\noindent This is the usual unit by which cosmological distances or parameters are expressed, for example the \textit{Hubble constant} $H_{0} \approx \SI{67.66}{\frac{\kilo \meter}{\second} \mega \parsec^{-1}}$\footnote{The value of $H_{0}$ according to the results of the \textit{Planck Collaboration 2018}, \cite[Table 7]{Planck2020} }. \\ 
 
 \noindent We should keep in mind that this method has of course boundaries and is practically useful for the local region of our galaxy, since the larger the distance to an observerd object is, the appeared change in position at sky gets smaller and is for objects with a distance on cosmological scale ($d \gtrsim \SI{300}{\mega \parsec}$) almost unnoticable. 
 
@@ -54,7 +55,7 @@ Another method to determine the distance to an object with a certain luminosity 
 \begin{align}
     F = \frac{L}{4\pi d^2}. \label{eq:radiant-flux} 
 \end{align}
-In general astronomical observations, it is not the radiant flux of a star that is measured. Rather, we observe \textit{differences} of brightness or magnitude $m$ between two objects. We define a difference in magnitude between two objects $m_{1} - m_{2} := \Delta m$ so that the radiant flux $F_{2}$ of object 2 is 100 times higher than the radiant flux $F_{1}$ of object 1, when their difference in magnitude is $\Delta m = 5$, so 
+In general astronomical observations, it is not the radiant flux of a star that is measured. Rather, we observe \textit{differences} of brightness or magnitude $m$ between two objects. We define a difference in magnitude between two objects $m_{1} - m_{2} =: \Delta m$ so that the radiant flux $F_{2}$ of object 2 is 100 times higher than the radiant flux $F_{1}$ of object 1, when their difference in magnitude is $\Delta m = 5$, so 
 \begin{align}
     \frac{F_{2}}{F_{1}} = 100 \Leftrightarrow m_{1} - m_{2} = \Delta m = 5.
 \end{align}
@@ -71,7 +72,7 @@ To eliminate the need of knowing five quantities, we can define an \textit{absol
 \begin{align}
     m - M = \frac{5}{2} \underbrace{\log_{10} \biggl( \frac{L}{L} \biggr)}_{ = 0} + 5 \log_{10} \biggl( \frac{d}{\SI{10}{\parsec}} \biggr) = 5 \log_{10} \biggl(\frac{d}{\SI{10}{\parsec}}\biggr). \label{eq:distance-modulus} 
 \end{align}
-We call this equation the \textit{distance modulus}. \\
+We call the difference between the relative magnitude $m$ and the absolute magnitude $M$ of one object its \textit{distance modulus}. \\
 The benefit of the distance modulus is that we only have to know two quantities, $m$ and $M$, to calculate the distance to an object. \\
 Unfortunately, we can not measure the absolute magnitude $M$ of an object that easily (since we can not fly to far away stars and measure the observed magnitude or radiant flux at a distance of $\SI{10}{\parsec}$ to them). That is why we rely on \eqref{eq:rel-magnitude-distance-relation}.
 But at least, we could reduce the amount of unknown variables by calibrating the relation \eqref{eq:rel-magnitude-distance-relation} with an object which luminosity and distance is known. \\
@@ -85,7 +86,7 @@ But at least, we could reduce the amount of unknown variables by calibrating the
 
 
 
-\subsection{Possible candidates for Standard Candles} 
+\subsection{Possible Candidates for Standard Candles} 
 
 Generally, there are two established candidates for standard candles in astronomy. Since we deal in this thesis with data of type Ia supernovae, the focus lies on the second paragraph of this subsection. For the sake of completeness, however, the cepheids as possible standard candles should not be unmentioned -- also to emphasize, why we rely on supernovae of type Ia to determinine cosmological distances.
 
@@ -106,7 +107,7 @@ There are several types and classes of cepheids, but they all have in common tha
 
 
 \noindent However, in order to use cepheids for distance determination, they must first be observed and resolved.
-Even with our most powerful telescopes that we have today, resolution of cepheids is only possible in our local, galactic neighborhood, for example in the Large Magellanic Cloud or the Andromeda Galaxy. Therefore, the boundary to resolute cepheids in other galaxies is currently about $\sim \SI{30}{\mega \parsec}$ (\cite[p. 47]{Bartelmann2019} and \cite[p. 3]{Engelmann2013}). \\
+Even with our most powerful telescopes that we have today, resolution of cepheids is only possible in our local, galactic neighborhood, for example in the Large Magellanic Cloud or the Andromeda galaxy. Therefore, the boundary to resolute cepheids in other galaxies is currently about $\sim \SI{30}{\mega \parsec}$ (\cite[p.~47]{Bartelmann2019} and \cite[p.~3]{Engelmann2013}). \\
 For larger scales, we need much brighter standard candles.
 
 
@@ -115,8 +116,8 @@ For larger scales, we need much brighter standard candles.
 
 In general, supernovae are abrupt bursts of luminosity from massive stars, often accompanied by explosive thermonuclear reactions.
 While supernovae of type Ib, Ic and II occur due to an imbalance between the star's gravity, which causes its nucleus to collapse, and radiation emitted by nuclear fusion inside the star, which pushes against its photosphere, supernovae of type Ia are caused by a white dwarf, accreting a companion star and therefore increasing in mass. \\
-If the white dwarf reaches due to accreting a companion star a mass limit over $\sim 1.4 M_{\odot}$ (where $M_{\odot} \approx \SI{1.98e+30}{\kilogram}$ is the mass of the sun, \cite[p. 48]{Bartelmann2019}), which is called the \textit{Chandrasekhar limit} $M_{\text{Ch}}$, the nucleus of the white dwarf beocmes unstable, since the degeneracy pressure of the electrons (Pauli exclusion principle) can not resist the gravitational forces any more. \\
-Inside the white dwarf's nucleus, a fusion of carbon and oxygen is triggered, which leads to further nuclear processes and an amount of energy release up to $\sim \SI{e+44}{\joule}$ (\cite[p. 295]{Maguire2017}, \cite[p. 321]{Spatschek2017}).
+If the white dwarf reaches due to accreting a companion star a mass limit over $\sim 1.4 M_{\odot}$ (where $M_{\odot} \approx \SI{1.98e+30}{\kilogram}$ is the mass of the sun, \cite[p.~48]{Bartelmann2019}), which is called the \textit{Chandrasekhar limit} $M_{\text{Ch}}$, the nucleus of the white dwarf beocmes unstable, since the degeneracy pressure of the electrons (Pauli exclusion principle) can not resist the gravitational forces any more. \\
+Inside the white dwarf's nucleus, a fusion of carbon and oxygen is triggered, which leads to further nuclear processes and an amount of energy release up to $\sim \SI{e+44}{\joule}$ (\cite[p.~295]{Maguire2017}, \cite[p.~321]{Spatschek2017}).
 This makes supernovae of type Ia one of the most energetic -- and therefore also luminous -- phenomena known in nature. Supernovae of type Ia are almost as bright as their host galaxy. 
 Since they are not only extremly luminous, but the process of star collapse is triggered after crossing a fixed limit of mass (the Chandrasekhar limit), this makes them also very unique and therefore good candidates for standard candles. \\
 \noindent We can distinguish between supernovae of type Ia from other supernovae types by observing and analizing their spectrum.
@@ -131,27 +132,26 @@ Source: \cite[Figure 1]{Quimby2018}}
     \hspace{1cm}
     \begin{minipage}{7cm}
         \includegraphics[scale=0.8]{figures/images/supernovae-spectra.jpg}
-        %\label{fig:supernovae-spectra}
     \end{minipage}
 \end{SCfigure}
 
 \noindent Yet there are small problems that occur here. \\
 First, the mechanism which leads to the supernovae explosion is somewhat controversial, since there are two possible scenarios: the ``single-degenerate''-model, in which the companion star is a star of the main sequence or a giant star, and the ``double-degenerate''-model, in which the companion star is also a white dwarf. \\
 
-\noindent In the ``single-degenerate''-model, the accretion must not be too slow, since the hydrogen-rich material of the companion star could be burnt at the same rate as it is accreted, which results in no growth of mass for the white dwarf. On the other hand, the accretion must not be too high, since the accretion might stop due to the companion star's loss of mass at a high rate or being engulfed by the accreted material (\cite[p. 308]{Maguire2017}).
+\noindent In the ``single-degenerate''-model, the accretion must not be too slow, since the hydrogen-rich material of the companion star could be burnt at the same rate as it is accreted, which results in no growth of mass for the white dwarf. On the other hand, the accretion must not be too high, since the accretion might stop due to the companion star's loss of mass at a high rate or being engulfed by the accreted material (\cite[p.~308]{Maguire2017}).
 
-\noindent In the ``double-degenrate''-model, it is assumed that one of both white dwarfs reaches the Chandrasekhar limit if they get too close (\cite[p. 48]{Bartelmann2019}), but there are also other possible scenarios that could occur (see \cite[p. 308/309]{Maguire2017}). \\
+\noindent In the ``double-degenrate''-model, it is assumed that one of both white dwarfs reaches the Chandrasekhar limit if they get too close (\cite[p.~48]{Bartelmann2019}), but there are also other possible scenarios that could occur (see \cite[p.~308/309]{Maguire2017}). \\
 \noindent This could lead to slight variations in the luminosity behavior. \\
 
 
-\noindent Other variations in luminosity behavior could occur due the amount of $^{56}$Ni in the thermonuclear process, which decay influences the peak of the supernovae type Ia light curve (\cite[p. 295]{Maguire2017}). But those variations can be compensated very well since a relation between the lumninosity's decline and its peak is found so that it is possible to ``normalize'' or ``stretch'' the light curves so they obey a uniform distribution (\cite[p. 4]{Perlmutter2003}, \cite{Phillips1993}).\\
-The fact that the light curves of type Ia supernovae are distributed exactly the same way after some ``normalization'' or ``stretching'' shows us, that the same physical process underlies all light curves of type Ia supernovae, even if they seem to be stretched, not only due to the relation of luminosity's decline and luminosity peak. We will mention later, why this property of supernovae type Ia light curves verify the expansion of the universe.
+\noindent Other variations in luminosity behavior could occur due the amount of $^{56}$Ni in the thermonuclear process, which decay influences the peak of the supernovae type Ia light curve (\cite[p.~295]{Maguire2017}). But those variations can be compensated very well since a relation between the lumninosity's decline and its peak is found so that it is possible to ``normalize'' or ``stretch'' the light curves so they obey a uniform distribution (\cite[p.~4]{Perlmutter2003}, \cite{Phillips1993}).\\
+The fact that the light curves of type Ia supernovae are distributed exactly the same way after some ``normalization'' or ``stretching'' shows us, that the same physical process underlies all light curves of type Ia supernovae, even if they seem to be stretched, not only due to the relation of luminositys decline and luminosity peak. We will mention later, why this property of supernovae type Ia light curves verify the expansion of the universe.
 
 \begin{figure}[H]
     \centering
     \includegraphics[scale=0.35]{figures/images/supernovae-stretch.png}
     \caption{Uncorrected vs. corrected sample of supernovae type Ia light curves. \\ 
-    Source: \cite[p. 298, Figure 2]{Maguire2017}} 
+    Source: \cite[p.~298, Figure 2]{Maguire2017}} 
 \end{figure}
 
 \noindent Despite the mentioned slight variations in the luminosity spectrum, supernovae of type Ia can be considered as the best candidates for standard candles at the current state of research, not only because their light curves are very homogeneous, but they are also much brighter than cepheids and therefore also at large distances visible, which is essential for cosmological research.
@@ -159,11 +159,11 @@ The fact that the light curves of type Ia supernovae are distributed exactly the
 
 \subsection{Redshift and Hubble's Observation}
 
-The most important tool to determine distances on a cosmological scale is by observing the redshift of extragalactic objects. The redshift is a shift in the observed spectrum of light emmited by a source with wavelength $\lambda_{e}$ to an observed wavelength $\lambda_{o}$ and defined as
+The most important tool to determine distances on a cosmological scale is by observing the redshift of extragalactic objects. The redshift is a shift in the observed spectrum of light emmited by a source with wavelength $\lambda_{\text{e}}$ to an observed wavelength $\lambda_{\text{o}}$ and defined as
 \begin{align}
-    z := \frac{\lambda_{o} - \lambda_{e}}{\lambda_{e}} = \frac{\lambda_{o}}{\lambda_{e}} - 1. \label{eq:redshift}
+    z := \frac{\lambda_{\text{o}} - \lambda_{\text{e}}}{\lambda_{\text{e}}} = \frac{\lambda_{\text{o}}}{\lambda_{\text{e}}} - 1. \label{eq:redshift}
 \end{align}
-The term ``red'' in ``redshift'' might be misleading, since $z$ could take also values $<0$ and therefore $\lambda_{o} < \lambda_{e}$, which implicates a shift of the light's spectrum to the blue. \\
+The term ``red'' in ``redshift'' might be misleading, since $z$ could take also values $<0$ and therefore $\lambda_{\text{o}} < \lambda_{\text{e}}$, which implicates a shift of the light's spectrum to the blue. \\
 This term has been established, because observations show that the spectrum of most galaxies and extragalactic objects is shifted towards red. \\
 
 \noindent In the end of the 1920s, Edwin Hubble observed a certain relation between the measured redshift of the galaxies and extragalactic objects and their distance to us. If one assumes the redshift due to (relativistic) doppler effect\footnote{Some raised objections against the interpretation that the observed redshift is a result of the doppler effect, but claimed that it is caused by energy loss of the photons traveling through space (``tired light''-hypothesis). We will address later, why this hypothesis can not be hold anymore in the light of tremendous evidence for the expansion model.}, one could calculate the galaxys velocity component towards the direction of observation by
@@ -178,14 +178,14 @@ This term has been established, because observations show that the spectrum of m
 \end{align}
 which is known as the \textit{Hubble law}. The proportionality constant $H_{0}$ has the dimension of an inverse time. It is one of the most important parameters in cosmology and its precise determination a challenge of active research (often called ``Hubble tension'', \cite{DiValentino2021}). \\ 
 
-\noindent For small velocities ($v \ll c$), we can approximate \eqref{eq:relativistic-doppler} (first order taylor series) as $z \approx \frac{v}{c}$, which leads with \eqref{eq:hubble-law} to 
+\noindent For small velocities ($v \ll c$), we can approximate \eqref{eq:relativistic-doppler} (first order taylor series) as $\displaystyle z \approx \frac{v}{c}$, which leads with \eqref{eq:hubble-law} to 
 \begin{align}
     d \approx \frac{c}{H_{0}} z. \label{eq:lum-dist-approx} 
 \end{align}
-We will see later that this relation is actually a first order approximation between the \textit{luminosity distance} $d_{L}$ and the redshift $z$. \\
-The correct relation between the luminosity distance $d_{L}$ and the redshift $z$ will play an essential role when estimating parameters of cosmological models.
+We will see later that this relation is actually a first order approximation between the \textit{luminosity distance} $d_{\text{L}}$ and the redshift $z$. \\
+The correct relation between the luminosity distance $d_{\text{L}}$ and the redshift $z$ will play an essential role when estimating parameters of cosmological models.
 
-\noindent From Hubble's law follows that the further the distance to a galaxy (or other cosmological object) is, the higher the redshift and therefore, the faster it seems to move apart from us. This observation was one of the milestones in the history of cosmology and was the first indicator, that our Universe is truly expanding.
+\noindent From Hubble's law follows that the further the distance to a galaxy (or other cosmological object) is, the higher the redshift and therefore, the faster it seems to move apart from us. This observation was one of the milestones in the history of cosmology and was the first indicator, that our universe is truly expanding.
 
 
 \begin{figure}[H]
@@ -209,10 +209,10 @@ The correct relation between the luminosity distance $d_{L}$ and the redshift $z
 
 \section{The Theory of Gravity and Spacetime}
 How can one speak about the nature on large scales without mentioning the force that dominates in this regime ?
-Beginning with Newton's ideas about gravity, the modern formulation about gravity is described in the framework of Einstein's General Theory of Relativity, in which gravity is, strictly speaking, not anymore a force in the Newtonian sense, but rather a property of the four dimensional spacetime that interacts with matter. \\
+Beginning with Newton's ideas about gravity, the modern formulation about gravity is described in the framework of Einstein's general theory of relativity, in which gravity is, strictly speaking, not anymore a force in the Newtonian sense, but rather a property of the four dimensional spacetime that interacts with matter. \\
 
-\noindent For a deep understanding of General Relativity, it is required to have knowledge on the mathematics of differential geometry. \\
-\noindent Despite the fact that, as an undergraduate student, I do not have this knowledge (yet), this would be beyond the scope of this bachelor thesis. \\
+\noindent For a deep understanding of general relativity, it is required to have knowledge on the mathematics of differential geometry. \\
+\noindent Despite the fact that, as an undergraduate student, I do not have this knowledge (yet, this would be beyond the scope of this bachelor thesis. \\
 \noindent But to motivate the basic equations of the $\Lambda$CDM-Model, which are derived from Einstein's field equations under certain assumptions that we formulate in the next chapter, I would like to mention the concept of a \textit{metric} and give brief view on Einstein's field equations.
 
 \subsection{The Metric of Spacetime}
@@ -221,12 +221,12 @@ For example, let $\mathbb{E}^2$ be the Euclidean, two dimensional space, then
 \begin{align}
     d(\cdot, \cdot) : \mathbb{E}^{2} \times \mathbb{E}^{2} \to \R, (\vb*{p}_{1}, \vb*{p}_{2}) \mapsto d(\vb*{p}_{1}, \vb*{p}_{2}) := \sqrt{(x_{1} - x_{2})^2 + (y_{1} - y_{2})^2} 
 \end{align}
-would be a function that gives us the distance between two points $\vb*{p}_{1} = (x_{1}, y_{1})^{\text{T}}$ and $\vb*{p}_{2} = (x_{2}, y_{2})^{\text{T}}$. This distance function $d$ would return the pythagorean distance in cartesian coordinates that we are familiar with. \\
+would be a function that gives us the distance between two points $\vb*{p}_{1} = (x_{1}, y_{1})^{\intercal}$ and $\vb*{p}_{2} = (x_{2}, y_{2})^{\intercal}$. This distance function $d$ would return the pythagorean distance in cartesian coordinates that we are familiar with. \\
 Let us define $x := x_{1} - x_{2}$, $y := y_{2} - y_{2}$ and $s := d(\vb*{p}_{1}, \vb*{p}_{2})$ so we could write for the (infinitesimal) distance 
 \begin{align}
     \dd{s}^2 = \dd{x}^2 + \dd{y}^2. \label{eq:line-element-cartesian}
 \end{align}
-Now, let us switch to polar coordinates so that $\vb*{p}_{1} := (r_{1}, \phi_{1})^{\text{T}}$ and $\vb*{p}_{2} := (r_{2}, \phi_{2})^{\text{T}}$. With the given distance function $d$, we would obtain 
+Now, let us switch to polar coordinates so that $\vb*{p}_{1} := (r_{1}, \phi_{1})^{\intercal}$ and $\vb*{p}_{2} := (r_{2}, \phi_{2})^{\intercal}$. With the given distance function $d$, we would obtain 
 \begin{align}
     d(\vb*{p}_{1}, \vb*{p}_{2}) = \sqrt{(r_{1} - r_{2})^2 + (\phi_{1} - \phi_{2})^2}. 
 \end{align}
@@ -237,20 +237,26 @@ But this is \textit{not} the same distance as in cartesian coordinates. The dist
 with $r:= r_{1} - r_{2}$, $\phi := \phi_{1} - \phi_{2}$. \\
 \noindent We have to introduce the \textit{metric tensor} (in most applications of physics a $3 \times 3$- or $4 \times 4$-matrix) that garantuees as the invariance of the distance function $d$ under coordinate transformation. \\
 We define 
+% \begin{align}
+%     \begin{pmatrix} 1 && 0 \\ 0 && 1 \end{pmatrix} \overset{\text{cartesian}}{=} g_{ij} \overset{\text{polar}}{=} \begin{pmatrix} 1 && 0 \\ 0 && r \end{pmatrix}, \quad x \overset{\text{cartesian}}{=} x^{1} \overset{\text{polar}}{=} r, \quad y \overset{\text{cartesian}}{=} x^{2} \overset{\text{polar}}{=} \phi, 
+% \end{align}
 \begin{align}
-    g_{ij} &\overset{\text{cartestian}}{=} \begin{pmatrix} 1 && 0 \\ 0 && 1 \end{pmatrix} \overset{\text{polar}}{=} \begin{pmatrix} 1 && 0 \\ 0 && r \end{pmatrix}, \quad x^{1} \overset{\text{cartesian}}{=} x \overset{\text{polar}}{=} r, \quad x^{2} \overset{\text{cartesian}}{=} y \overset{\text{polar}}{=} \phi,
+    g_{ij} := \begin{cases} \begin{pmatrix} 1 && 0 \\ 0 && 1 \end{pmatrix} \quad \text{in cart.} \\  \begin{pmatrix} 1 && 0 \\ 0 && r \end{pmatrix} \quad \text{in polar} \end{cases} x^{1} := \begin{cases} x \quad \text{in cart.} \\ r \quad \text{in polar} \end{cases}  x^{2} := \begin{cases} y \quad \text{in cart.} \\ \phi \quad \text{in polar} \end{cases}
 \end{align}
+% \begin{align}
+%     g_{ij} &\overset{\text{cartestian}}{=} \begin{pmatrix} 1 && 0 \\ 0 && 1 \end{pmatrix} \overset{\text{polar}}{=} \begin{pmatrix} 1 && 0 \\ 0 && r \end{pmatrix}, \quad x^{1} = \begin{cases} x \quad \text{cartestian} \\ r \quad \text{polar}\end{cases},  \quad x^{2} = \begin{cases} y \quad \text{cartesian} \\ \phi \quad \text{polar} \end{cases}
+% \end{align}
 so that we can express the invariant distance between $\vb*{p}_{1}$ and $\vb*{p}_{2}$ through
 \begin{align}
     \dd{s}^2 &= \sum_{i = 1}^{2} \sum_{j = 1}^{2} g_{ij}\dd{x}^{i}\dd{x}^{j} = g_{11} \bigl(\dd{x}^{1}\bigr)^2 + \underbrace{g_{12}}_{= 0} \dd{x}^{1}\dd{x}^{2} + \underbrace{g_{21}}_{= 0} \dd{x}^{2} \dd{x}^{1} + g_{22} \bigl(\dd{x}^{2} \bigr)^2 \\
-             &= g_{11} \bigl(\dd{x}^{1}\bigr)^2 + g_{22} \bigl(\dd{x}^{2}\bigr)^2 \overset{\text{cartesian}}{=} \dd{x}^{2} + \dd{y}^{2} \overset{\text{polar}}{=} \dd{r}^{2} + r^2 \dd{\phi}^{2}.  
+             &= g_{11} \bigl(\dd{x}^{1}\bigr)^2 + g_{22} \bigl(\dd{x}^{2}\bigr)^2 \overset{\text{cart.}}{=} \dd{x}^{2} + \dd{y}^{2} \overset{\text{polar}}{=} \dd{r}^{2} + r^2 \dd{\phi}^{2}.  
 \end{align}
 
-\noindent In the framework of relativity, we express the distance (called ``world line'') between to \textit{events} $\vb*{p}_{1} := (c t_{1}, x_{1}, y_{1}, z_{1})^{\text{T}}$ and $\vb*{p}_{2} := (c t_{2}, x_{2}, y_{2}, z_{2})^{\text{T}}$ in four dimensional spacetime as
+\noindent In the framework of relativity, we express the distance (called ``world line'') between to \textit{events} $\vb*{p}_{1} := (c t_{1}, x_{1}, y_{1}, z_{1})^{\intercal}$ and $\vb*{p}_{2} := (c t_{2}, x_{2}, y_{2}, z_{2})^{\intercal}$ in four dimensional spacetime as
 \begin{align}
     \dd{s}^2 = g_{\mu\nu} \dd{x}^{\mu} \dd{x}^{\nu}
 \end{align}
-with the implicit sum over double occuring indices $\mu, \nu \in \{0,1,2,3\}$. In flat Minkowski-Spacetime of Special Relativity for example, we have 
+with the implicit sum over double occuring indices $\mu, \nu \in \{0,1,2,3\}$. In flat Minkowski-spacetime of special relativity for example, we have 
 \begin{align}
     g_{\mu\nu} = \eta_{\mu\nu} := \diag(-1, 1, 1, 1) 
 \end{align} 
@@ -261,12 +267,9 @@ and therefore for distances in spacetime
 
 
 
+\subsection{Einstein's Field Equations}
 
-
-
-\subsection{Einstein's field equations}
-
-\noindent Similar to the derivation of the Euler-Lagrange equations in classical mechanics (or classical field theory) by formulating an action $S[\vb*{q}(t)]$ (or $S[\phi(x)]$) and find the path $\vb*{q}(t)$ (or field $\phi(x)$) that extremizes the action ($\delta S = 0$), Einstein's field equations can be derived\footnote{For a proper and detailed derivation, I recommend subsection 4.3 ``\textit{Lagrangian Formulation}'' in \cite[p. 159]{SeanCarroll2019}} from the so called Einstein-Hilbert action given by
+\noindent Similar to the derivation of the Euler-Lagrange equations in classical mechanics (or classical field theory) by formulating an action $S[\vb*{q}(t)]$ (or $S[\phi(x)]$) and find the path $\vb*{q}(t)$ (or field $\phi(x)$) that extremizes the action ($\delta S = 0$), Einstein's field equations can be derived\footnote{For a proper and detailed derivation, I recommend subsection 4.3 ``\textit{Lagrangian Formulation}'' in \cite[p.~159]{SeanCarroll2019}} from the Einstein-Hilbert action given by
 \begin{align}
     S_{\text{EH}}[g_{\mu\nu}] = \int \dd[4]{x} \sqrt{-\det(g_{\mu\nu})} \biggl[\frac{c^4}{16\pi G}(R - 2\Lambda) + \mathcal{L}_{\text{M}} \biggr], 
 \end{align}

@@ -1,4 +1,42 @@
-\chapter{The Dvali-Gabadadze-Porrati-Model}
+\chapter{The Dvali--Gabadadze--Porrati-Model}
+\label{chap:the-dvali-gabadadze-porrati-model}
 \thispagestyle{empty}
 
-\bt
+The model proposed by Gia Dvali, Gregory Gabadadze and Massimo Porrati (\cite{Dvali2000}) is an alternative cosmological model, in which our four-dimensional universe is embedded as a brane in a five-dimensional Minkowski spacetime. \\
+The authors introduce a fourth spatial dimension $y$. While the electromagnetic, the weak and the strong nuclear force are limited to our four-dimensional world, gravity acts also onto the postulated extra spatial dimension. \\
+The scale to which gravity acts familiar as the theory of general relativity predicts, but mimics dark energy as it acts onto the extra dimension, is introduced as the crossover scale $r_{\text{c}}$. \\
+From the modified Einstein--Hilbert-action given by 
+\begin{align}
+    S_{\text{DGP}} = \frac{1}{r_{\text{c}}} \frac{c^4}{8\pi G} \int \dd[4]{x} \dd{y} \sqrt{\det(g_{AB}^{(5)})} \mathcal{R} + \int \dd[4]{x} \sqrt{\det(g_{\mu \nu})} \biggl(\frac{c^4}{8 \pi G} R + \mathcal{L}_{\text{SM}} \biggr),
+\end{align}
+where $g_{AB}^{(5)}$ is the metric with $A, B \in \{0, 1, 2, 3, 4\}$ and $\mathcal{R}$ the ricci scalar on five-dimensional spacetime, follow the modified Einstein field equations 
+\begin{align}
+    \frac{1}{r_{\text{c}}} \mathcal{G}_{AB} + \delta(y) \delta_{A}^{\mu} \delta_{B}^{\nu} \biggl( G_{\mu \nu} - \frac{8\pi G}{c^4} T_{\mu \nu} \biggr), 
+\end{align}
+where $G_{\mu \nu} = R_{\mu \nu} - \frac{1}{2} R g_{\mu \nu}$ is the Einstein tensor (left-hand-side of \eqref{eq:einstein-field-equations} without cosmological constant $\Lambda$) and $\mathcal{G}_{AB}$ its five-dimensional analogon. An ansatz as proposed in \cite{Dvali2003}, the metric 
+\begin{align}
+    \dd{s}_{(5)}^2 = f(y,H) \dd{s}^2 - \dd{y}^2, 
+\end{align}
+where $\dd{s}^2$ is the four-dimensional maximally-symmetric FLRW-metric, $H$ the four-dimensional Hubble parameter and $f(y, H)$ the so called warp-factor, leads to the modified Friedmann equation
+\begin{align}
+    H^{2} \pm \frac{c}{r_{\text{c}}}H = \frac{8 \pi G}{3} \rho.  \label{eq:modified-friedmann1}
+\end{align}
+The positive sign accounts to a decelerated expansion, while a negative sign corresponds to an accelerated expansion. Thus, we consider in the following the case in which the sign in \eqref{eq:modified-friedmann1} is negative. \\
+
+\noindent We are now introducing the parameter $\alpha \in \R$ which should interpolate between the DGP-model for $\alpha = 0$ and the $\Lambda$CDM-model in the case of neglecting radiation in a flat universe ($\Omega_{\text{r},0} = 0, \Omega_{k,0} = 0$) for $\alpha = 1$. Therefore, we can rewrite \eqref{eq:modified-friedmann1} in the accelerated case as 
+\begin{align}
+    H^{2} - \biggl(\frac{c}{r_{\text{c}}} \biggr)^{2 - \alpha} H^{\alpha} = \frac{8 \pi G}{3} \rho
+\end{align}
+and can conclude with equation \eqref{eq:critical-density}, equation \eqref{eq:matter-density-scale} and the crossover scale expressed by (\cite[p.~3]{Dvali2003})
+\begin{align}
+    r_{\text{c}} = \frac{c}{H_{0}}(1 - \Omega_{\text{m},0})^{\frac{1}{\alpha - 2}}, 
+\end{align}
+the equation 
+\begin{align}
+    E^{2}(z) - (1 - \Omega_{\text{m},0}) E^{\alpha}(z) - \Omega_{\text{m},0} (1 + z)^3 = 0, \label{eq:dgp-friedmann-interpolation} 
+\end{align}
+where $E(z) = \frac{H(z)}{H_{0}}$ is the expansion function. \\
+
+\noindent The DGP-model refrains from introducing a cosmological constant. The free parameters of the DGP-model are therefore $\Omega_{\text{m},0}$ and $\alpha$.
+We consider in this thesis the DGP-model of a flat universe. The definition of the luminosity distance $d_{\text{L}}$ remains the same as in the $\Lambda$CDM-model (see equation \eqref{eq:luminosity-distance}). \\
+Since a deeper understanding of the mathematical formalism of the DGP-model and a detailed description of its phenomenological implications would go beyond the scope of this thesis, I recommend for further readings \cite{Lue2006}.
