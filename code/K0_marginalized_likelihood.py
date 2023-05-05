@@ -15,8 +15,7 @@ from numba import njit                                                      #   
 import numpy as np                                   #   for general scientific computation
 
 ### scipy package -- https://docs.scipy.org/doc/scipy/index.html ###
-# from scipy import constants as const                             #   for physical constants -- https://docs.scipy.org/doc/scipy/reference/constants.html
-from scipy.integrate import quad, dblquad, tplquad                 #   for integration -- https://docs.scipy.org/doc/scipy/tutorial/integrate.html
+from scipy.integrate import quad, dblquad                          #   for integration -- https://docs.scipy.org/doc/scipy/tutorial/integrate.html
 from scipy import optimize as opt                                  #   for optimization and fit -- https://docs.scipy.org/doc/scipy/reference/tutorial/optimize.html
 # from scipy import special as sp                                  #   for special mathematical functions -- https://docs.scipy.org/doc/scipy/reference/tutorial/special.html
 
@@ -110,7 +109,6 @@ def marginalized_likelihood(LIST_Omega_m0, redshifts, magnitudes, error_magnitud
 
 
 def find_best_fit_values(LIST_marginalized_likelihood):
-    # FIXME: There are some NaN's in the matrix...
     return np.nanargmax(LIST_marginalized_likelihood)
 
 

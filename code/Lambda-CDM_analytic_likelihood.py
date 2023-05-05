@@ -15,10 +15,8 @@ from numba import njit                                                      #   
 import numpy as np                                   #   for general scientific computation
 
 ### scipy package -- https://docs.scipy.org/doc/scipy/index.html ###
-# from scipy import constants as const                             #   for physical constants -- https://docs.scipy.org/doc/scipy/reference/constants.html
-from scipy.integrate import quad, dblquad, tplquad                 #   for integration -- https://docs.scipy.org/doc/scipy/tutorial/integrate.html
+from scipy.integrate import quad, dblquad                          #   for integration -- https://docs.scipy.org/doc/scipy/tutorial/integrate.html
 from scipy import optimize as opt                                  #   for optimization and fit -- https://docs.scipy.org/doc/scipy/reference/tutorial/optimize.html
-# from scipy import special as sp                                  #   for special mathematical functions -- https://docs.scipy.org/doc/scipy/reference/tutorial/special.html
 from scipy import stats                                            #   for chi2 -- https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.chi2.html#scipy.stats.chi2
 
 ### time package -- https://docs.python.org/3/library/time.html ###
@@ -28,15 +26,6 @@ plt.rcParams['text.usetex'] = True
 plt.rcParams.update({'font.size':16})
 # plt.rcParams['text.latex.preamble'] = r'''
 # '''
-
-# def timeit(func):
-#     def wrapper(*args, **kwargs):
-#         start = time.perf_counter()
-#         ret = func(*args, **kwargs)
-#         end = time.perf_counter()
-#         print(f"Time for {func.__name__}: {end - start} seconds")
-#         return ret
-#     return wrapper
 
 
 def timeit(message):
@@ -52,18 +41,20 @@ def timeit(message):
     return outer_wrapper
 
 
+# Cosmological functions #
+# ====================== #
 @njit
-def integrand(x, Omega_r0, Omega_m0, Omega_Lambda0):
-    if x == 0.0:
-        return 1.0
+def expansion_function(z, Omega_r0, Omega_m0, Omega_Lambda0):
     Omega_K0 = 1.0 - Omega_r0 - Omega_m0 - Omega_Lambda0
+    return np.sqrt(Omega_r0 * np.power(1.0 + z, 4) + Omega_m0 * np.power(1.0 + z, 3) + Omega_K0 * np.power(1.0 + z, 2) + Omega_Lambda0)
 
-    # define one_x := 1.0 + x and replace higher powers of it by recursive mulitiplications of one_x, since '**'-operator may be slow
-    one_x = 1.0 + x
-    one_x2 = one_x * one_x
-    one_x3 = one_x2 * one_x
-    one_x4 = one_x2 * one_x2
-    return 1.0/np.sqrt(Omega_r0*one_x4 + Omega_m0*one_x3 + Omega_K0*one_x2 + Omega_Lambda0)
+
+@njit
+def integrand(z, Omega_r0, Omega_m0, Omega_Lambda0):
+    if z == 0.0:
+        return 1.0
+    E = expansion_function(z, Omega_r0, Omega_m0, Omega_Lambda0)
+    return 1.0/E
 
 
 def integral(z, Omega_r0, Omega_m0, Omega_Lambda0):
@@ -71,48 +62,39 @@ def integral(z, Omega_r0, Omega_m0, Omega_Lambda0):
     return quad(integrand, 0.0, z, args=(Omega_r0, Omega_m0, Omega_Lambda0))[0]
 
 
-def distances(z, Omega_m0, Omega_Lambda0):
+def luminosity_distance(z, Omega_m0, Omega_Lambda0):
     # Cosmological Parameters
     # =======================
-    c = 299792.458
-    # h = 0.6736
-    # H_0 = h*100.0
-    H_0 = 1.0
-    Omega_r0 = 0.0
-    d_H = c/H_0
+    c = 299792.458           # speed of light in vacuum in km/s
+    # h = 0.6766               # Planck Collaboration 2018, Table 7, Planck+BAO -- https://www.aanda.org/articles/aa/full_html/2020/09/aa33880-18/T7.html
+    # H_0 = h*100.0            # hubble constant in km/s per Mpc
+    H_0 = 1.0                # dependence on hubble constant is set into the new_absolute_magnitude, see relative_magnitude(new_absolute_magnitude, new_luminosity_distance)
+    d_H = c/H_0              # hubble distance
+    Omega_r0 = 0.0           # assume no radiation
     # =======================
-    
-    I = np.array([integral(zi, Omega_r0, Omega_m0, Omega_Lambda0) for zi in z])
-    
-    Omega_K0 = 1.0 - Omega_r0 - Omega_m0 - Omega_Lambda0
-    # Omega_K0 = 0.0 
 
-    if Omega_K0 > 0.0:
-        transverse_comoving_distance = d_H * 1.0/np.sqrt(Omega_K0) * np.sinh(np.sqrt(Omega_K0) * I)
+    I = np.array([integral(zi, Omega_r0, Omega_m0, Omega_Lambda0) for zi in z])
+
+    Omega_K0 = 1.0 - Omega_r0 - Omega_m0 - Omega_Lambda0
+
+    if Omega_K0 < 0.0:
+        transverse_comoving_distance = d_H * 1.0/np.sqrt(abs(Omega_K0)) * np.sin(np.sqrt(abs(Omega_K0)) * I)
 
     elif Omega_K0 == 0.0:
         transverse_comoving_distance = d_H * I
 
-    elif Omega_K0 < 0.0:
-        transverse_comoving_distance = d_H * 1.0/np.sqrt(abs(Omega_K0)) * np.sin(np.sqrt(abs(Omega_K0)) * I)
+    elif Omega_K0 > 0.0:
+        transverse_comoving_distance = d_H * 1.0/np.sqrt(Omega_K0) * np.sinh(np.sqrt(Omega_K0) * I)
 
-    # angular_diameter_distance = 1.0/(1.0 + z)*transverse_comoving_distance
-    luminosity_distance = (1.0 + z) * transverse_comoving_distance
-
-    # return transverse_comoving_distance, angular_diameter_distance, luminosity_distance
-    return luminosity_distance
+    return (1.0 + z) * transverse_comoving_distance
 
 
 @njit
 def relative_magnitude(new_absolute_magnitude, new_luminosity_distance):
-    # # luminosity_distance per Mpc, absolute_magnitude is at 10 pc (therefore + 25.0 since 10 pc = 10**(-5.0) Mpc)
-    # return absolute_magnitude + 5.0*np.log10(luminosity_distance) + 25.0
-
-    # h = 0.6736
-    # H_0 = h*100.0
     # new_luminosity_distance := H_0 * luminosity_distance
-    # new_absolute_magnitude := old_absolute_magnitude - 5.0 * np.log10(H_0) + 25.0
-    return new_absolute_magnitude + 5.0 * np.log10(new_luminosity_distance) 
+    # new_absolute_magnitude := absolute_magnitude - 5.0 * np.log10(H_0) + 25.0
+    return new_absolute_magnitude + 5.0 * np.log10(new_luminosity_distance)
+# ====================== #
 
 
 @njit
@@ -129,7 +111,7 @@ def chi_square_analytic(magnitudes, error_magnitudes, relative_magnitudes):
 
 def likelihood(Omega_m0, Omega_Lambda0, redshifts, magnitudes, error_magnitudes, L0, zero_NaNs=False):
     new_absolute_magnitude = 0.0 
-    d_L = distances(redshifts, Omega_m0, Omega_Lambda0)
+    d_L = luminosity_distance(redshifts, Omega_m0, Omega_Lambda0)
     rel_mag = relative_magnitude(new_absolute_magnitude, d_L)
     chi_2 = chi_square_analytic(magnitudes, error_magnitudes, rel_mag)
     L = np.exp(-0.5 * chi_2)
@@ -172,9 +154,7 @@ def MATRIX_likelihood(Omega_m0, Omega_Lambda0, redshifts, magnitudes, error_magn
 
 
 def find_best_fit_values(Omega_m0, Omega_Lambda0, MATRIX_likelihood):
-    # FIXME: There are some NaN's in the matrix...
     return np.unravel_index(np.nanargmax(MATRIX_likelihood), MATRIX_likelihood.shape)
-    
     
 
 def gauss_curve(x, mu, sigma, y0):
@@ -187,12 +167,12 @@ def main():
     # Import data
     DATA_DIR = '../data/SN-data.txt'
     names, redshifts, magnitudes, error_magnitudes = np.loadtxt(DATA_DIR,
-                                                                comments="#",
+                                                                comments='#',
                                                                 usecols=(0, 1, 2, 3),
-                                                                dtype=np.dtype([("name", str),
-                                                                                ("redshift", float),
-                                                                                ("magnitude", float),
-                                                                                ("sigma", float)]),
+                                                                dtype=np.dtype([('name', str),
+                                                                                ('redshift', float),
+                                                                                ('magnitude', float),
+                                                                                ('sigma', float)]),
                                                                 unpack=True)
 
 
@@ -236,10 +216,8 @@ def main():
     #    sum_X0[i] = s
 
     # --- parameter guess for gauss fits p0_guess_X0 = [mu, sigma, y0] ---
-    # p0_guess_m0 = [0.25, 0.01, 1.0]
-    # p0_guess_Lambda0 = [0.7, 1.0, 1.0]
-    p0_guess_m0 = [Omega_m0_best, 0.01, 1.0]
-    p0_guess_Lambda0 = [Omega_Lambda0_best, 1.0, 1.0]
+    p0_guess_m0 = [Omega_m0_best, 0.1, 1.0]
+    p0_guess_Lambda0 = [Omega_Lambda0_best, 0.1, 1.0]
     
     # --- calculate parameters by using scipy optimize with defined gauss_curve ---
     # (_, sigma_m0, _), *_      = opt.curve_fit(gauss_curve, Omega_m0, sum_Omega_m0, p0_guess_m0)
@@ -286,16 +264,16 @@ def main():
     plt.plot(Omega_m0, sum_Omega_m0_gauss_fit, linestyle='--', color='tab:orange', label='fit')
     plt.xlabel('$\Omega_{m,0}$')
     plt.ylabel('$L(\Omega_{m,0}, \sum \Omega_{\Lambda,0})$')
-    plt.suptitle('$\\texttt{analytic_likelihood.py}$', fontsize=20)
+    plt.suptitle('$\\texttt{Lambda-CDM_analytic_likelihood.py}$', fontsize=20)
     plt.title('fit values: ($\mu_{{m,0}}, \sigma_{{m,0}}) = ({0:.2f},{1:.2f})$'.format(*popt_m0))
     plt.grid(True)
     plt.show()
 
     # --- save fig ---
-    # fig.savefig('../thesis/figures/plots/EPS/[analytic_likelihood]_Omega_m0_vs_likelihood_summed_Omega_Lambda0.eps', format = 'eps', bbox_inches = 'tight')
-    fig.savefig('../thesis/figures/plots/PNG/[analytic_likelihood]_Omega_m0_vs_likelihood_summed_Omega_Lambda0.png', format = 'png', bbox_inches = 'tight', dpi = 250)
-    # fig.savefig('../thesis/figures/plots/PDF/[analytic_likelihood]_Omega_m0_vs_likelihood_summed_Omega_Lambda0.pdf', format = 'pdf', bbox_inches = 'tight')
-    # tikzplotlib.save('../thesis/figures/tikz/[analytic_likelihood]_Omega_m0_vs_likelihood_summed_Omega_Lambda0.tex')
+    # fig.savefig('../thesis/figures/plots/EPS/[Lambda-CDM_analytic_likelihood]_Omega_m0_vs_likelihood_summed_Omega_Lambda0.eps', format = 'eps', bbox_inches = 'tight')
+    fig.savefig('../thesis/figures/plots/PNG/[Lambda-CDM_analytic_likelihood]_Omega_m0_vs_likelihood_summed_Omega_Lambda0.png', format = 'png', bbox_inches = 'tight', dpi = 250)
+    # fig.savefig('../thesis/figures/plots/PDF/[Lambda-CDM_analytic_likelihood]_Omega_m0_vs_likelihood_summed_Omega_Lambda0.pdf', format = 'pdf', bbox_inches = 'tight')
+    # tikzplotlib.save('../thesis/figures/tikz/[Lambda-CDM_analytic_likelihood]_Omega_m0_vs_likelihood_summed_Omega_Lambda0.tex')
 
     # --- fig ---
     fig = plt.figure()
@@ -305,16 +283,16 @@ def main():
     plt.plot(Omega_Lambda0, sum_Omega_Lambda0_gauss_fit, linestyle='--', color='tab:orange', label='fit')
     plt.xlabel('$\Omega_{\Lambda,0}$')
     plt.ylabel('$L(\sum \Omega_{m,0}, \Omega_{\Lambda,0})$')
-    plt.suptitle('$\\texttt{analytic_likelihood.py}$', fontsize=20)
+    plt.suptitle('$\\texttt{Lambda-CDM_analytic_likelihood.py}$', fontsize=20)
     plt.title('fit values: ($\mu_{{\Lambda,0}}, \sigma_{{\Lambda,0}}) = ({0:.2f},{1:.2f})$'.format(*popt_Lambda0))
     plt.grid(True)
     plt.show()
 
     # --- save fig ---
-    # fig.savefig('../thesis/figures/plots/EPS/[analytic_likelihood]_Omega_Lambda0_vs_likelihood_summed_Omega_m0.eps', format = 'eps', bbox_inches = 'tight')
-    fig.savefig('../thesis/figures/plots/PNG/[analytic_likelihood]_Omega_Lambda0_vs_likelihood_summed_Omega_m0.png', format = 'png', bbox_inches = 'tight', dpi = 250)
-    # fig.savefig('../thesis/figures/plots/PDF/[analytic_likelihood]_Omega_Lambda0_vs_likelihood_summed_Omega_m0.pdf', format = 'pdf', bbox_inches = 'tight')
-    # tikzplotlib.save('../thesis/figures/tikz/[analytic_likelihood]_Omega_Lambda0_vs_likelihood_summed_Omega_m0.tex')
+    # fig.savefig('../thesis/figures/plots/EPS/[Lambda-CDM_analytic_likelihood]_Omega_Lambda0_vs_likelihood_summed_Omega_m0.eps', format = 'eps', bbox_inches = 'tight')
+    fig.savefig('../thesis/figures/plots/PNG/[Lambda-CDM_analytic_likelihood]_Omega_Lambda0_vs_likelihood_summed_Omega_m0.png', format = 'png', bbox_inches = 'tight', dpi = 250)
+    # fig.savefig('../thesis/figures/plots/PDF/[Lambda-CDM_analytic_likelihood]_Omega_Lambda0_vs_likelihood_summed_Omega_m0.pdf', format = 'pdf', bbox_inches = 'tight')
+    # tikzplotlib.save('../thesis/figures/tikz/[Lambda-CDM_analytic_likelihood]_Omega_Lambda0_vs_likelihood_summed_Omega_m0.tex')
     # =======================================================================
 
 
@@ -328,26 +306,28 @@ def main():
     X, Y = np.meshgrid(Omega_m0, Omega_Lambda0)
 
     conf_int = [stats.chi2.cdf(s**2.0, 1) for s in range(1,5)]
-    lvls = [max_MATRIX_like * np.exp(-0.5 * stats.chi2.ppf(ci, 2)) for ci in conf_int].sort()
-    # lvl_labels = [f"${k}\sigma$".format(k) for k in reversed(range(1,5))]
+    lvls = [max_MATRIX_like * np.exp(-0.5 * stats.chi2.ppf(ci, 2)) for ci in conf_int]
+    lvls.sort()
+    # lvls = [stats.chi2.ppf(ci, 2) for ci in conf_int]
+    lvl_labels = [f'${k}\sigma$'.format(k) for k in reversed(range(1,5))]
 
     # --- plot 3D ---
     fig = plt.figure()
     ax = plt.axes(projection='3d')
 
     ax.plot_wireframe(X, Y, Z, edgecolor='blue', alpha=0.3)
-    ax.contourf(X, Y, Z, zdir='z', levels=lvls, offset=0, cmap='coolwarm')
+    ax.contour(X, Y, Z, zdir='z', levels=lvls, offset=0, cmap='coolwarm')
     ax.set(xlabel='$\Omega_{m,0}$', ylabel='$\Omega_{\Lambda,0}$', zlabel='$L(\Omega_{m,0}, \Omega_{\Lambda,0})$')
-    plt.suptitle('$\\texttt{analytic_likelihood.py}$', fontsize=20)
+    plt.suptitle('$\\texttt{Lambda-CDM_analytic_likelihood.py}$', fontsize=20)
     plt.title('best fit values: $(\Omega_{{m,0}}, \Omega_{{\Lambda,0}}) \pm (\sigma_{{m,0}}, \sigma_{{\Lambda,0}}) = ({0:.2f}, {1:.2f}) \pm ({2:.2f}, {3:.2f})$'.format(Omega_m0_best, Omega_Lambda0_best, sigma_m0, sigma_Lambda0))
     plt.grid(True)
     plt.show()
 
     # --- save fig ---
-    # fig.savefig('../thesis/figures/plots/EPS/[analytic_likelihood]_Omega_m0_vs_Omega_Lambda0_vs_likelihood.eps', format = 'eps', bbox_inches = 'tight')
-    fig.savefig('../thesis/figures/plots/PNG/[analytic_likelihood]_Omega_m0_vs_Omega_Lambda0_vs_likelihood.png', format = 'png', bbox_inches = 'tight', dpi = 250)
-    # fig.savefig('../thesis/figures/plots/PDF/[analytic_likelihood]_Omega_m0_vs_Omega_Lambda0_vs_likelihood.pdf', format = 'pdf', bbox_inches = 'tight')
-    # tikzplotlib.save('../thesis/figures/tikz/[analytic_likelihood]_Omega_m0_vs_Omega_Lambda0_vs_likelihood.tex')
+    # fig.savefig('../thesis/figures/plots/EPS/[Lambda-CDM_analytic_likelihood]_Omega_m0_vs_Omega_Lambda0_vs_likelihood.eps', format = 'eps', bbox_inches = 'tight')
+    fig.savefig('../thesis/figures/plots/PNG/[Lambda-CDM_analytic_likelihood]_Omega_m0_vs_Omega_Lambda0_vs_likelihood.png', format = 'png', bbox_inches = 'tight', dpi = 250)
+    # fig.savefig('../thesis/figures/plots/PDF/[Lambda-CDM_analytic_likelihood]_Omega_m0_vs_Omega_Lambda0_vs_likelihood.pdf', format = 'pdf', bbox_inches = 'tight')
+    # tikzplotlib.save('../thesis/figures/tikz/[Lambda-CDM_analytic_likelihood]_Omega_m0_vs_Omega_Lambda0_vs_likelihood.tex')
 
 
     # --- plot 2D contour ---
@@ -355,24 +335,24 @@ def main():
 
     CP = ax.contour(X, Y, Z, levels=lvls, cmap='coolwarm')
     
-    # fmt = {}
-    # for l, s in zip(CP.levels, lvl_labels):
-    #     fmt[l] = s
+    fmt = {}
+    for l, s in zip(CP.levels, lvl_labels):
+        fmt[l] = s
 
-    # ax.clabel(CP, inline=True, fmt=fmt)
+    ax.clabel(CP, inline=True, fmt=fmt)
 
     plt.xlabel('$\Omega_{m,0}$')
     plt.ylabel('$\Omega_{\Lambda,0}$')
-    plt.suptitle('$\\texttt{analytic_likelihood.py}$', fontsize=20)
+    plt.suptitle('$\\texttt{Lambda-CDM_analytic_likelihood.py}$', fontsize=20)
     plt.title('best fit values: $(\Omega_{{m,0}}, \Omega_{{\Lambda,0}}) \pm (\sigma_{{m,0}}, \sigma_{{\Lambda,0}}) = ({0:.2f}, {1:.2f}) \pm ({2:.2f}, {3:.2f})$'.format(Omega_m0_best, Omega_Lambda0_best, sigma_m0, sigma_Lambda0))
     plt.grid(True)
     plt.show()
 
     # --- save fig ---
-    # fig.savefig('../thesis/figures/plots/EPS/[analytic_likelihood]_Omega_m0_vs_Omega_Lambda0.eps', format = 'eps', bbox_inches = 'tight')
-    fig.savefig('../thesis/figures/plots/PNG/[analytic_likelihood]_Omega_m0_vs_Omega_Lambda0.png', format = 'png', bbox_inches = 'tight', dpi = 250)
-    # fig.savefig('../thesis/figures/plots/PDF/[analytic_likelihood]_Omega_m0_vs_Omega_Lambda0.pdf', format = 'pdf', bbox_inches = 'tight')
-    # tikzplotlib.save('../thesis/figures/tikz/[analytic_likelihood]_Omega_m0_vs_Omega_Lambda0.tex')
+    # fig.savefig('../thesis/figures/plots/EPS/[Lambda-CDM_analytic_likelihood]_Omega_m0_vs_Omega_Lambda0.eps', format = 'eps', bbox_inches = 'tight')
+    fig.savefig('../thesis/figures/plots/PNG/[Lambda-CDM_analytic_likelihood]_Omega_m0_vs_Omega_Lambda0.png', format = 'png', bbox_inches = 'tight', dpi = 250)
+    # fig.savefig('../thesis/figures/plots/PDF/[Lambda-CDM_analytic_likelihood]_Omega_m0_vs_Omega_Lambda0.pdf', format = 'pdf', bbox_inches = 'tight')
+    # tikzplotlib.save('../thesis/figures/tikz/[Lambda-CDM_analytic_likelihood]_Omega_m0_vs_Omega_Lambda0.tex')
     # ======================================================
 
 

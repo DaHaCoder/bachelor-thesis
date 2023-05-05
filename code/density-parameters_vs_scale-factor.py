@@ -7,6 +7,7 @@ import numpy as np                                   #   for general scientific 
 ### tizplotlib package -- https://github.com/nschloe/tikzplotlib ###
 import tikzplotlib                                                 #    to save plots as .tex-file with tikz
 
+plt.rcParams['font.family']='serif'
 plt.rcParams['text.usetex'] = True
 plt.rcParams['text.latex.preamble'] = r'''
 \usepackage{physics}

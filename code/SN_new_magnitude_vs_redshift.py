@@ -7,7 +7,7 @@ import numpy as np                      #   for general scientific computation
 ### scipy package -- https://docs.scipy.org/doc/scipy/index.html ###
 # from scipy import constants as const    #   for physical constants -- https://docs.scipy.org/doc/scipy/reference/constants.html 
 from scipy.integrate import quad          #   for integration -- https://docs.scipy.org/doc/scipy/tutorial/integrate.html
-# from scipy import optimize as opt       #   for optimization and fit -- https://docs.scipy.org/doc/scipy/reference/tutorial/optimize.html
+import scipy.optimize                     #   for optimization and fit -- https://docs.scipy.org/doc/scipy/reference/tutorial/optimize.html
 # from scipy import special as sp         #   for special mathematical functions -- https://docs.scipy.org/doc/scipy/reference/tutorial/special.html
 
 plt.rcParams['text.usetex'] = True
@@ -15,25 +15,39 @@ plt.rcParams['text.usetex'] = True
 # '''
 
 
-def integrand(x, Omega_r0, Omega_m0, Omega_Lambda0):
-    if x == 0.0:
-        return 1.0
+def fsolve_func(e: float, x: float, Omega_r0: float, Omega_m0: float, Omega_Lambda0: float) -> float:
     Omega_K0 = 1.0 - Omega_r0 - Omega_m0 - Omega_Lambda0
-
-    # define one_x := 1.0 + x and replace higher powers of it by recursive multiplication of one_x, since '**'-operator may be slow
-    one_x = 1.0 + x
-    one_x2 = one_x * one_x
-    one_x3 = one_x2 * one_x
-    one_x4 = one_x2 * one_x2
-    return 1.0/np.sqrt(Omega_r0*one_x4 + Omega_m0*one_x3 + Omega_K0*one_x2 + Omega_Lambda0)
+    
+    return e * e - Omega_r0 * np.power(1.0 + x, 4) - Omega_m0 * np.power(1.0 + x, 3) - Omega_K0 * np.power(1.0 + x, 2) - Omega_Lambda0
 
 
-def integral(z, Omega_r0, Omega_m0, Omega_Lambda0):
-    # d_C/d_H = Integrate[1/E(z'), {z',0,z}]
+def fsolve_jac(e: float, _: float, Omega_r0: float, Omega_m0: float,  Omega_Lambda0:float) -> float:
+    return 2.0 * e
+
+
+def integrand(z: float, Omega_r0: float, Omega_m0: float, Omega_Lambda0: float) -> float:
+    e, *_ = scipy.optimize.fsolve(fsolve_func, 1.0, args=(z, Omega_r0, Omega_m0, Omega_Lambda0), fprime=fsolve_jac)
+    return 1.0/e
+
+
+def new_integral(z, Omega_r0, Omega_m0, Omega_Lambda0):
     return quad(integrand, 0.0, z, args=(Omega_r0, Omega_m0, Omega_Lambda0))[0]
 
+# def integrand(x, Omega_r0, Omega_m0, Omega_Lambda0):
+#     if x == 0.0:
+#         return 1.0
+    
+#     Omega_K0 = 1.0 - Omega_r0 - Omega_m0 - Omega_Lambda0
+    
+#     return 1.0/np.sqrt(Omega_r0 * np.power(1.0 + x, 4) + Omega_m0 * np.power(1.0 + x, 3) + Omega_K0 * np.power(1.0 + x, 2) + Omega_Lambda0)
 
-def distances(z, Omega_r0, Omega_m0, Omega_Lambda0):
+
+# def integral(z, Omega_r0, Omega_m0, Omega_Lambda0):
+#     # d_C/d_H = Integrate[1/E(z'), {z',0,z}]
+#     return quad(integrand, 0.0, z, args=(Omega_r0, Omega_m0, Omega_Lambda0))[0]
+
+
+def Lambda_CDM_luminosity_distance(z, Omega_r0, Omega_m0, Omega_Lambda0):
     # Cosmological Parameters
     # =======================
     c = 299792.458
@@ -42,7 +56,8 @@ def distances(z, Omega_r0, Omega_m0, Omega_Lambda0):
     d_H = c/H_0
     # =======================
 
-    I = np.array([integral(zi, Omega_r0, Omega_m0, Omega_Lambda0) for zi in z])
+    # I = np.array([integral(zi, Omega_r0, Omega_m0, Omega_Lambda0) for zi in z])
+    I = np.array([new_integral(zi, Omega_r0, Omega_m0, Omega_Lambda0) for zi in z])
 
     Omega_K0 = 1.0 - Omega_r0 - Omega_m0 - Omega_Lambda0
     if Omega_K0 > 0.0:
@@ -54,15 +69,14 @@ def distances(z, Omega_r0, Omega_m0, Omega_Lambda0):
     elif Omega_K0 < 0.0:
         transverse_comoving_distance = d_H*1.0/np.sqrt(abs(Omega_K0))*np.sin(np.sqrt(abs(Omega_K0))*I)
 
-    angular_diameter_distance = 1/(1.0 + z)*transverse_comoving_distance
-    luminosity_distance = (1.0 + z)*transverse_comoving_distance
-
-    # return transverse_comoving_distance, angular_diameter_distance, luminosity_distance
-    return luminosity_distance
+    return (1.0 + z) * transverse_comoving_distance
 
 def relative_magnitude(absolute_magnitude, luminosity_distance):
-    # luminosity_distance per Mpc, absolute_magnitude is at 10 pc (therefore + 25.0 since 10 pc = 10**(-5.0) Mpc)
+    # luminosity_distance per Mpc, absolute_magnitude is at 10 pc (therefor + 25.0 since 10 pc = 10**(-5.0) Mpc)
     return absolute_magnitude + 5.0*np.log10(luminosity_distance) + 25.0
+    # h = 0.6736
+    # H_0 = h*100.0
+    # return absolute_magnitude + 5.0*np.log10(H_0*luminosity_distance) + 25.0 
 
 
 def main():    
@@ -148,10 +162,10 @@ def main():
    
     plt.show()
 
-    # fig.savefig('../thesis/figures/plots/EPS/SN_magnitude_vs_redshift.eps', format = 'eps', bbox_inches = 'tight')
-    fig.savefig('../thesis/figures/plots/PNG/SN_magnitude_vs_redshift.png', format = 'png', bbox_inches = 'tight', dpi = 250)
-    # fig.savefig('../thesis/figures/plots/PDF/SN_magnitude_vs_redshift.pdf', format = 'pdf', bbox_inches = 'tight')
-    # tikzplotlib.save('../thesis/figures/tikz/SN_magnitude_vs_redshift.tex')
+    # fig.savefig('../thesis/figures/plots/EPS/SN_new_magnitude_vs_redshift.eps', format = 'eps', bbox_inches = 'tight')
+    fig.savefig('../thesis/figures/plots/PNG/SN_new_magnitude_vs_redshift.png', format = 'png', bbox_inches = 'tight', dpi = 250)
+    # fig.savefig('../thesis/figures/plots/PDF/SN_new_magnitude_vs_redshift.pdf', format = 'pdf', bbox_inches = 'tight')
+    # tikzplotlib.save('../thesis/figures/tikz/SN_new_magnitude_vs_redshift.tex')
 
 if __name__ == "__main__":
     main()

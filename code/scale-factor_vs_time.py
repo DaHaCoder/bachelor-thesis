@@ -7,6 +7,7 @@ import numpy as np                                   #   for general scientific 
 ### scipy package -- https://docs.scipy.org/doc/scipy/index.html ###
 from scipy.integrate import quad                                   #   for integration -- https://docs.scipy.org/doc/scipy/tutorial/integrate.html
 
+plt.rcParams['font.family'] = 'serif'
 plt.rcParams['text.usetex'] = True
 plt.rcParams['text.latex.preamble'] = r'''
 \usepackage{physics}
@@ -48,7 +49,7 @@ def main():
     time_only_matter = np.array([integral(ai, Omega_r0, Omega_m0, Omega_Lambda0) for ai in a])
     age_only_matter = integral(a0, Omega_r0, Omega_m0, Omega_Lambda0)
 
-    plt.plot(time_only_matter, a, color='blue', label='$(\\Omega_{{\\text{{m}},0}}, \\Omega_{{\\Lambda,0}}, t_{{0}}/t_{{\\text{{H}}}}) = ({0:.1f}, {1:.1f}, {2:.2f})$ (Einstein-de-Sitter)'.format(Omega_m0, Omega_Lambda0, age_only_matter))
+    plt.plot(time_only_matter, a, color='blue', label='$(\\Omega_{{\\text{{m}},0}}, \\Omega_{{\\Lambda,0}}, t_{{0}}/t_{{\\text{{H}}}}) = ({0:.1f}, {1:.1f}, {2:.2f})$ (Einstein--de--Sitter)'.format(Omega_m0, Omega_Lambda0, age_only_matter))
     plt.vlines(age_only_matter, ymin=0.0, ymax=a0, color='blue', alpha=0.5, linestyle='--')
     plt.hlines(a0, xmin=0.0, xmax=age_only_matter, color='grey', linestyle='--')
     # -----------------------------------------
@@ -80,7 +81,7 @@ def main():
     time_today = np.array([integral(ai, Omega_r0, Omega_m0, Omega_Lambda0) for ai in a])
     age_today = integral(a0, Omega_r0, Omega_m0, Omega_Lambda0)
 
-    plt.plot(time_today, a, color='red', label='$(\\Omega_{{\\text{{m}},0}}, \\Omega_{{\\Lambda,0}}, t_{{0}}/t_{{\\text{{H}}}}) = ({0:.1f}, {1:.1f}, {2:.2f})$ ($\\approx$ todays values)'.format(Omega_m0, Omega_Lambda0, age_today))
+    plt.plot(time_today, a, color='red', label="$(\\Omega_{{\\text{{m}},0}}, \\Omega_{{\\Lambda,0}}, t_{{0}}/t_{{\\text{{H}}}}) = ({0:.1f}, {1:.1f}, {2:.2f})$ ($\\approx$ today's values)".format(Omega_m0, Omega_Lambda0, age_today))
     plt.vlines(age_today, ymin=0.0, ymax=a0, color='red', alpha=0.5, linestyle='--')
     plt.hlines(a0, xmin=0.0, xmax=age_today, color='grey', linestyle='--')
     # -------------

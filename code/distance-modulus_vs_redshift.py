@@ -11,9 +11,8 @@ import numpy as np                                   #   for general scientific 
 from scipy.integrate import quad                                   #   for integration -- https://docs.scipy.org/doc/scipy/tutorial/integrate.html
 from scipy import optimize as opt                                  #   for optimization and fit -- https://docs.scipy.org/doc/scipy/reference/tutorial/optimize.html
 
-
+plt.rcParams['font.family'] = 'serif'
 plt.rcParams['text.usetex'] = True
-#plt.rcParams.update({'font.size':16})
 plt.rcParams['text.latex.preamble'] = r'''
 \usepackage{physics}
 '''
@@ -159,7 +158,7 @@ def main():
     d_L = luminosity_distance(z, Omega_m0, Omega_Lambda0)
     m = relative_magnitude(0.0, d_L)
 
-    plt.plot(z, m, color='blue', label='$(\\Omega_{{\\text{{m}},0}}, \\Omega_{{\\Lambda,0}}) = ({0:.1f}, {1:.1f})$ (Einstein-de-Sitter)'.format(Omega_m0, Omega_Lambda0))
+    plt.plot(z, m, color='blue', label='$(\\Omega_{{\\text{{m}},0}}, \\Omega_{{\\Lambda,0}}) = ({0:.1f}, {1:.1f})$ (Einstein--de--Sitter)'.format(Omega_m0, Omega_Lambda0))
     # -----------------------------------------
    
     # Lambda-CDM Model

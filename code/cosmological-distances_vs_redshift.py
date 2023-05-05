@@ -7,6 +7,7 @@ import numpy as np                                   #   for general scientific 
 ### scipy package -- https://docs.scipy.org/doc/scipy/index.html ###
 from scipy.integrate import quad                                   #   for integration -- https://docs.scipy.org/doc/scipy/tutorial/integrate.html
 
+plt.rcParams['font.family'] = 'serif'
 plt.rcParams['text.usetex'] = True
 plt.rcParams['text.latex.preamble'] = r'''
 \usepackage{physics}
