@@ -58,13 +58,9 @@
 \usepackage{footnotebackref}                        %   for hyperlinks of footnotes -- https://www.ctan.org/pkg/footnotebackref
 \usepackage{hyperref}                               %   for highlighting/reference of links, i.e. websites -- https://www.ctan.org/pkg/hyperref
 \usepackage{listings}                               %   for typesetting code -- https://www.ctan.org/pkg/listings
-%\usepackage{minted}                                 %   for highlighting code -- https://www.ctan.org/pkg/minted
+% \usepackage{minted}                                 %   for highlighting code -- https://www.ctan.org/pkg/minted
 %\usepackage{pythonhighlight}                        %   for highlighting python code -- https://www.ctan.org/pkg/pythonhighlight
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-
-\usepackage{blindtext}
-\newcommand{\bt}{\blindtext}
 
 
 %%%%%%%%%%%%%%%%%%%%
@@ -91,8 +87,8 @@
   \ThisStyle{\outline{$\mathbf{\SavedStyle#2}$}}
 }
 % -- own command for theoremstyle, see amsthm -- %
-\theoremstyle{plain}                             %
-\newtheorem{definition}{Definition}              %
+%\theoremstyle{plain}                             %
+%\newtheorem{definition}{Definition}              %
 %%%%%%%%%%%%%%%%%%%%%
 
 
@@ -113,20 +109,20 @@
 \newcommand*{\getSupervisorTwo}{Dr. Steffen Hagstotz}
 % \newcommand*{\getExamDate}{Date of final exam}
 % -- english -- %
-\newcommand{\getTitleEN}{Estimation of Cosmological Parameters in $\Lambda$CDM- and DGP-Model using Supernovae Type Ia Data}
-\newcommand{\getSubtitleEN}{maybe with some subtitle}
+\newcommand{\getTitleEN}{Estimation of Cosmological Parameters in $\Lambda$CDM- and DGP-Model Using Supernovae Type Ia Data}
+%\newcommand{\getSubtitleEN}{maybe with some subtitle}
 \newcommand*{\getPrintLocationEN}{Munich}
 \newcommand*{\getPrintYearEN}{\the\year}
-\newcommand*{\getPlaceOfBirthEN}{Gifhorn}
-\newcommand*{\getSubmissionDateEN}{02.05.2023}
+%\newcommand*{\getPlaceOfBirthEN}{}
+\newcommand*{\getSubmissionDateEN}{01.06.2023}
 \newcommand*{\langEN}{en-US}
 % -- german -- %
 \newcommand{\getTitleDE}{Abschätzung kosmologischer Parameter im $\Lambda$CDM- und DGP-Modell anhand von Supernovae Typ Ia Daten}
-\newcommand{\getSubtitleDE}{maybe with some subtitle}
+%\newcommand{\getSubtitleDE}{maybe with some subtitle}
 \newcommand*{\getPrintLocationDE}{München} 
 \newcommand*{\getPrintYearDE}{\the\year}
-\newcommand*{\getPlaceOfBirthDE}{Gifhorn}
-\newcommand*{\getSubmissionDateDE}{02.05.2023}
+%\newcommand*{\getPlaceOfBirthDE}{}
+\newcommand*{\getSubmissionDateDE}{01.06.2023}
 %\newcommand*{\langDE}{de}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -168,7 +164,7 @@
 
 %%% COMMAND FOR EMPTY PAGE %%%
 % source: https://tex.stackexchange.com/questions/34934/add-a-new-empty-page
-%\newcommand*\NewPage{\newpage\null\thispagestyle{empty}\newpage}
+\newcommand*\NewPage{\newpage\null\thispagestyle{empty}\newpage}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%% XCOLOR COMMAND %%%
@@ -179,7 +175,7 @@
 %\newcommand{\cyan}[1]{\textcolor{cyan}{#1}}
 %\newcommand{\purple}[1]{\textcolor{red!75!blue}{#1}}
 %\newcommand{\orange}[1]{\textcolor{orange}{#1}}
-%\newcommand{\grey}[1]{\textcolor{white!50!black}{#1}}
+%\newcommand{\gray}[1]{\textcolor{white!50!black}{#1}}
 %%%%%%%%%%%%%%%%%%%%%%%
 
 
@@ -262,26 +258,40 @@
 %%%%%%%%%%%%%%%%%%%
 
 %%% LISTINGS SETUP %%%
- \definecolor{mygreen}{rgb}{0,0.6,0}
- \definecolor{mygrey}{rgb}{0.8,0.8,0.8}
- \definecolor{mymauve}{rgb}{0.58,0,0.82}
+\definecolor{backcolor}{HTML}{E3E6E8}
+% \definecolor{codebasic}{HTML}{000000}
 
- \lstset{ %
-   backgroundcolor=\color{mygrey},       % choose the background color
-   basicstyle=\ttfamily,                 % size of fonts used for the code
-   breaklines=true,                      % automatic line breaking only at whitespace
-   captionpos=b,                         % sets the caption-position to bottom
-   commentstyle=\color{mygreen},         % comment style
-   escapeinside={\%*}{*)},               % if you want to add LaTeX within your code
-   keywordstyle=\color{blue},            % keyword style
-   numbers=left,                         % alignment of numbers
-   numberstyle={\small \color{black}},    % number style
-   numbersep=9pt,                        % this defines how far the numbers are from the text
-   stepnumber=1,
-   stringstyle=\color{mymauve}           % string literal style
- }
+% \definecolor{codered}{HTML}{FF007F}
+% \definecolor{codegreen}{HTML}{00FF7F}
+% \definecolor{codeblue}{HTML}{007FFF}
+% \definecolor{codecyan}{HTML}{10BCEB}
+\definecolor{codepurple}{HTML}{7F00FF}
+% \definecolor{codelightpurple}{HTML}{7F77FF}
+% \definecolor{codeyellow}{HTML}{FFFF00}
+% \definecolor{codelightyellow}{HTML}{FFF777}
+
+\definecolor{codegray}{HTML}{5A7296}
+
+\lstset{
+    backgroundcolor=\color{backcolor},   
+    basicstyle=\ttfamily\footnotesize,
+    keywordstyle=\color{codepurple},
+    stringstyle=\color{codered},
+    commentstyle=\color{codegray},
+    numberstyle=\tiny\color{codegray},
+    escapeinside={\%*}{*)},               % if you want to add LaTeX within your code
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
 %%%%%%%%%%%%%%%%%%%%%
-
 
 
 

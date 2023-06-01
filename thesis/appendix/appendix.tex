@@ -1,32 +1,29 @@
 \begin{appendix}
 
-\chapter{SN Ia Union2.1 Data}
-\label{app:sn-ia-union2.1-data}
+\chapter{Dataset and Source Codes}
+\label{app:dataset-and-source-codes}
 \thispagestyle{empty}
 
-The dataset used here is a reduced version of the full SN Ia ``Union2.1'' dataset. \\
-Download: \href{https://supernova.lbl.gov/Union/figures/SCPUnion2.1\_mu\_vs\_z.txt}{https://supernova.lbl.gov/Union/figures/SCPUnion2.1\_mu\_vs\_z.txt} \\
-The full table of all supernovae contains additional data like B-band magnitude, stretch or color. \\
-Description: \href{https://supernova.lbl.gov/Union/descriptions.html\#FullTable}{https://supernova.lbl.gov/Union/descriptions.html\#FullTable} \\
-Download full table as \texttt{.tex}-file: \href{https://supernova.lbl.gov/Union/figures/SCPUnion2.1\_AllSNe.tex}{https://supernova.lbl.gov/Union/figures/SCPUnion2.1\_AllSNe.tex}
+The dataset used in this thesis is a reduced version of the full SN Ia ``Union2.1'' dataset.\footnote{Download the dataset used in this thesis: \href{https://supernova.lbl.gov/Union/figures/SCPUnion2.1\_mu\_vs\_z.txt}{https://supernova.lbl.gov/Union/figures/SCPUnion2.1\_mu\_vs\_z.txt}} \\
+The full table of all supernovae contains additional data like B-band magnitude, stretch or color.\footnote{Description of the full table: \href{https://supernova.lbl.gov/Union/descriptions.html\#FullTable}{https://supernova.lbl.gov/Union/descriptions.html\#FullTable}}\footnote{Download full table as \texttt{.tex}-file: \href{https://supernova.lbl.gov/Union/figures/SCPUnion2.1\_AllSNe.tex}{https://supernova.lbl.gov/Union/figures/SCPUnion2.1\_AllSNe.tex}} \\
 
-
-Here is the first appendix.
-
-
-\chapter{Source Codes}
-\label{app:source-codes}
-\thispagestyle{empty}
-
-All source codes that I wrote to produce the plots are open-source and available at the GitHub repository of this thesis: \href{https://github.com/DaHaCoder/bachelor-thesis/tree/main/code}{https://github.com/DaHaCoder/bachelor-thesis/tree/main/code}. \\
-Here is the list of the source code that correspond to following figures:
+\noindent All source codes that I wrote to produce the plots are open-source and available at the GitHub repository of this thesis.\footnote{GitHub repository of this thesis: \href{ https://github.com/DaHaCoder/bachelor-thesis}{https://github.com/DaHaCoder/bachelor-thesis}} \\
+Here is the list of the source code that correspond to following Figures:
 
 \begin{itemize}
-    \item Figure \ref{fig:density-parameters-vs-scale-factor}: \href{https://github.com/DaHaCoder/bachelor-thesis/blob/main/code/density-parameters\_vs\_scale-factor.py}{\lstinline{density-parameters\_vs\_scale-factor.py}}
-    \item Figure \ref{fig:scale-factor-vs-time}: \href{https://github.com/DaHaCoder/bachelor-thesis/blob/main/code/scale-factor\_vs\_time.py}{\lstinline{scale-factor\_vs\_time.py}}
-    \item Figure \ref{fig:cosmological-distances-vs-redshift}: \href{https://github.com/DaHaCoder/bachelor-thesis/blob/main/code/cosmological-distances\_vs\_redshift.py}{\lstinline{cosmological-distances\_vs\_redshift.py}}
-    \item Figure \ref{fig:distance-modulus-vs-redshift}: \href{https://github.com/DaHaCoder/bachelor-thesis/blob/main/code/distance-modulus\_vs\_redshift.py}{\lstinline{distance-modulus\_vs\_redshift.py}}
+    \item Figure \ref{fig:parallax}: \href{https://github.com/DaHaCoder/bachelor-thesis/blob/main/thesis/figures/tikz/parallax/parallax.tex}{\lstinline{parallax.tex}}
+    \item Figure \ref{fig:homogeneous-isotropic}: \href{https://github.com/DaHaCoder/bachelor-thesis/blob/main/thesis/figures/tikz/homogeneous-isotropic/homogeneous-isotropic.tex}{\lstinline{homogeneous-isotropic.tex}}
+    \item Figure \ref{fig:scale-factor-vs-density-parameters}: \href{https://github.com/DaHaCoder/bachelor-thesis/blob/main/code/scale-factor-vs-density-parameters.py}{\lstinline{scale-factor-vs-density-parameters.py}}
+    \item Figure \ref{fig:time-vs-scale-factor}: \href{https://github.com/DaHaCoder/bachelor-thesis/blob/main/code/time-vs-scale-factor.py}{\lstinline{time-vs-scale-factor.py}}
+    \item Figure \ref{fig:redshift-vs-cosmological-distances}: \href{https://github.com/DaHaCoder/bachelor-thesis/blob/main/code/redshift-vs-cosmological-distances.py}{\lstinline{redshift-vs-cosmological-distances.py}}
+    \item Figure \ref{fig:redshift-vs-distance-modulus}: \href{https://github.com/DaHaCoder/bachelor-thesis/blob/main/code/redshift-vs-distance-modulus.py}{\lstinline{redshift-vs-distance-modulus.py}}
+    \item Figure \ref{fig:MWE-analytic-chi2}: \href{https://github.com/DaHaCoder/bachelor-thesis/blob/main/code/MWE-analytic-chi2.py}{\lstinline{MWE-analytic-chi2.py}}
+    \item Figure \ref{fig:MWE-analytic-likelihood-L0-1}, Figure \ref{fig:MWE-analytic-likelihood}: \href{https://github.com/DaHaCoder/bachelor-thesis/blob/main/code/MWE-analytic-likelihood.py}{\lstinline{MWE-analytic-likelihood.py}}
+    \item Figure \ref{fig:MWE-likelihood_mod-absolute-magnitude-vs-likelihood-at-Omega-m0-best}, Figure \ref{fig:MWE-likelihood_mod-absolute-magnitude-vs-Omega-m0-vs-likelihood}: \href{https://github.com/DaHaCoder/bachelor-thesis/blob/main/code/MWE-likelihood.py}{\lstinline{MWE-likelihood.py}}
+    \item Figure \ref{fig:MWE-marginalized-likelihood}: \href{https://github.com/DaHaCoder/bachelor-thesis/blob/main/code/MWE-marginalized-likelihood.py}{\lstinline{MWE-marginalized-likelihood.py}}
+    \item Figure \ref{fig:Lambda-CDM-analytic-chi2_Omega-m0-vs-Omega-Lambda0-vs-chi2}, Figure \ref{fig:Lambda-CDM-analytic-chi2_Omega-m0-vs-chi2-at-Omega-Lambda0-best}, Figure \ref{fig:Lambda-CDM-analytic-chi2_Omega-Lambda0-vs-chi2-at-Omega-m0-best}, Figure \ref{fig:Lambda-CDM-analytic-chi2_Omega-m0-vs-Omega-Lambda0}: \href{https://github.com/DaHaCoder/bachelor-thesis/blob/main/code/Lambda-CDM-analytic-chi2.py}{\lstinline{Lambda-CDM-analytic-chi2.py}}
+    \item Figure \ref{fig:Lambda-CDM-analytic-likelihood_Omega-m0-vs-Omega-Lambda0-vs-likelihood}, Figure \ref{fig:Lambda-CDM-analytic-likelihood_Omega-m0-vs-likelihood-summed-Omega-Lambda0}, Figure \ref{fig:Lambda-CDM-analytic-likelihood_Omega-Lambda0-vs-likelihood-summed-Omega-m0}, Figure \ref{fig:Lambda-CDM-analytic-likelihood_Omega-m0-vs-Omega-Lambda0}: \href{https://github.com/DaHaCoder/bachelor-thesis/blob/main/code/Lambda-CDM-analytic-likelihood.py}{\lstinline{Lambda-CDM-analytic-likelihood.py}}
+    \item Figure \ref{fig:DGP-analytic-chi2_Omega-m0-vs-chi2-at-alpha-best}, Figure \ref{fig:DGP-analytic-chi2_alpha-vs-chi2-at-Omega-m0-best}, Figure \ref{fig:DGP-analytic-chi2_Omega-m0-vs-alpha-vs-chi2}, Figure \ref{fig:DGP-analytic-chi2_Omega-m0-vs-alpha-full}, Figure \ref{fig:DGP-analytic-chi2_Omega-m0-vs-alpha-0-2}: \href{https://github.com/DaHaCoder/bachelor-thesis/blob/main/code/DGP-analytic-chi2.py}{\lstinline{DGP-analytic-chi2.py}}
 \end{itemize}
-
 
 \end{appendix}

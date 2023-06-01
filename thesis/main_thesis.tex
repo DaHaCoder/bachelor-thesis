@@ -27,9 +27,7 @@
 \thispagestyle{empty}
 
 %%% ACKNOWLEDGEMENT
-% \include{pages/danksagung}
 \include{pages/acknowledgement}
-\thispagestyle{empty}
 
 %%% MEMORY
 \include{pages/memory}
@@ -37,11 +35,11 @@
 
 %%% NOTATION AND CONVENTIONS
 \include{pages/notation-and-conventions}
-\thispagestyle{empty}
+%\thispagestyle{empty}
 
 %%% ABSTRACT
 \include{pages/abstract}
-\thispagestyle{empty}
+%\thispagestyle{empty}
 
 %%% TABLE OF CONTENT
 \pdfbookmark{\contentsname}{Contents}
@@ -73,7 +71,6 @@
 %%% APPENDIX
 \include{appendix/appendix}
 
-
 %%%%%%%%%%%%%%%%%%%
 %%% BACK MATTER %%%
 %%% =========== %%%
@@ -81,9 +78,12 @@
 \backmatter
 
 %%% BIBLIOGRAPHY
+\sloppy
 \nocite{*}
 \phantomsection\addcontentsline{toc}{chapter}{Bibliography}
 \printbibliography
+\fussy
+\thispagestyle{empty}
 
 %%% LIST OF FIGURES
 % \listoffigures
@@ -91,13 +91,10 @@
 %%% LIST OF TABLES
 % \listoftables
 
-% \NewPage
-% \NewPage
-
 %%% DECLARATION OF AUTHORSHIP 
-\include{pages/declaration-of-authorship}
+\include{pages/declaration-of-authorship_de}
+\thispagestyle{empty}
+\include{pages/declaration-of-authorship_en}
 
-% \NewPage
-% \NewPage
 
 \end{document}
