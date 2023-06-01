@@ -13,12 +13,12 @@ Let us now compare the $\Lambda$CDM- and DGP-model. To do this, we will consider
 \begin{figure}[H]
    \centering
    \includegraphics[scale=0.97]{figures/plots/PDF/redshift-vs-distance-modulus.pdf}
-   \caption{Distance modulus $m - M$ against redshift $z$ for Einstein--de--Sitter-Model $(\Omega_{\text{m},0}, \Omega_{\Lambda,0}) = (1.0, 0.0)$, the $\Lambda$CDM-model with $(\Omega_{\text{m},0}, \Omega_{\Lambda,0}) = (0.3, 0.7)$ and DGP-model with $(\Omega_{\text{m},0}, \alpha) = (0.3, 1.0)$.\\}
+   \caption{Distance modulus $m - M$ against redshift $z$ for Einstein--de--Sitter-model $(\Omega_{\text{m},0}, \Omega_{\Lambda,0}) = (1.0, 0.0)$, the $\Lambda$CDM-model with $(\Omega_{\text{m},0}, \Omega_{\Lambda,0}) = (0.3, 0.7)$ and DGP-model with $(\Omega_{\text{m},0}, \alpha) = (0.3, 1.0)$.\\}
    \label{fig:redshift-vs-distance-modulus}
 \end{figure}
 
 \noindent At first sight, we see that a universe that contains only matter (Einstein--de--Sitter-model) cannot match the data, especially for high redshifts. \\
-Further, we can conclude that the data points at high redshift ($z \gtrsim 0.8$) have a greater influence on the fit for the estimated parameters, since there is no significant fluctuation of data points at low redshifts. \\
+Further, we can conclude that the data points at high redshift ($z \gtrsim 0.8$) have a greater influence on the fit for the estimated parameters, since there is no significant fluctuation of data points at low redshift. \\
 The apparently large errors of some data points in the range of $0.35 \leq z \leq 1.0$ should not cause any concerns whether this dataset is suitable for an adequate parameter estimation, since the error of low-redshift data points will impact the fit to a lesser degree than errors in high-redshift data points.
 
 \section{Statistical Analysis}
@@ -32,12 +32,12 @@ From now on, we denote $\vb*{\theta}$ as the parameter pairs of the model we wan
 \end{align}
 The given dataset is a sample of $N = 580$ datapoints which contain for datapoint $i \in [1,N]$ the redshift $z_{i}$, the distance modulus and therefore implicitly\footnote{Although the ``Union2.1'' SN Ia compilation contains the distance modulus $m - M$, we will handle it throughout the parameter estimation as if it only contains the relative magnitude $m$. Since we are going to marginalize the parameter $M$, it has no influence on the parameter estimation.} the relative magnitude $m_{i}$ and its error $\sigma_{m_{i}}$. \\
 Our goal is to express the quantities given \textit{only} through the free parameters $\vb*{\theta}$. \\
-Now, let us consider the relative magnitude $m$, which is given by the distance modulus, see Equation \eqref{eq:distance-modulus}. First, we want to express the luminosity distance $d_{\text{L}}$ in multiples of $\SI{1}{\mega \parsec}$, so we obtain
+Now, let us consider the relative magnitude $m$, which is given by the distance modulus (see Equation \eqref{eq:distance-modulus}). First, we want to express the luminosity distance $d_{\text{L}}$ in multiples of $\SI{1}{\mega \parsec}$, so we obtain
 \begin{align*}
     m &= M + 5\log_{10}\biggl( \frac{d_{\text{L}}}{\SI{10}{\parsec}} \biggr) = M + 5\log_{10}\biggl( 10^{5} \frac{d_{\text{L}}}{\SI{1}{\mega \parsec}} \biggr) \\
       &= M + 25 + 5\log_{10}\biggl(\frac{d_{\text{L}}}{\SI{1}{\mega \parsec}}\biggr). 
 \end{align*}
-Since the luminosity distance $d_{\text{L}}$ depends on the Hubble distance $d_{\text{H}}$ (see Equation \eqref{eq:luminosity-distance} and \eqref{eq:comoving-distance}) and is therefore proportional to $d_{\text{L}} \propto 1/H_{0}$, we redefine the luminosity distance so that it is independent of the Hubble constant. Hence, we go on with 
+Since the luminosity distance $d_{\text{L}}$ depends on the Hubble distance $d_{\text{H}}$ (see Equation \eqref{eq:comoving-distance} and \eqref{eq:luminosity-distance}) and is therefore proportional to $d_{\text{L}} \propto 1/H_{0}$, we redefine the luminosity distance so that it is independent of the Hubble constant. Hence, we go on with 
 \begin{align}
 m &= M + 25 + 5\log_{10} \biggl(\frac{1}{H_{0}} H_{0} d_{\text{L}}(z, H_{0}, \vb*{\theta}) \SI{}{\mega \parsec^{-1}} \biggr) \nonumber \\
   &= \underbrace{M + 25 - 5\log_{10}(H_{0})}_{ =: \mathcal{M}(H_{0}) } + 5 \log_{10} \biggl( \underbrace{H_{0} d_{\text{L}}(z, H_{0}, \vb*{\theta})}_{ =: \mathcal{D}_{\text{L}}(z, \vb*{\theta}) } \SI{}{\mega \parsec^{-1}} \biggr) \nonumber \\

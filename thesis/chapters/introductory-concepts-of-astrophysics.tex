@@ -2,7 +2,7 @@
 \label{chap:introductory-concepts-of-astrophysics}
 \thispagestyle{empty}
 
-In 2011, Saul Perlmutter, Adam G. Riess, and Brian P. Schmidt received the Nobel Prize in Physics \enquote{for the discovery of the accelerating expansion of the Universe through observations of distant supernovae}. \footnote{\href{https://www.nobelprize.org/prizes/physics/2011/press-release/}{Press release: https://www.nobelprize.org/prizes/physics/2011/press-release/}} \\
+In 2011, Saul Perlmutter, Adam G. Riess, and Brian P. Schmidt received the Nobel Prize in Physics \enquote{for the discovery of the accelerating expansion of the Universe through observations of distant supernovae}. \footnote{Press release: \href{https://www.nobelprize.org/prizes/physics/2011/press-release/}{https://www.nobelprize.org/prizes/physics/2011/press-release/}} \\
 Since then, we know that the expansion of the universe is accelerating.
 The cause of this accelerated expansion is still unknown, but there are some theoretical models which attempt to explain this phenomenon. \\
 
@@ -12,7 +12,7 @@ In this model, the cause of the accelerated expansion is due to the so called \t
 \noindent Another model, published in April 2000 by Gia Dvali, Gregory Gabadadze and Massimo Porrati, -- the \textbf{DGP-model} -- proposes a modification of Einstein's field equations by introducing a fifth dimension to the four-dimensional spacetime, so that gravity behaves equivalently to Newtonian gravity on small distances, but weakens on large scales. \\
 
 
-\noindent Before going into details about both cosmological models, let me introduce relevant concepts in physics and astronomy from which we can relate measurable physical quantities, like the brightness of stars or their redshift, to more abstract properties of the universe like its scale factor. Based on certain assumptions of a theory, it is possible to develope models that make predictions about properties of the universe, for example, how the expansion and its evolution in time influences the relation of physical quantities.
+\noindent Before going into details about both cosmological models, let me introduce relevant concepts in physics and astronomy from which we can relate measurable physical quantities, like the brightness of stars or their redshift, to more abstract properties of the universe like its scale factor. Based on certain assumptions of a theory, it is possible to develop models that make predictions about properties of the universe, for example, how the expansion and its evolution in time influences the relation of physical quantities.
 
 
 
@@ -41,12 +41,12 @@ First, we detect the position of the measured object in the sky. After a while (
 where $\SI{1}{\au} \approx \SI{149.6e+9}{\meter}$ (``astronomical unit''\footnote{Since 2012, the astronomical unit was redefined by the IAU (International Astronomical Union) to be exactly $\SI{1}{au} := \SI{149597870700}{\meter}$, see \textit{Resolution B2} at the XXVIII General Assembly of IAU: \href{https://www.iau.org/static/resolutions/IAU2012\_English.pdf}{https://www.iau.org/static/resolutions/IAU2012\_English.pdf}}) is defined as the average distance $d_{\earth \odot}$ of earth to the sun. \\ 
 The small-angle approximation can be considered justified, since the distance to earth nearest star (beyond of our solar system), Proxima-Centauri, is about $d_{\text{P.C.}} \approx \SI{4.2}{\ly}$ and therefore $\phi_{\text{P.C.}} \approx \arcsin \bigl( \frac{\SI{1}{\au}}{\SI{4.2}{\ly}} \bigr) \approx \SI{3.723e-6} \ll 1$.
 The larger the distance to the measured object, the smaller the angle is. \\
-\noindent Since the parallax method is one of the most important ways to measure the distance far away objects, we define the distance of a \textit{parsec} (``parallax second'') as the distance to an object, under which the parallax is $\phi = \SI{1}{\arcsec} = \frac{1}{3600} \SI{}{\degree}$:
+\noindent Since the parallax method is one of the most important ways to measure the distance of far away objects, we define the distance of a \textit{parsec} (``parallax second'') as the distance to an object, under which the parallax is $\phi = \SI{1}{\arcsec} = \frac{1}{3600} \SI{}{\degree}$:
 \begin{align}
     \SI{1}{\parsec} := \frac{\SI{1}{\au}}{\sin \bigl( \frac{1}{3600} \SI{}{\degree} \bigr)} \approx \SI{3.26}{\ly} \approx \SI{3.086e16}{\meter}.
 \end{align}
 
-\noindent This is the usual unit by which cosmological distances or parameters are expressed, for example the \textit{Hubble constant} $H_{0} \approx \SI{67.66}{\frac{\kilo \meter}{\second} \mega \parsec^{-1}}$\footnote{The value of $H_{0}$ according to the results of the \textit{Planck Collaboration 2018}, \cite[Table 7]{Planck2020} }. \\ 
+\noindent This is the usual unit by which cosmological distances or parameters are expressed, for example the \textit{Hubble constant} $H_{0} \approx \SI{67.66}{\frac{\kilo \meter}{\second} \mega \parsec^{-1}}$.\footnote{The value of $H_{0}$ according to the results of the \textit{Planck Collaboration 2018}, \cite[Table 7]{Planck2020} } \\ 
 
 \noindent We should keep in mind that this method has of course boundaries and is practically useful for the local region of our galaxy, since the larger the distance to an observed object is, the apparent change in position in the sky gets smaller and is almost unnoticable for objects with a distance on cosmological scale ($d \gtrsim \SI{300}{\mega \parsec}$). 
 
@@ -64,18 +64,18 @@ This leads us to the relation between the difference of magnitude $\Delta m$ and
 \begin{align}
     \frac{F_{2}}{F_{1}} = 100^{\frac{m_{1} - m_{2}}{5}} 
 \end{align}
-and therefore with \eqref{eq:radiant-flux}
+and therefore with Equation \eqref{eq:radiant-flux}
 \begin{align}
     m_{1} - m_{2} = \frac{5}{2} \log_{10} \biggl( \frac{F_{2}}{F_{1}} \biggr) = \frac{5}{2} \log_{10} \biggl( \frac{L_{2}}{4\pi d_{2}^2} \frac{4\pi d_{1}^2}{L_{1}} \biggr) = \frac{5}{2} \log_{10} \biggl( \frac{L_{2}}{L_{1}} \biggr) + 5 \log_{10} \biggl( \frac{d_{1}}{d_{2}} \biggr). \label{eq:rel-magnitude-distance-relation} 
 \end{align}
-So, to calculate the distance to one of both objects, for example object 2, would require us to know their \textit{relative} magnitudes $m_{1}$ and $m_{2}$, their luminosities $L_{1}$ and $L_{2}$ and the distance $d_{1}$ to object 1. \\
+So, calculating the distance to one of both objects, for example object 2, would require us to know their \textit{relative} magnitudes $m_{1}$ and $m_{2}$, their luminosities $L_{1}$ and $L_{2}$ and the distance $d_{1}$ to object 1. \\
 To eliminate the need of knowing five quantities, we can define an \textit{absolute} magnitude $M$ as the magnitude an object would have at a distance of $d = \SI{10}{\parsec}$. If we consider only one object, we therefore can calculate the distance to this object by
 \begin{align}
     m - M = \frac{5}{2} \underbrace{\log_{10} \biggl( \frac{L}{L} \biggr)}_{ = 0} + 5 \log_{10} \biggl( \frac{d}{\SI{10}{\parsec}} \biggr) = 5 \log_{10} \biggl(\frac{d}{\SI{10}{\parsec}}\biggr). \label{eq:distance-modulus} 
 \end{align}
 We call the difference between the relative magnitude $m$ and the absolute magnitude $M$ of one object its \textit{distance modulus}. \\
 The benefit of the distance modulus is that we only have to know two quantities, $m$ and $M$, to calculate the distance to an object. \\
-Unfortunately, we cannot measure the absolute magnitude $M$ of an object that easily (since we can not fly to far away stars and measure the observed magnitude or radiant flux at a distance of $\SI{10}{\parsec}$ to them), which is why we rely on Equation \eqref{eq:rel-magnitude-distance-relation}.
+Unfortunately, we cannot measure the absolute magnitude $M$ of an object that easily (since we cannot fly to far away stars and measure the observed magnitude or radiant flux at a distance of $\SI{10}{\parsec}$ to them), which is why we rely on Equation \eqref{eq:rel-magnitude-distance-relation}.
 However, we could reduce the amount of unknown variables by calibrating the relation \eqref{eq:rel-magnitude-distance-relation} with an object which luminosity and distance is known. \\
 
 \noindent One could choose to calibrate Equation \eqref{eq:rel-magnitude-distance-relation} by measuring the properties of the nearest star to earth -- our sun. Given the magnitude $m_{\odot}$, the luminosity $L_{\odot}$ and the distance to sun $d_{\earth \odot} = \SI{1}{au}$, we obtain 
@@ -95,7 +95,7 @@ Generally, there are two established candidates for standard candles in astronom
 
 There are several types and classes of cepheids, but they all have in common that those stars obey a certain, periodic relation of luminosity and time. \\
 
-\noindent Without going into details\footnote{For further information and more detailed explanation how stellar pulsation and its underlying $\kappa$-mechanism can be calculated, I recommend chapter 14 ``\textit{Stellar Pulsation}'' in \cite{BradleyCarroll2007}} the periodicity of luminosity is caused by fluctuations of temperature dependent opacity in the stars photosphere due to transitions between single- and dual-ionized Helium inside the star. 
+\noindent Without going into details\footnote{For further information and more detailed explanation how stellar pulsation and its underlying $\kappa$-mechanism can be calculated, I recommend chapter 14 ``\textit{Stellar Pulsation}'' in \cite{BradleyCarroll2007}.} the periodicity of luminosity is caused by fluctuations of temperature dependent opacity in the stars photosphere due to transitions between single- and dual-ionized Helium inside the star. 
 
 \noindent It is important to identify cepheids of the same type -- cepheids that share the same physical properties, like their metalicity or the same periodicity pattern in their luminosity, to ensure that the same physical process is occuring in all cepheids of a certain type.
 \noindent From then on, it is possible to determine the luminosity of all cepheids of the same type by observing one cepheid, measuring its relative magnitude $m$ and its distance $d$ by the parallax method. \\
@@ -108,7 +108,7 @@ There are several types and classes of cepheids, but they all have in common tha
 
 
 \noindent However, in order to use cepheids for distance determination, they must first be observed and resolved.
-Even with our most powerful telescopes that we have today, resolution of cepheids is only possible in our local, galactic neighborhood, for example in the Large Magellanic Cloud or the Andromeda galaxy. Therefore, the boundary to resolute cepheids in other galaxies is currently about $\sim \SI{30}{\mega \parsec}$ (\cite[p.~47]{Bartelmann2019} and \cite[p.~3]{Engelmann2013}). \\
+Even with our most powerful telescopes that we have today, resolution of cepheids is only possible in our local, galactic neighborhood, for example in the Large Magellanic Cloud or the Andromeda Galaxy. Therefore, the boundary to resolute cepheids in other galaxies is currently about $\sim \SI{30}{\mega \parsec}$ (\cite[p.~47]{Bartelmann2019} and \cite[p.~3]{Engelmann2013}). \\
 For larger scales, we need much brighter standard candles.
 
 
@@ -117,7 +117,7 @@ For larger scales, we need much brighter standard candles.
 
 In general, supernovae are abrupt bursts of luminosity from massive stars, often accompanied by explosive thermonuclear reactions.
 While supernovae of type Ib, Ic and II occur due to an imbalance between the star's gravity, which causes its nucleus to collapse, and radiation emitted by nuclear fusion inside the star, which pushes against its photosphere, supernovae of type Ia are caused by a white dwarf accreting a companion star and therefore increasing in mass. \\
-If, due to accreating a companion star, the white dwarf reaches star a mass limit over $\sim 1.4 M_{\odot}$ (where $M_{\odot} \approx \SI{1.98e+30}{\kilogram}$ is the mass of the sun, \cite[p.~48]{Bartelmann2019}), which is called the \textit{Chandrasekhar limit} $M_{\text{Ch}}$, the nucleus of the white dwarf beocmes unstable, since the degeneracy pressure of the electrons (Pauli exclusion principle) cannot resist the gravitational forces any more. \\
+If, due to accreating a companion star, the white dwarf reaches a mass limit over $\sim 1.4 M_{\odot}$ (where $M_{\odot} \approx \SI{1.98e+30}{\kilogram}$ is the mass of the sun, \cite[p.~48]{Bartelmann2019}), which is called the \textit{Chandrasekhar limit} $M_{\text{Ch}}$, the nucleus of the white dwarf beocmes unstable, since the degeneracy pressure of the electrons (Pauli exclusion principle) cannot resist the gravitational forces any more. \\
 Inside the white dwarf's nucleus, a fusion of carbon and oxygen is triggered, which leads to further nuclear processes and an amount of energy release up to $\sim \SI{e+44}{\joule}$ (\cite[p.~295]{Maguire2017}, \cite[p.~321]{Spatschek2017}).
 This makes supernovae of type Ia one of the most energetic -- and therefore also luminous -- phenomena known in nature. Supernovae of type Ia are almost as bright as their host galaxy. 
 Since they are not only extremly luminous, but the process of star collapse is triggered after crossing a fixed limit of mass (the Chandrasekhar limit), this makes them also very unique and therefore good candidates for standard candles. \\
@@ -146,7 +146,7 @@ First, the mechanism which leads to the supernovae explosion is somewhat controv
 
 
 \noindent Other variations in luminosity behavior could occur due the amount of $^{56}$Ni in the thermonuclear process whose decay influences the peak of the supernovae type Ia light curve (\cite[p.~295]{Maguire2017}). However, those variations can be compensated very well since a relation between the lumninosity's decline and its peak is found so that it is possible to ``normalize'' or ``stretch'' the light curves so they obey a uniform distribution (\cite[p.~4]{Perlmutter2003}, \cite{Phillips1993}).\\
-The fact that the light curves of type Ia supernovae are distributed exactly the same way after some ``normalization'' or ``stretching'' shows us that the same physical process underlies all light curves of type Ia supernovae, even if they seem to be stretched, not only due to the relation of luminositys decline and luminosity peak. We will mention later why this property of supernovae type Ia light curves verify the expansion of the universe.
+The fact that the light curves of type Ia supernovae are distributed exactly the same way after some ``normalization'' or ``stretching'' shows us that the same physical process underlies all light curves of type Ia supernovae, even if they seem to be stretched, not only due to the relation of luminositys decline and luminositys peak. We will mention later why this property of supernovae type Ia light curves verify the expansion of the universe.
 
 \begin{figure}[H]
     \centering
@@ -179,7 +179,7 @@ This term has been established because observations show that the spectrum of mo
 \end{align}
 which is known as the \textit{Hubble law}. The proportionality constant $H_{0}$ has the dimension of an inverse time. It is one of the most important parameters in cosmology and its precise determination a challenge of active research (often called ``Hubble tension'', \cite{DiValentino2021}). \\ 
 
-\noindent For small velocities ($v \ll c$), we can approximate \eqref{eq:relativistic-doppler} (first order Taylor series) as $\displaystyle z \approx \frac{v}{c}$, which leads with \eqref{eq:hubble-law} to 
+\noindent For small velocities ($v \ll c$), we can approximate Equation \eqref{eq:relativistic-doppler} (first order Taylor series) as $\displaystyle z \approx \frac{v}{c}$, which leads with Equation \eqref{eq:hubble-law} to 
 \begin{align}
     d \approx \frac{c}{H_{0}} z. \label{eq:lum-dist-approx} 
 \end{align}
@@ -214,7 +214,7 @@ Beginning with Newton's ideas about gravity, the modern formulation about gravit
 
 \noindent For a deep understanding of general relativity, it is required to have knowledge on the mathematics of differential geometry. \\
 \noindent Besides the fact that, as an undergraduate student, I do not (yet) possess this knowledge, this would be beyond the scope of this bachelor thesis. \\
-\noindent However, to motivate the basic equations of the $\Lambda$CDM-Model, which are derived from Einstein's field equations under certain assumptions that we are going to formulate in the next chapter, I would like to mention the concept of a \textit{metric} and give brief view on Einstein's field equations.
+\noindent However, to motivate the basic equations of the $\Lambda$CDM-model, which are derived from Einstein's field equations under certain assumptions that we are going to formulate in the next chapter, I would like to mention the concept of a \textit{metric} and give brief view on Einstein's field equations.
 
 \subsection{The Metric of Spacetime}
 Generally speaking, a metric is a function that takes two points in space and returns a distance. \\
@@ -270,7 +270,7 @@ and therefore for distances in spacetime
 
 \subsection{Einstein's Field Equations}
 
-\noindent Similar to the derivation of the Euler--Lagrange equations in classical mechanics (or classical field theory) by formulating an action $S[\vb*{q}(t)]$ (or $S[\phi(x)]$) and find the path $\vb*{q}(t)$ (or field $\phi(x)$) that extremizes the action ($\delta S = 0$), Einstein's field equations can be derived\footnote{For a proper and detailed derivation, see subsection 4.3 ``\textit{Lagrangian Formulation}'' in \cite[p.~159]{SeanCarroll2019}} from the Einstein--Hilbert action given by
+\noindent Similar to the derivation of the Euler--Lagrange equations in classical mechanics (or classical field theory) by formulating an action $S[\vb*{q}(t)]$ (or $S[\phi(x)]$) and find the path $\vb*{q}(t)$ (or field $\phi(x)$) that extremizes the action ($\delta S = 0$), Einstein's field equations can be derived\footnote{For a proper and detailed derivation, see subsection 4.3 ``\textit{Lagrangian Formulation}'' in \cite[p.~159]{SeanCarroll2019}.} from the Einstein--Hilbert action given by
 \begin{align}
     S_{\text{EH}}[g_{\mu\nu}] = \int \dd[4]{x} \sqrt{-\det(g_{\mu\nu})} \biggl[\frac{c^4}{16\pi G}(R - 2\Lambda) + \mathcal{L}_{\text{M}} \biggr], 
 \end{align}
@@ -281,7 +281,7 @@ where $\dd[4]{x}$ is the four dimensional spacetime-volume element, $g_{\mu\nu}$
     R_{\mu\nu} - \frac{1}{2}R g_{\mu\nu} + \Lambda g_{\mu\nu} = \frac{8\pi G}{c^4}T_{\mu \nu}, \label{eq:einstein-field-equations}
 \end{align}
 where $R_{\mu\nu}$ is the Ricci curvature tensor and $T_{\mu\nu}$ the energy-momentum tensor. \\
-\noindent Without getting too much into details about the single components of this equation, we keep in mind that the left hand side of Equation \eqref{eq:einstein-field-equations} describes how spacetime behaves, while the right hand side of Equation \eqref{eq:einstein-field-equations} describes how matter behaves.
+\noindent Without getting too much into details about the single components of this equation, we keep in mind that the left-hand side of Equation \eqref{eq:einstein-field-equations} describes how spacetime behaves, while the right-hand side of Equation \eqref{eq:einstein-field-equations} describes how matter behaves.
 
 \subsubsection{The Cosmological Constant $\Lambda$}
 
