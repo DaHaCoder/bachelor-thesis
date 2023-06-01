@@ -188,8 +188,8 @@ def main():
     Omega_Lambda0 = np.linspace(0.0, 1.2, 200)
 
     # --- compute normalization factor for marginalized likelihood ---
-    # L0 = normalization_factor(redshifts, magnitudes, error_magnitudes, guess=1e+124)
-    L0 = 3.022013e+125
+    L0 = normalization_factor(redshifts, magnitudes, error_magnitudes, guess=1e+124)
+    # L0 = 3.022013e+125
 
     # --- compute marginalized likelihood for every value in Omega_m0 and Omega_Lambda0 ---
     MATRIX_marg_like = MATRIX_marginalized_likelihood(Omega_m0, Omega_Lambda0, redshifts, magnitudes, error_magnitudes, L0)
@@ -268,16 +268,16 @@ def main():
     fig, ax = plt.subplots()
 
     # at = AnchoredText(fr'$\vb*{{\theta_{{\text{{best}}}}}} = ({Omega_m0_best:.2f}, {Omega_Lambda0_best:.2f})$', loc='upper right', borderpad=0.5)
-    at = AnchoredText(fr'$(\Omega_{{\text{{m}}, 0, \text{{best}}}}, \Omega_{{\Lambda, 0, \text{{best}}}}) \pm (\sigma_{{\text{{m}}, 0}}, \sigma_{{\Lambda, 0}}) = ({Omega_m0_best:.2f}, {Omega_Lambda0_best:.2f}) \pm ({sigma_m0:.2f}, {sigma_Lambda0:.2f})$', loc='upper right', borderpad=0.5)
-    at.patch.set(boxstyle='round,pad=0.2', fc='w', ec='0.5', alpha=0.9)
-    ax.add_artist(at)
+    # at = AnchoredText(fr'$(\Omega_{{\text{{m}}, 0, \text{{best}}}}, \Omega_{{\Lambda, 0, \text{{best}}}}) \pm (\sigma_{{\text{{m}}, 0}}, \sigma_{{\Lambda, 0}}) = ({Omega_m0_best:.2f}, {Omega_Lambda0_best:.2f}) \pm ({sigma_m0:.2f}, {sigma_Lambda0:.2f})$', loc='upper right', borderpad=0.5)
+    # at.patch.set(boxstyle='round,pad=0.2', fc='w', ec='0.5', alpha=0.9)
+    # ax.add_artist(at)
    
     plt.plot(Omega_m0, MATRIX_marg_like_summed_Omega_Lambda0, label='data')
     plt.plot(Omega_m0, MATRIX_marg_like_summed_Omega_Lambda0_gauss_fit, linestyle='--', color='tab:orange', label='fit')
-    plt.xlabel(r'$\Omega_{\text{m},0}$')
-    plt.ylabel(r'$L_{\text{M}, \sum \Omega_{\Lambda,0}}(\Omega_{\text{m},0} \vert D)$')
+    plt.xlabel(r'$\Omega_{\text{m},0}$', fontsize=16)
+    plt.ylabel(r'$L_{\text{M}, \sum \Omega_{\Lambda,0}}(\Omega_{\text{m},0} \vert D)$', fontsize=16)
     # plt.suptitle(r'$\texttt{Lambda-CDM-marginalized-likelihood.py}$', fontsize=20)
-    # plt.title(fr'fit values: ($\mu_{{\text{{m}},0}}, \sigma_{{\text{{m}},0}}) = ({mu_m0:.2f},{sigma_m0:.2f})$')
+    plt.title(fr'$(\Omega_{{\text{{m}}, 0, \text{{best}}}}, \Omega_{{\Lambda, 0, \text{{best}}}}) \pm (\sigma_{{\text{{m}}, 0}}, \sigma_{{\Lambda, 0}}) = ({Omega_m0_best:.2f}, {Omega_Lambda0_best:.2f}) \pm ({sigma_m0:.2f}, {sigma_Lambda0:.2f})$')
     plt.grid(True) 
     # plt.show()
     
@@ -291,16 +291,16 @@ def main():
     fig, ax = plt.subplots()
 
     # at = AnchoredText(fr'$\vb*{{\theta_{{\text{{best}}}}}} = ({Omega_m0_best:.2f}, {Omega_Lambda0_best:.2f})$', loc='upper left', borderpad=0.5)
-    at = AnchoredText(fr'$(\Omega_{{\text{{m}}, 0, \text{{best}}}}, \Omega_{{\Lambda, 0, \text{{best}}}}) \pm (\sigma_{{\text{{m}}, 0}}, \sigma_{{\Lambda, 0}}) = ({Omega_m0_best:.2f}, {Omega_Lambda0_best:.2f}) \pm ({sigma_m0:.2f}, {sigma_Lambda0:.2f})$', loc='upper left', borderpad=0.5)
-    at.patch.set(boxstyle='round,pad=0.2', fc='w', ec='0.5', alpha=0.9)
-    ax.add_artist(at)
+    # at = AnchoredText(fr'$(\Omega_{{\text{{m}}, 0, \text{{best}}}}, \Omega_{{\Lambda, 0, \text{{best}}}}) \pm (\sigma_{{\text{{m}}, 0}}, \sigma_{{\Lambda, 0}}) = ({Omega_m0_best:.2f}, {Omega_Lambda0_best:.2f}) \pm ({sigma_m0:.2f}, {sigma_Lambda0:.2f})$', loc='upper left', borderpad=0.5)
+    # at.patch.set(boxstyle='round,pad=0.2', fc='w', ec='0.5', alpha=0.9)
+    # ax.add_artist(at)
     
     plt.plot(Omega_Lambda0, MATRIX_marg_like_summed_Omega_m0, label='data')
     plt.plot(Omega_Lambda0, MATRIX_marg_like_summed_Omega_m0_gauss_fit, linestyle='--', color='tab:orange', label='fit')
     plt.xlabel(r'$\Omega_{\Lambda,0}$')
     plt.ylabel(r'$L_{\text{M}, \sum \Omega_{\text{m},0}}(\Omega_{\Lambda,0} \vert D)$')
     # plt.suptitle(r'$\texttt{Lambda-CDM-marginalized-likelihood.py}$', fontsize=20)
-    # plt.title(fr'fit values: ($\mu_{{\text{{m}},0}}, \sigma_{{\text{{m}},0}}) = ({mu_Lambda0:.2f},{sigma_Lambda0:.2f})$')
+    plt.title(fr'$(\Omega_{{\text{{m}}, 0, \text{{best}}}}, \Omega_{{\Lambda, 0, \text{{best}}}}) \pm (\sigma_{{\text{{m}}, 0}}, \sigma_{{\Lambda, 0}}) = ({Omega_m0_best:.2f}, {Omega_Lambda0_best:.2f}) \pm ({sigma_m0:.2f}, {sigma_Lambda0:.2f})$')
     plt.grid(True) 
     # plt.show()
 
@@ -360,12 +360,12 @@ def main():
     ax.text(*text_location, r'flat universe ($\Omega_{k,0} = 0$)', rotation=-45, rotation_mode='anchor', transform_rotates_text=True, color='grey', fontsize=20)
 
     # at = AnchoredText(fr'$\vb*{{\theta_{{\text{{best}}}}}} = ({Omega_m0_best:.2f}, {Omega_Lambda0_best:.2f})$', loc='lower left', borderpad=0.5)
-    at = AnchoredText(fr'$(\Omega_{{\text{{m}}, 0, \text{{best}}}}, \Omega_{{\Lambda, 0, \text{{best}}}}) \pm (\sigma_{{\text{{m}}, 0}}, \sigma_{{\Lambda, 0}}) = ({Omega_m0_best:.2f}, {Omega_Lambda0_best:.2f}) \pm ({sigma_m0:.2f}, {sigma_Lambda0:.2f})$', loc='lower left', borderpad=0.5)
-    at.patch.set(boxstyle='round,pad=0.2', fc='w', ec='0.5', alpha=0.9)
-    ax.add_artist(at)
+    # at = AnchoredText(fr'$(\Omega_{{\text{{m}}, 0, \text{{best}}}}, \Omega_{{\Lambda, 0, \text{{best}}}}) \pm (\sigma_{{\text{{m}}, 0}}, \sigma_{{\Lambda, 0}}) = ({Omega_m0_best:.2f}, {Omega_Lambda0_best:.2f}) \pm ({sigma_m0:.2f}, {sigma_Lambda0:.2f})$', loc='lower left', borderpad=0.5)
+    # at.patch.set(boxstyle='round,pad=0.2', fc='w', ec='0.5', alpha=0.9)
+    # ax.add_artist(at)
 
-    plt.xlabel(r'$\Omega_{\text{m},0}$') 
-    plt.ylabel(r'$\Omega_{\Lambda,0}$')
+    plt.xlabel(r'$\Omega_{\text{m},0}$', fontsize=16) 
+    plt.ylabel(r'$\Omega_{\Lambda,0}$', fontsize=16)
     # plt.suptitle(r'$\texttt{Lambda-CDM-marginalized-likelihood.py}$', fontsize=20)
     # plt.title(rf'best fit values: $(\Omega_{{\text{{m}},0}}, \Omega_{{\Lambda,0}}) \pm (\sigma_{{\text{{m}},0}}, \sigma_{{\Lambda,0}}) = ({Omega_m0_best:.2f}, {Omega_Lambda0_best:.2f}) \pm ({sigma_m0:.2f}, {sigma_Lambda0:.2f})$')
     plt.grid(True)

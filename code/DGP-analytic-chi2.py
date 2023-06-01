@@ -27,7 +27,7 @@ import time                                                       #   for calcul
 # import tikzplotlib                                               #   for converting plot to tikz
 
 plt.rcParams['font.family'] = 'serif'
-plt.rcParams['font.size'] = 16
+# plt.rcParams['font.size'] = 16
 plt.rcParams['text.usetex'] = True
 plt.rcParams['text.latex.preamble'] = r'''
 \usepackage{physics}
@@ -51,7 +51,6 @@ def timeit(message):
 # ====================== #
 @njit
 def mod_friedmann(E, z, Omega_m0, alpha):
-    # expansion function E = H(z)/H_0
     return E * E - (1.0 - Omega_m0) * np.power(E, alpha) - Omega_m0 * np.power(1.0 + z, 3)
 
 
@@ -60,9 +59,9 @@ def deriv_mod_friedmann(E, _, Omega_m0, alpha):
     return 2.0 * E - alpha * (1.0 - Omega_m0) * np.power(E, alpha - 1.0)
 
 
-def sol_friedmann(z, Omega_m0, alpha, friedmann, deriv_friedmann):
-    # Solves the friedmann equation f(z) = 0 for z with derivative deriv_friedmann
-    return opt.root(friedmann, 1.0, args=(z, Omega_m0, alpha), jac=deriv_friedmann).x[0]
+def sol_friedmann(z, Omega_m0, alpha, mod_friedmann, mod_deriv_friedmann):
+    # Solves the modified friedmann equation f(z) = 0 for z with exterior derivative mod_deriv_friedmann
+    return opt.root(mod_friedmann, 1.0, args=(z, Omega_m0, alpha), jac=mod_deriv_friedmann).x[0]
 
 
 @njit
@@ -79,7 +78,7 @@ def interp_integral(z, sample_redshifts, sample_E):
     return quad(interp_integrand, 0.0, z, args=(sample_redshifts, sample_E))[0]
 
 
-def DGP_luminosity_distance(z, Omega_m0, alpha):
+def mod_luminosity_distance(z, Omega_m0, alpha):
     # Cosmological Parameters
     # =======================
     c = 299792.458           # speed of light in vacuum in km/s
@@ -106,7 +105,7 @@ def theoretical_magnitude(mod_absolute_magnitude, mod_luminosity_distance):
 
 
 @njit
-def chi_square_analytic(magnitudes, error_magnitudes, theoretical_magnitudes):
+def analytic_chi_square(magnitudes, error_magnitudes, theoretical_magnitudes):
     c1 = 0.0
     b0 = 0.0
     b1 = 0.0
@@ -119,9 +118,9 @@ def chi_square_analytic(magnitudes, error_magnitudes, theoretical_magnitudes):
 
 def chi2(Omega_m0, alpha, redshifts, magnitudes, error_magnitudes, zero_NaNs=False):
     mod_absolute_magnitude = 0.0
-    D_L = DGP_luminosity_distance(redshifts, Omega_m0, alpha)
+    D_L = mod_luminosity_distance(redshifts, Omega_m0, alpha)
     m_th = theoretical_magnitude(mod_absolute_magnitude, D_L)
-    chi_2 = chi_square_analytic(magnitudes, error_magnitudes, m_th)
+    chi_2 = analytic_chi_square(magnitudes, error_magnitudes, m_th)
     if np.isnan(chi_2) and zero_NaNs:
         chi_2 = 0.0
     return chi_2 
@@ -176,8 +175,8 @@ def main():
     # ====================================================================================
 
     # --- define variables ---
-    Omega_m0 = np.linspace(0.0, 1.0, 1000)
-    alpha    = np.linspace(0.0, 2.0, 1000)
+    Omega_m0 = np.linspace(0.0, 0.6, 400)
+    alpha    = np.linspace(-11.0, 2.0, 400)
     
     # --- compute MATRIX_chi_square for every value in Omega_m0 and alpha ---
     MATRIX_chi_square = MATRIX_chi2(Omega_m0, alpha, redshifts, magnitudes, error_magnitudes)
@@ -213,17 +212,19 @@ def main():
     # --- plot Omega_m0 vs. MATRIX_chi_square for summed alpha ---
     fig, ax = plt.subplots()
 
-    # at = AnchoredText(fr'$\vb*{{\theta_{{\text{{best}}}}}} = ({Omega_m0_best:.2f}, {alpha_best:.2f})$', loc='upper right', borderpad=0.5)
-    at = AnchoredText(fr'$(\Omega_{{\text{{m}}, 0, \text{{best}}}}, \alpha_{{\text{{best}}}}) = ({Omega_m0_best:.2f}, {alpha_best:.2f})$', loc='upper right', borderpad=0.5)
-    at.patch.set(boxstyle='round,pad=0.2', fc='w', ec='0.5', alpha=0.9)
-    ax.add_artist(at)
-
     plt.plot(Omega_m0, MATRIX_chi_square_summed_Omega_m0, label='data')
     # plt.plot(Omega_m0_best, min_MATRIX_chi_square, 'o', color='red')
-    plt.xlabel(r'$\Omega_{\text{m},0}$')
-    plt.ylabel(r'$\chi_{\text{A}, \sum \alpha}^2(\Omega_{\text{m},0} \vert D)$')
+    plt.xlabel(r'$\Omega_{\text{m},0}$', fontsize=16)
+    plt.ylabel(r'$\chi_{\text{A}, \sum \alpha}^2(\Omega_{\text{m},0} \vert D)$', fontsize=16)
     # plt.suptitle(r'$\texttt{DGP-analytic-chi2.py}$', fontsize=20)
+    ax.tick_params(labelsize=14)
     plt.grid(True)
+    
+    # at = AnchoredText(fr'$(\Omega_{{\text{{m}}, 0, \text{{best}}}}, \alpha_{{\text{{best}}}}) = ({Omega_m0_best:.2f}, {alpha_best:.2f})$', loc='upper right', borderpad=0.5, prop=dict(fontsize=16))
+    at = AnchoredText(fr'$\vb*{{\theta_{{\text{{best}}}}}} = ({Omega_m0_best:.2f}, {alpha_best:.2f})$', loc='upper right', borderpad=0.5, prop=dict(fontsize=16))
+    at.patch.set(boxstyle='round,pad=0.2', fc='w', ec='0.5', alpha=0.9)
+    ax.add_artist(at)
+    
     # plt.show()
 
     # --- save fig ---
@@ -235,17 +236,19 @@ def main():
     # --- plot alpha vs. MATRIX_chi_square for summed Omega_m0 ---
     fig, ax = plt.subplots()
 
-    # at = AnchoredText(fr'$\vb*{{\theta_{{\text{{best}}}}}} = ({Omega_m0_best:.2f}, {alpha_best:.2f})$', loc='upper left', borderpad=0.5)
-    at = AnchoredText(fr'$(\Omega_{{\text{{m}}, 0, \text{{best}}}}, \alpha_{{\text{{best}}}}) = ({Omega_m0_best:.2f}, {alpha_best:.2f})$', loc='upper left', borderpad=0.5)
+    plt.plot(alpha, MATRIX_chi_square_summed_alpha, label='data')
+    # plt.plot(alpha_best, min_MATRIX_chi_square, 'o', color='red')
+    plt.xlabel(r'$\alpha$', fontsize=16)
+    plt.ylabel(r'$\chi_{\text{A}, \sum \Omega_{\text{m}, 0}}^2(\alpha \vert D)$', fontsize=16)
+    # plt.suptitle(r'$\texttt{DGP-analytic-chi2.py}$', fontsize=20)
+    ax.tick_params(labelsize=14)
+    plt.grid(True)
+    
+    # at = AnchoredText(fr'$(\Omega_{{\text{{m}}, 0, \text{{best}}}}, \alpha_{{\text{{best}}}}) = ({Omega_m0_best:.2f}, {alpha_best:.2f})$', loc='upper right', borderpad=0.5, prop=dict(fontsize=16))
+    at = AnchoredText(fr'$\vb*{{\theta_{{\text{{best}}}}}} = ({Omega_m0_best:.2f}, {alpha_best:.2f})$', loc='upper right', borderpad=0.5, prop=dict(fontsize=16))
     at.patch.set(boxstyle='round,pad=0.2', fc='w', ec='0.5', alpha=0.9)
     ax.add_artist(at)
     
-    plt.plot(alpha, MATRIX_chi_square_summed_alpha, label='data')
-    # plt.plot(alpha_best, min_MATRIX_chi_square, 'o', color='red')
-    plt.xlabel(r'$\alpha$')
-    plt.ylabel(r'$\chi_{\text{A}, \sum \Omega_{\text{m}, 0}}^2(\alpha \vert D)$')
-    # plt.suptitle(r'$\texttt{DGP-analytic-chi2.py}$', fontsize=20)
-    plt.grid(True)
     # plt.show()
 
     # --- save fig ---
@@ -262,17 +265,19 @@ def main():
     # --- plot Omega_m0 vs. MATRIX_chi_square at alpha_best ---
     fig, ax = plt.subplots()
 
-    # at = AnchoredText(fr'$\vb*{{\theta_{{\text{{best}}}}}} = ({Omega_m0_best:.2f}, {alpha_best:.2f})$', loc='upper right', borderpad=0.5)
-    at = AnchoredText(fr'$(\Omega_{{\text{{m}}, 0, \text{{best}}}}, \alpha_{{\text{{best}}}}) = ({Omega_m0_best:.2f}, {alpha_best:.2f})$', loc='upper right', borderpad=0.5)
-    at.patch.set(boxstyle='round,pad=0.2', fc='w', ec='0.5', alpha=0.9)
-    ax.add_artist(at)
-
     plt.plot(Omega_m0, MATRIX_chi_square[alpha_index, :], label='data')
     plt.plot(Omega_m0_best, min_MATRIX_chi_square, 'o', color='red')
-    plt.xlabel(r'$\Omega_{\text{m}, 0}$')
-    plt.ylabel(r'$\chi_{\text{A}}^2(\Omega_{\text{m}, 0}, \alpha_{\text{best}} \vert D)$')
+    plt.xlabel(r'$\Omega_{\text{m}, 0}$', fontsize=16)
+    plt.ylabel(r'$\chi_{\text{A}}^2(\Omega_{\text{m}, 0}, \alpha_{\text{best}} \vert D)$', fontsize=16)
     # plt.suptitle(r'$\texttt{DGP-analytic-chi2.py}$', fontsize=20)
+    ax.tick_params(labelsize=14)
     plt.grid(True)
+    
+    # at = AnchoredText(fr'$(\Omega_{{\text{{m}}, 0, \text{{best}}}}, \alpha_{{\text{{best}}}}) = ({Omega_m0_best:.2f}, {alpha_best:.2f})$', loc='upper right', borderpad=0.5, prop=dict(fontsize=16))
+    at = AnchoredText(fr'$\vb*{{\theta_{{\text{{best}}}}}} = ({Omega_m0_best:.2f}, {alpha_best:.2f})$', loc='upper right', borderpad=0.5, prop=dict(fontsize=16))
+    at.patch.set(boxstyle='round,pad=0.2', fc='w', ec='0.5', alpha=0.9)
+    ax.add_artist(at)
+    
     # plt.show()
 
     # --- save fig ---
@@ -284,17 +289,19 @@ def main():
     # --- plot alpha vs. chi2 at Omega_m0_best ---
     fig, ax = plt.subplots()
 
-    # at = AnchoredText(fr'$\vb*{{\theta_{{\text{{best}}}}}} = ({Omega_m0_best:.2f}, {alpha_best:.2f})$', loc='upper left', borderpad=0.5)
-    at = AnchoredText(fr'$(\Omega_{{\text{{m}}, 0, \text{{best}}}}, \alpha_{{\text{{best}}}}) = ({Omega_m0_best:.2f}, {alpha_best:.2f})$', loc='upper left', borderpad=0.5)
+    plt.plot(alpha, MATRIX_chi_square[:, Omega_m0_index], label='data')
+    plt.plot(alpha_best, min_MATRIX_chi_square, 'o', color='red')
+    plt.xlabel(r'$\alpha$', fontsize=16)
+    plt.ylabel(r'$\chi_{\text{A}}^2(\Omega_{\text{m}, 0, \text{best}}, \alpha \vert D)$', fontsize=16)
+    # plt.suptitle(r'$\texttt{DGP_analytic_chi2.py}$', fontsize=20)
+    ax.tick_params(labelsize=14)
+    plt.grid(True)
+    
+    # at = AnchoredText(fr'$(\Omega_{{\text{{m}}, 0, \text{{best}}}}, \alpha_{{\text{{best}}}}) = ({Omega_m0_best:.2f}, {alpha_best:.2f})$', loc='upper right', borderpad=0.5, prop=dict(fontsize=16))
+    at = AnchoredText(fr'$\vb*{{\theta_{{\text{{best}}}}}} = ({Omega_m0_best:.2f}, {alpha_best:.2f})$', loc='upper right', borderpad=0.5, prop=dict(fontsize=16))
     at.patch.set(boxstyle='round,pad=0.2', fc='w', ec='0.5', alpha=0.9)
     ax.add_artist(at)
     
-    plt.plot(alpha, MATRIX_chi_square[:, Omega_m0_index], label='data')
-    plt.plot(alpha_best, min_MATRIX_chi_square, 'o', color='red')
-    plt.xlabel(r'$\Omega_{\text{m}, 0}$')
-    plt.ylabel(r'$\chi_{\text{A}}^2(\Omega_{\text{m}, 0, \text{best}}, \alpha \vert D)$')
-    # plt.suptitle(r'$\texttt{DGP_analytic_chi2.py}$', fontsize=20)
-    plt.grid(True)
     # plt.show()
 
     # --- save fig ---
@@ -320,10 +327,13 @@ def main():
     fig = plt.figure()
     ax = plt.axes(projection='3d')
 
-    ax.plot_wireframe(X, Y, Z, edgecolor='tab:blue', alpha=0.5)
-    ax.contour(X, Y, Z, zdir='z', levels=lvls, cmap='coolwarm_r')
-    ax.scatter(Omega_m0_best, alpha_best, min_MATRIX_chi_square, 'o', color='red')
-    ax.set(xlabel=r'$\Omega_{\text{m}, 0}$', ylabel=r'$\alpha$', zlabel=r'$\chi_{\text{A}}^2(\Omega_{\text{m},0}, \alpha \vert D)$')
+    ax.plot_wireframe(X, Y, Z, edgecolor='tab:blue', alpha=0.5, linewidths=1.0)
+    ax.contour(X, Y, Z, zdir='z', levels=lvls, cmap='coolwarm_r', linewidths=1.0)
+    ax.scatter(Omega_m0_best, alpha_best, min_MATRIX_chi_square, '.', color='red', s=1.0)
+    ax.set_xlabel(xlabel=r'$\Omega_{\text{m},0}$', fontsize=12)
+    ax.set_ylabel(ylabel=r'$\alpha$', fontsize=12)
+    ax.set_zlabel(zlabel=r'$\chi_{\text{A}}^2(\Omega_{\text{m},0}, \alpha \vert D)$', fontsize=12)
+    ax.tick_params(axis='both', width=10, labelsize=8, pad=0)
     # plt.suptitle(r'$\texttt{DGP-analytic-chi2.py}$', fontsize=20)
     plt.grid(True)
     # plt.show()
@@ -338,29 +348,61 @@ def main():
     # --- plot 2D contour ---
     fig, ax = plt.subplots()
 
-    CP = ax.contour(X, Y, Z, levels=lvls, cmap='coolwarm_r')
-    plt.plot(Omega_m0_best, alpha_best, 'o', color='red')
+    CP = ax.contour(X, Y, Z, levels=lvls, cmap='coolwarm_r', linewidths=1.0)
+    plt.plot(Omega_m0_best, alpha_best, '.', color='red')
     fmt = {}
     for l, s in zip(CP.levels, lvl_labels):
         fmt[l] = s
     ax.clabel(CP, inline=True, fmt=fmt)
 
-    # at = AnchoredText(fr'$\vb*{{\theta_{{\text{{best}}}}}} = ({Omega_m0_best:.2f}, {alpha_best:.2f})$', loc='upper right', borderpad=0.5)
-    at = AnchoredText(fr'$(\Omega_{{\text{{m}}, 0, \text{{best}}}}, \alpha_{{\text{{best}}}}) = ({Omega_m0_best:.2f}, {alpha_best:.2f})$', loc='upper right', borderpad=0.5)
+    plt.xlabel(r'$\Omega_{\text{m}, 0}$', fontsize=14)
+    plt.ylabel(r'$\alpha$', fontsize=14)
+    # plt.suptitle(r'$\texttt{DGP-analytic-chi2.py}$', fontsize=20)
+    ax.tick_params(labelsize=10)
+    plt.grid(True)
+    
+    # at = AnchoredText(fr'$(\Omega_{{\text{{m}}, 0, \text{{best}}}}, \alpha_{{\text{{best}}}}) = ({Omega_m0_best:.2f}, {alpha_best:.2f})$', loc='upper right', borderpad=0.5, prop=dict(fontsize=16))
+    at = AnchoredText(fr'$\vb*{{\theta_{{\text{{best}}}}}} = ({Omega_m0_best:.2f}, {alpha_best:.2f})$', loc='lower left', borderpad=0.5, prop=dict(fontsize=14))
     at.patch.set(boxstyle='round,pad=0.2', fc='w', ec='0.5', alpha=0.9)
     ax.add_artist(at)
 
-    plt.xlabel(r'$\Omega_{\text{m}, 0}$')
-    plt.ylabel(r'$\alpha$')
-    # plt.suptitle(r'$\texttt{DGP-analytic-chi2.py}$', fontsize=20)
-    plt.grid(True)
     # plt.show()
 
     # --- save fig ---
-    fig.savefig('../thesis/figures/plots/EPS/DGP-analytic-chi2_Omega-m0-vs-alpha.eps', format='eps', bbox_inches='tight')
-    fig.savefig('../thesis/figures/plots/PNG/DGP-analytic-chi2_Omega-m0-vs-alpha.png', format='png', bbox_inches='tight', dpi=250)
-    fig.savefig('../thesis/figures/plots/PDF/DGP-analytic-chi2_Omega-m0-vs-alpha.pdf', format='pdf', bbox_inches='tight')
-    # tikzplotlib.save('../thesis/figures/tikz/DGP-analytic-chi2_Omega-m0-vs-alpha.tex')
+    fig.savefig('../thesis/figures/plots/EPS/DGP-analytic-chi2_Omega-m0-vs-alpha-full.eps', format='eps', bbox_inches='tight')
+    fig.savefig('../thesis/figures/plots/PNG/DGP-analytic-chi2_Omega-m0-vs-alpha-full.png', format='png', bbox_inches='tight', dpi=250)
+    fig.savefig('../thesis/figures/plots/PDF/DGP-analytic-chi2_Omega-m0-vs-alpha-full.pdf', format='pdf', bbox_inches='tight')
+    # tikzplotlib.save('../thesis/figures/tikz/DGP-analytic-chi2_Omega-m0-vs-alpha-full.tex')
+
+    # --- plot 2D contour for alpha in [0.0, 2.0] ---
+    fig, ax = plt.subplots()
+
+    CP = ax.contour(X, Y, Z, levels=lvls, cmap='coolwarm_r', linewidths=1.0)
+    plt.plot(Omega_m0_best, alpha_best, '.', color='red')
+    fmt = {}
+    for l, s in zip(CP.levels, lvl_labels):
+        fmt[l] = s
+    ax.clabel(CP, inline=True, fmt=fmt)
+
+    plt.xlabel(r'$\Omega_{\text{m}, 0}$', fontsize=16)
+    plt.ylabel(r'$\alpha$', fontsize=16)
+    plt.ylim(0.0, 2.0)
+    # plt.suptitle(r'$\texttt{DGP-analytic-chi2.py}$', fontsize=20)
+    ax.tick_params(labelsize=14)
+    plt.grid(True)
+    
+    # at = AnchoredText(fr'$(\Omega_{{\text{{m}}, 0, \text{{best}}}}, \alpha_{{\text{{best}}}}) = ({Omega_m0_best:.2f}, {alpha_best:.2f})$', loc='upper right', borderpad=0.5, prop=dict(fontsize=16))
+    at = AnchoredText(fr'$\vb*{{\theta_{{\text{{best}}}}}} = ({Omega_m0_best:.2f}, {alpha_best:.2f})$', loc='upper right', borderpad=0.5, prop=dict(fontsize=16))
+    at.patch.set(boxstyle='round,pad=0.2', fc='w', ec='0.5', alpha=0.9)
+    ax.add_artist(at)
+
+    # plt.show()
+
+    # --- save fig ---
+    fig.savefig('../thesis/figures/plots/EPS/DGP-analytic-chi2_Omega-m0-vs-alpha-0-2.eps', format='eps', bbox_inches='tight')
+    fig.savefig('../thesis/figures/plots/PNG/DGP-analytic-chi2_Omega-m0-vs-alpha-0-2.png', format='png', bbox_inches='tight', dpi=250)
+    fig.savefig('../thesis/figures/plots/PDF/DGP-analytic-chi2_Omega-m0-vs-alpha-0-2.pdf', format='pdf', bbox_inches='tight')
+    # tikzplotlib.save('../thesis/figures/tikz/DGP-analytic-chi2_Omega-m0-vs-alpha-0-2.tex')
     # =====================================================
 
 

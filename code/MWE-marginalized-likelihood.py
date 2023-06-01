@@ -25,7 +25,7 @@ import time                                                       #   for calcul
 # import tikzplotlib                                               #   for converting plot to tikz
 
 plt.rcParams['font.family'] = 'serif' 
-plt.rcParams['font.size'] = 16 
+# plt.rcParams['font.size'] = 16 
 plt.rcParams['text.usetex'] = True
 plt.rcParams['text.latex.preamble'] = r'''
 \usepackage{physics}
@@ -102,8 +102,8 @@ def l(mod_absolute_magnitude, mod_luminosity_distance, magnitudes, error_magnitu
 
 def marginalized_likelihood(Omega_m0, redshifts, magnitudes, error_magnitudes, L0, zero_NaNs=False):
     D_L = mod_luminosity_distance(redshifts, Omega_m0)
-    min_mod_absolute_magnitude = 15.0
-    max_mod_absolute_magnitude = 17.0
+    min_mod_absolute_magnitude = 15.7
+    max_mod_absolute_magnitude = 15.9
     margin_L = quad(l, min_mod_absolute_magnitude, max_mod_absolute_magnitude, args=(D_L, magnitudes, error_magnitudes, L0))[0]
     if np.isnan(margin_L) and zero_NaNs:
         margin_L = 0.0
@@ -111,7 +111,7 @@ def marginalized_likelihood(Omega_m0, redshifts, magnitudes, error_magnitudes, L
 
 
 @timeit("Compute normalization factor") 
-def normalization_factor(redshifts, magnitudes, error_magnitudes, guess=1.0, bounds_Omega_m0=(0.0, 2.5)): 
+def normalization_factor(redshifts, magnitudes, error_magnitudes, guess=1.0, bounds_Omega_m0=(0.0, 1.0)): 
     L = lambda Omega_m0: marginalized_likelihood(Omega_m0, redshifts, magnitudes, error_magnitudes, L0=guess, zero_NaNs=True) 
     L0 = guess / quad(L, *bounds_Omega_m0)[0]                                                   
     return L0 
@@ -141,11 +141,11 @@ def main():
     # =================================================================================================
 
     # --- define variables ---
-    LIST_Omega_m0 = np.linspace(0.0, 1.0, 400)
+    LIST_Omega_m0 = np.linspace(0.0, 1.0, 1000)
 
     # --- compute normalization factor for marginalized likelihood ---
-    # L0 = normalization_factor(redshifts, magnitudes, error_magnitudes, guess=1e+124)
-    L0 = 1.388170e+125
+    L0 = normalization_factor(redshifts, magnitudes, error_magnitudes, guess=1e+124)
+    # L0 = 1.388170e+125
 
     # --- compute marginalized likelihood for every value in LIST_Omega_m0 and LIST_Omega_Lambda0 ---
     LIST_marginalized_likelihood = [marginalized_likelihood(Omega_m0, redshifts, magnitudes, error_magnitudes, L0) for Omega_m0 in LIST_Omega_m0]
@@ -178,15 +178,16 @@ def main():
 
     plt.plot(LIST_Omega_m0, LIST_marginalized_likelihood, color='tab:blue')
     # plt.plot(Omega_m0_best, marginalized_likelihood_best, 'o', color='tab:red')
-    plt.xlabel(r'$\Omega_{\text{m},0}$')
-    plt.ylabel(r'$L_{\text{M}}(\Omega_{\text{m},0} \vert D)$')
+    plt.xlabel(r'$\Omega_{\text{m},0}$', fontsize=16)
+    plt.ylabel(r'$L_{\text{M}}(\Omega_{\text{m},0} \vert D)$', fontsize=16)
     # plt.suptitle(r'$\texttt{MWE-marginalized-likelihood.py}$', fontsize=20)
+    ax.tick_params(labelsize=14)
+    plt.grid(True)
 
     at = AnchoredText(fr'$\vb*{{\theta_{{\text{{best}}}}}} = ({Omega_m0_best:.2f}, {Omega_Lambda0_best:.2f})$', loc='upper right', borderpad=0.5)
     at.patch.set(boxstyle='round,pad=0.2', fc='w', ec='0.5', alpha=0.9)
     ax.add_artist(at)
 
-    plt.grid(True)
     # plt.show()
 
     # --- save fig ---

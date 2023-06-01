@@ -27,7 +27,7 @@ import time                                                       #   for calcul
 # import tikzplotlib                                               #   for converting plot to tikz
 
 plt.rcParams['font.family'] = 'serif'
-plt.rcParams['font.size'] = 16
+# plt.rcParams['font.size'] = 9
 plt.rcParams['text.usetex'] = True
 plt.rcParams['text.latex.preamble'] = r'''
 \usepackage{physics}
@@ -172,8 +172,8 @@ def main():
     # ===============================================================================
 
     # --- define variables ---
-    Omega_m0      = np.linspace(0.0, 1.0, 200)
-    Omega_Lambda0 = np.linspace(0.0, 1.2, 200)
+    Omega_m0      = np.linspace(0.0, 1.0, 400)
+    Omega_Lambda0 = np.linspace(0.0, 1.4, 400)
     
     # --- compute chi2 for every value in Omega_m0 and Omega_Lambda0 ---
     MATRIX_chi_square = MATRIX_chi2(Omega_m0, Omega_Lambda0, redshifts, magnitudes, error_magnitudes)
@@ -209,17 +209,17 @@ def main():
     # --- plot Omega_m0 vs. chi2 for summed Omega_Lambda0 ---
     fig, ax = plt.subplots()
 
-    # at = AnchoredText(fr'$\vb*{{\theta_{{\text{{best}}}}}} = ({Omega_m0_best:.2f}, {Omega_Lambda0_best:.2f})$', loc='upper left', borderpad=0.5)
-    at = AnchoredText(fr'$(\Omega_{{\text{{m}}, 0, \text{{best}}}}, \Omega_{{\Lambda, 0, \text{{best}}}}) = ({Omega_m0_best:.2f}, {Omega_Lambda0_best:.2f})$', loc='upper left', borderpad=0.5)
+    plt.plot(Omega_m0, MATRIX_chi_square_summed_Omega_Lambda0, label='data')
+    # plt.plot(Omega_m0_best, min_MATRIX_chi_square, 'o', color='red')
+    plt.xlabel(r'$\Omega_{\text{m},0}$', fontsize=16)
+    plt.ylabel(r'$\chi_{\text{A}, \sum \Omega_{\Lambda,0}}^2(\Omega_{\text{m},0} \vert D)$', fontsize=16)
+    # plt.suptitle(r'$\texttt{Lambda-CDM-analytic-chi2.py}$', fontsize=20)
+    plt.grid(True)
+    
+    at = AnchoredText(fr'$\vb*{{\theta}}_{{\text{{best}}}} = ({Omega_m0_best:.2f}, {Omega_Lambda0_best:.2f})$', loc='upper right', borderpad=0.5, prop=dict(fontsize=16))
     at.patch.set(boxstyle='round,pad=0.2', fc='w', ec='0.5', alpha=0.9)
     ax.add_artist(at)
 
-    plt.plot(Omega_m0, MATRIX_chi_square_summed_Omega_Lambda0, label='data')
-    # plt.plot(Omega_m0_best, min_MATRIX_chi_square, 'o', color='red')
-    plt.xlabel(r'$\Omega_{\text{m},0}$')
-    plt.ylabel(r'$\chi_{\text{A}, \sum \Omega_{\Lambda,0}}^2(\Omega_{\text{m},0} \vert D)$')
-    # plt.suptitle(r'$\texttt{Lambda-CDM-analytic-chi2.py}$', fontsize=20)
-    plt.grid(True)
     # plt.show()
 
     # --- save fig ---
@@ -231,17 +231,17 @@ def main():
     # --- plot Omega_Lambda0 vs. chi2 for summed Omega_m0 ---
     fig, ax = plt.subplots()
     
-    # at = AnchoredText(fr'$\vb*{{\theta_{{\text{{best}}}}}} = ({Omega_m0_best:.2f}, {Omega_Lambda0_best:.2f})$', loc='upper right', borderpad=0.5)
-    at = AnchoredText(fr'$(\Omega_{{\text{{m}}, 0, \text{{best}}}}, \Omega_{{\Lambda, 0, \text{{best}}}}) = ({Omega_m0_best:.2f}, {Omega_Lambda0_best:.2f})$', loc='upper right', borderpad=0.5)
-    at.patch.set(boxstyle='round,pad=0.2', fc='w', ec='0.5', alpha=0.9)
-    ax.add_artist(at)
-    
     plt.plot(Omega_Lambda0, MATRIX_chi_square_summed_Omega_m0, label='data')
     # plt.plot(Omega_Lambda0_best, min_MATRIX_chi_square, 'o', color='red')
-    plt.xlabel(r'$\Omega_{\Lambda,0}$')
-    plt.ylabel(r'$\chi_{\text{A}, \sum \Omega_{\text{m},0}}^{2}(\Omega_{\Lambda,0} \vert D)$')
+    plt.xlabel(r'$\Omega_{\Lambda,0}$', fontsize=16)
+    plt.ylabel(r'$\chi_{\text{A}, \sum \Omega_{\text{m},0}}^{2}(\Omega_{\Lambda,0} \vert D)$', fontsize=16)
     # plt.suptitle(r'$\texttt{Lambda-CDM-analytic-chi2.py}$', fontsize=20)
     plt.grid(True)
+ 
+    at = AnchoredText(fr'$\vb*{{\theta}}_{{\text{{best}}}} = ({Omega_m0_best:.2f}, {Omega_Lambda0_best:.2f})$', loc='upper right', borderpad=0.5, prop=dict(fontsize=16))
+    at.patch.set(boxstyle='round,pad=0.2', fc='w', ec='0.5', alpha=0.9)
+    ax.add_artist(at)
+
     # plt.show()
 
     # --- save fig ---
@@ -258,17 +258,18 @@ def main():
     # --- plot Omega_m0 vs. chi2 at Omega_Lambda0_best ---
     fig, ax = plt.subplots()
 
-    # at = AnchoredText(fr'$\vb*{{\theta_{{\text{{best}}}}}} = ({Omega_m0_best:.2f}, {Omega_Lambda0_best:.2f})$', loc='upper left', borderpad=0.5)
-    at = AnchoredText(fr'$(\Omega_{{\text{{m}}, 0, \text{{best}}}}, \Omega_{{\Lambda, 0, \text{{best}}}}) = ({Omega_m0_best:.2f}, {Omega_Lambda0_best:.2f})$', loc='upper left', borderpad=0.5)
+    plt.plot(Omega_m0, MATRIX_chi_square[Omega_Lambda0_index, :], label='data')
+    plt.plot(Omega_m0_best, min_MATRIX_chi_square, 'o', color='red')
+    plt.xlabel(r'$\Omega_{\text{m},0}$', fontsize=16)
+    plt.ylabel(r'$\chi_{\text{A}}^2(\Omega_{\text{m},0}, \Omega_{\Lambda, 0, \text{best}} \vert D)$', fontsize=16)
+    # plt.suptitle(r'$\texttt{Lambda-CDM-analytic-chi2.py}$', fontsize=20)
+    ax.tick_params(labelsize=14)
+    plt.grid(True)
+
+    at = AnchoredText(fr'$\vb*{{\theta}}_{{\text{{best}}}} = ({Omega_m0_best:.2f}, {Omega_Lambda0_best:.2f})$', loc='upper right', borderpad=0.5, prop=dict(fontsize=16))
     at.patch.set(boxstyle='round,pad=0.2', fc='w', ec='0.5', alpha=0.9)
     ax.add_artist(at)
 
-    plt.plot(Omega_m0, MATRIX_chi_square[Omega_Lambda0_index, :], label='data')
-    plt.plot(Omega_m0_best, min_MATRIX_chi_square, 'o', color='red')
-    plt.xlabel(r'$\Omega_{\text{m},0}$')
-    plt.ylabel(r'$\chi_{\text{A}}^2(\Omega_{\text{m},0}, \Omega_{\Lambda, 0, \text{best}} \vert D)$')
-    # plt.suptitle(r'$\texttt{Lambda-CDM-analytic-chi2.py}$', fontsize=20)
-    plt.grid(True)
     # plt.show()
 
     # --- save fig ---
@@ -280,22 +281,23 @@ def main():
     # --- plot Omega_Lambda0 vs. chi2 at Omega_m0_best ---
     fig, ax = plt.subplots()
 
-    # at = AnchoredText(fr'$\vb*{{\theta_{{\text{{best}}}}}} = ({Omega_m0_best:.2f}, {Omega_Lambda0_best:.2f})$', loc='upper right', borderpad=0.5)
-    at = AnchoredText(fr'$(\Omega_{{\text{{m}}, 0, \text{{best}}}}, \Omega_{{\Lambda, 0, \text{{best}}}}) = ({Omega_m0_best:.2f}, {Omega_Lambda0_best:.2f})$', loc='upper right', borderpad=0.5)
-    at.patch.set(boxstyle='round,pad=0.2', fc='w', ec='0.5', alpha=0.9)
-    ax.add_artist(at)
-    
     plt.plot(Omega_Lambda0, MATRIX_chi_square[:, Omega_m0_index], label='data')
     plt.plot(Omega_Lambda0_best, min_MATRIX_chi_square, 'o', color='red')
-    plt.xlabel(r'$\Omega_{\Lambda,0}$')
-    plt.ylabel(r'$\chi_{\text{A}}^2(\Omega_{\text{m}, 0, \text{best}}, \Omega_{\Lambda,0} \vert D)$')
+    plt.xlabel(r'$\Omega_{\Lambda,0}$', fontsize=16)
+    plt.ylabel(r'$\chi_{\text{A}}^2(\Omega_{\text{m}, 0, \text{best}}, \Omega_{\Lambda,0} \vert D)$', fontsize=16)
     # plt.suptitle(r'$\texttt{Lambda-CDM-analytic-chi2.py}$', fontsize=20)
+    ax.tick_params(labelsize=14)
     plt.grid(True)
+
+    at = AnchoredText(fr'$\vb*{{\theta}}_{{\text{{best}}}} = ({Omega_m0_best:.2f}, {Omega_Lambda0_best:.2f})$', loc='upper right', borderpad=0.5, prop=dict(fontsize=16))
+    at.patch.set(boxstyle='round,pad=0.2', fc='w', ec='0.5', alpha=0.9)
+    ax.add_artist(at)
+
     # plt.show()
 
     # --- save fig ---
     fig.savefig('../thesis/figures/plots/EPS/Lambda-CDM-analytic-chi2_Omega-Lambda0-vs-chi2-at-Omega-m0-best.eps', format='eps', bbox_inches='tight')
-    fig.savefig('../thesis/figures/plots/PNG/Lambda-CDM-analytic-chi2_Omega-Lambda0-vs-chi2-at-Omega-m0-best.png', format='png', bbox_inches='tight', dpi = 250)
+    fig.savefig('../thesis/figures/plots/PNG/Lambda-CDM-analytic-chi2_Omega-Lambda0-vs-chi2-at-Omega-m0-best.png', format='png', bbox_inches='tight', dpi=250)
     fig.savefig('../thesis/figures/plots/PDF/Lambda-CDM-analytic-chi2_Omega-Lambda0-vs-chi2-at-Omega-m0-best.pdf', format='pdf', bbox_inches='tight')
     # tikzplotlib.save('../thesis/figures/tikz/Lambda-CDM-analytic-chi2_Omega-Lambda0-vs-chi2-at-Omega-m0-best.tex')
     # ===============================================
@@ -316,17 +318,21 @@ def main():
     fig = plt.figure()
     ax = plt.axes(projection='3d')
 
-    ax.plot_wireframe(X, Y, Z, edgecolor='tab:blue', alpha=0.3)
-    ax.contour(X, Y, Z, zdir='z', levels=lvls, cmap='coolwarm_r')
-    ax.scatter(Omega_m0_best, Omega_Lambda0_best, min_MATRIX_chi_square, 'o', color='red')
-    ax.set(xlabel=r'$\Omega_{\text{m},0}$', ylabel=r'$\Omega_{\Lambda,0}$', zlabel=r'$\chi_{\text{A}}^2(\Omega_{\text{m},0}, \Omega_{\Lambda,0} \vert D)$')
+    ax.plot_wireframe(X, Y, Z, edgecolor='tab:blue', alpha=0.3, linewidths=1.0)
+    ax.contour(X, Y, Z, zdir='z', levels=lvls, cmap='coolwarm_r', linewidths=1.0)
+    ax.scatter(Omega_m0_best, Omega_Lambda0_best, min_MATRIX_chi_square, 'o', color='red', s=1.0)
+    ax.set_xlabel(xlabel=r'$\Omega_{\text{m},0}$', fontsize=12)
+    ax.set_ylabel(ylabel=r'$\Omega_{\Lambda,0}$', fontsize=12)
+    ax.set_zlabel(zlabel=r'$\chi_{\text{A}}^2(\Omega_{\text{m},0}, \Omega_{\Lambda,0} \vert D)$', fontsize=12)
+    ax.set_zlim(min_MATRIX_chi_square, 1499.0)
+    ax.tick_params(axis='both', width=10, labelsize=6, pad=0)
     # plt.suptitle(r'$\texttt{Lambda-CDM-analytic-chi2.py}$', fontsize=20)
     plt.grid(True)
     # plt.show()
 
     # --- save fig ---
     fig.savefig('../thesis/figures/plots/EPS/Lambda-CDM-analytic-chi2_Omega-m0-vs-Omega-Lambda0-vs-chi2.eps', format='eps', bbox_inches='tight')
-    fig.savefig('../thesis/figures/plots/PNG/Lambda-CDM-analytic-chi2_Omega-m0-vs-Omega-Lambda0-vs-chi2.png', format='png', bbox_inches='tight', dpi = 250)
+    fig.savefig('../thesis/figures/plots/PNG/Lambda-CDM-analytic-chi2_Omega-m0-vs-Omega-Lambda0-vs-chi2.png', format='png', bbox_inches='tight', dpi=250)
     fig.savefig('../thesis/figures/plots/PDF/Lambda-CDM-analytic-chi2_Omega-m0-vs-Omega-Lambda0-vs-chi2.pdf', format='pdf', bbox_inches='tight')
     # tikzplotlib.save('../thesis/figures/tikz/Lambda-CDM-analytic-chi2_Omega-m0-vs-Omega-Lambda0-vs-chi2.tex')
 
@@ -335,32 +341,35 @@ def main():
     fig, ax = plt.subplots()
 
     flat_line = plt.plot([0.0, 1.0], [1.0, 0.0], linestyle='--', color='grey')
-    CP = ax.contour(X, Y, Z, levels=lvls, cmap='coolwarm_r')
-    plt.plot(Omega_m0_best, Omega_Lambda0_best, 'o', color='red')   
+    CP = ax.contour(X, Y, Z, levels=lvls, cmap='coolwarm_r', linewidths=1.0)
+    plt.plot(Omega_m0_best, Omega_Lambda0_best, '.', color='red')   
     fmt = {}
     for l, s in zip(CP.levels, lvl_labels):
         fmt[l] = s
     ax.clabel(CP, inline=True, fmt=fmt)
 
+
+    plt.xlabel(r'$\Omega_{\text{m},0}$', fontsize=12)
+    plt.ylabel(r'$\Omega_{\Lambda,0}$', fontsize=12)
+    # plt.suptitle(r'$\texttt{Lambda-CDM-analytic-chi2.py}$', fontsize=20)
+    ax.tick_params(labelsize=10)
+    plt.axis('scaled')
+    plt.grid(True)
+
     text_location = np.array((0.51, 0.51))
     angle = 45
     trans_angle = plt.gca().transData.transform_angles(np.array((45,)), text_location.reshape((1, 2)))[0]
-    ax.text(*text_location, r'flat universe ($\Omega_{k,0} = 0$)', rotation=-45, rotation_mode='anchor', transform_rotates_text=True, color='grey', fontsize=20)
+    ax.text(*text_location, r'flat universe ($\Omega_{k,0} = 0$)', rotation=-45, rotation_mode='anchor', transform_rotates_text=True, color='grey', fontsize=12)
 
-    # at = AnchoredText(fr'$\vb*{{\theta_{{\text{{best}}}}}} = ({Omega_m0_best:.2f}, {Omega_Lambda0_best:.2f})$', loc='lower left', borderpad=0.5)
-    at = AnchoredText(fr'$(\Omega_{{\text{{m}}, 0, \text{{best}}}}, \Omega_{{\Lambda, 0, \text{{best}}}}) = ({Omega_m0_best:.2f}, {Omega_Lambda0_best:.2f})$', loc='lower left', borderpad=0.5)
+    at = AnchoredText(fr'$\vb*{{\theta}}_{{\text{{best}}}} = ({Omega_m0_best:.2f}, {Omega_Lambda0_best:.2f})$', loc='upper right', borderpad=0.5, prop=dict(fontsize=12))
     at.patch.set(boxstyle='round,pad=0.2', fc='w', ec='0.5', alpha=0.9)
     ax.add_artist(at)
 
-    plt.xlabel(r'$\Omega_{\text{m},0}$')
-    plt.ylabel(r'$\Omega_{\Lambda,0}$')
-    # plt.suptitle(r'$\texttt{Lambda-CDM-analytic-chi2.py}$', fontsize=20)
-    plt.grid(True)
     # plt.show()
 
     # --- save fig ---
     fig.savefig('../thesis/figures/plots/EPS/Lambda-CDM-analytic-chi2_Omega-m0-vs-Omega-Lambda0.eps', format='eps', bbox_inches='tight')
-    fig.savefig('../thesis/figures/plots/PNG/Lambda-CDM-analytic-chi2_Omega-m0-vs-Omega-Lambda0.png', format='png', bbox_inches='tight', dpi = 250)
+    fig.savefig('../thesis/figures/plots/PNG/Lambda-CDM-analytic-chi2_Omega-m0-vs-Omega-Lambda0.png', format='png', bbox_inches='tight', dpi=250)
     fig.savefig('../thesis/figures/plots/PDF/Lambda-CDM-analytic-chi2_Omega-m0-vs-Omega-Lambda0.pdf', format='pdf', bbox_inches='tight')
     # tikzplotlib.save('../thesis/figures/tikz/Lambda-CDM-analytic-chi2_Omega-m0-vs-Omega-Lambda0.tex')
     # ================================================

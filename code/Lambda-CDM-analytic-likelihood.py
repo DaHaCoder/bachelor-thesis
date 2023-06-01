@@ -27,7 +27,7 @@ import time                                                       #   for calcul
 # import tikzplotlib                                               #   for converting plot to tikz
 
 plt.rcParams['font.family'] = 'serif'
-plt.rcParams['font.size'] = 16
+# plt.rcParams['font.size'] = 18
 plt.rcParams['text.usetex'] = True
 plt.rcParams['text.latex.preamble'] = r'''
 \usepackage{physics}
@@ -185,19 +185,20 @@ def main():
     # =============================================================================================
 
     # --- define variables ---
-    Omega_m0      = np.linspace(0.0, 1.0, 200)
-    Omega_Lambda0 = np.linspace(0.0, 1.2, 200)
+    Omega_m0      = np.linspace(0.0, 1.0, 400)
+    Omega_Lambda0 = np.linspace(0.0, 1.4, 400)
     
     # --- compute normalization factor ---
     # L0 = normalization_factor(redshifts, magnitudes, error_magnitudes, guess=1e+124)
     L0 = 5.433805e+123
-
+    
     # --- compute analytic likelihood for every value in Omega_m0 and Omega_Lambda0 ---
     MATRIX_ana_like = MATRIX_analytic_likelihood(Omega_m0, Omega_Lambda0, redshifts, magnitudes, error_magnitudes, L0)
     
     print()
     print("==========================")
     print(f"{L0 = :.6e}")
+    print("==========================")
     print(f"Sanity check: Riemann integral of likelihoods = {np.nansum(MATRIX_ana_like) * np.diff(Omega_m0)[0] * np.diff(Omega_Lambda0)[0]:.6f}")
     print()
     
@@ -268,18 +269,21 @@ def main():
     # --- plot Omega_m0 vs. analytic likelihood for summed Omega_Lambda0 with gauss fit ---
     fig, ax = plt.subplots()
 
-    # at = AnchoredText(fr'$\vb*{{\theta_{{\text{{best}}}}}} = ({Omega_m0_best:.2f}, {Omega_Lambda0_best:.2f})$', loc='upper right', borderpad=0.5)
-    at = AnchoredText(fr'$(\Omega_{{\text{{m}}, 0, \text{{best}}}}, \Omega_{{\Lambda, 0, \text{{best}}}}) \pm (\sigma_{{\text{{m}}, 0}}, \sigma_{{\Lambda, 0}}) = ({Omega_m0_best:.2f}, {Omega_Lambda0_best:.2f}) \pm ({sigma_m0:.2f}, {sigma_Lambda0:.2f})$', loc='upper right', borderpad=0.5)
-    at.patch.set(boxstyle='round,pad=0.2', fc='w', ec='0.5', alpha=0.9)
-    ax.add_artist(at)
-
     plt.plot(Omega_m0, MATRIX_ana_like_summed_Omega_Lambda0, label='data')
     plt.plot(Omega_m0, MATRIX_ana_like_summed_Omega_Lambda0_gauss_fit, linestyle='--', color='tab:orange', label='fit')
-    plt.xlabel(r'$\Omega_{\text{m},0}$')
-    plt.ylabel(r'$L_{\text{A}, \sum \Omega_{\Lambda,0}}(\Omega_{\text{m},0} \vert D)$')
+    plt.xlabel(r'$\Omega_{\text{m},0}$', fontsize=18)
+    plt.ylabel(r'$L_{\text{A}, \sum \Omega_{\Lambda,0}}(\Omega_{\text{m},0} \vert D)$', fontsize=18)
+    ax.tick_params(labelsize=14)
     # plt.suptitle(r'$\texttt{Lambda-CDM-analytic-likelihood.py}$', fontsize=20)
-    # plt.title(fr'fit values: ($\mu_{{\text{{m}},0}}, \sigma_{{\text{{m}},0}}) = ({mu_m0:.2f},{sigma_m0:.2f})$')
+    # plt.title(fr'$(\Omega_{{\text{{m}}, 0, \text{{best}}}}, \Omega_{{\Lambda, 0, \text{{best}}}}) \pm (\sigma_{{\text{{m}}, 0}}, \sigma_{{\Lambda, 0}}) = ({Omega_m0_best:.2f}, {Omega_Lambda0_best:.2f}) \pm ({sigma_m0:.2f}, {sigma_Lambda0:.2f})$', fontsize=18) 
+    plt.title(fr'$\vb*{{\theta_{{\text{{best}}}}}} \pm (\sigma_{{\text{{m}}, 0}}, \sigma_{{\Lambda, 0}}) = ({Omega_m0_best:.2f}, {Omega_Lambda0_best:.2f}) \pm ({sigma_m0:.2f}, {sigma_Lambda0:.2f})$', fontsize=18) 
     plt.grid(True)
+    
+    # at = AnchoredText(fr'$\vb*{{\theta_{{\text{{best}}}}}} = ({Omega_m0_best:.2f}, {Omega_Lambda0_best:.2f})$', loc='upper right', borderpad=0.5)
+    # at = AnchoredText(fr'$(\Omega_{{\text{{m}}, 0, \text{{best}}}}, \Omega_{{\Lambda, 0, \text{{best}}}}) \pm (\sigma_{{\text{{m}}, 0}}, \sigma_{{\Lambda, 0}}) = ({Omega_m0_best:.2f}, {Omega_Lambda0_best:.2f}) \pm ({sigma_m0:.2f}, {sigma_Lambda0:.2f})$', loc='upper right', borderpad=0.5)
+    # at.patch.set(boxstyle='round,pad=0.2', fc='w', ec='0.5', alpha=0.9)
+    # ax.add_artist(at)
+
     # plt.show()
 
     # --- save fig ---
@@ -291,18 +295,21 @@ def main():
     # --- plot Omega_Lambda0 vs. analytic likelihood for summed Omega_m0 with gauss fit ---
     fig, ax = plt.subplots()
 
-    # at = AnchoredText(fr'$\vb*{{\theta_{{\text{{best}}}}}} = ({Omega_m0_best:.2f}, {Omega_Lambda0_best:.2f})$', loc='upper left', borderpad=0.5)
-    at = AnchoredText(fr'$(\Omega_{{\text{{m}}, 0, \text{{best}}}}, \Omega_{{\Lambda, 0, \text{{best}}}}) \pm (\sigma_{{\text{{m}}, 0}}, \sigma_{{\Lambda, 0}}) = ({Omega_m0_best:.2f}, {Omega_Lambda0_best:.2f}) \pm ({sigma_m0:.2f}, {sigma_Lambda0:.2f})$', loc='upper left', borderpad=0.5)
-    at.patch.set(boxstyle='round,pad=0.2', fc='w', ec='0.5', alpha=0.9)
-    ax.add_artist(at)
-    
     plt.plot(Omega_Lambda0, MATRIX_ana_like_summed_Omega_m0, label='data')
     plt.plot(Omega_Lambda0, MATRIX_ana_like_summed_Omega_m0_gauss_fit, linestyle='--', color='tab:orange', label='fit')
-    plt.xlabel(r'$\Omega_{\Lambda,0}$')
-    plt.ylabel(r'$L_{\text{A}, \sum \Omega_{\text{m},0}}(\Omega_{\Lambda,0} \vert D)$')
+    plt.xlabel(r'$\Omega_{\Lambda,0}$', fontsize=18)
+    plt.ylabel(r'$L_{\text{A}, \sum \Omega_{\text{m},0}}(\Omega_{\Lambda,0} \vert D)$', fontsize=18)
+    ax.tick_params(labelsize=14)
     # plt.suptitle(r'$\texttt{Lambda-CDM-analytic-likelihood.py}$', fontsize=20)
-    # plt.title(fr'fit values: ($\mu_{{\text{{m}},0}}, \sigma_{{\text{{m}},0}}) = ({mu_Lambda0:.2f},{sigma_Lambda0:.2f})$')
+    # plt.title(fr'$(\Omega_{{\text{{m}}, 0, \text{{best}}}}, \Omega_{{\Lambda, 0, \text{{best}}}}) \pm (\sigma_{{\text{{m}}, 0}}, \sigma_{{\Lambda, 0}}) = ({Omega_m0_best:.2f}, {Omega_Lambda0_best:.2f}) \pm ({sigma_m0:.2f}, {sigma_Lambda0:.2f})$', fontsize=18) 
+    plt.title(fr'$\vb*{{\theta_{{\text{{best}}}}}} \pm (\sigma_{{\text{{m}}, 0}}, \sigma_{{\Lambda, 0}}) = ({Omega_m0_best:.2f}, {Omega_Lambda0_best:.2f}) \pm ({sigma_m0:.2f}, {sigma_Lambda0:.2f})$', fontsize=18) 
     plt.grid(True)
+    
+    # at = AnchoredText(fr'$(\Omega_{{\text{{m}}, 0, \text{{best}}}}, \Omega_{{\Lambda, 0, \text{{best}}}}) \pm (\sigma_{{\text{{m}}, 0}}, \sigma_{{\Lambda, 0}}) = ({Omega_m0_best:.2f}, {Omega_Lambda0_best:.2f}) \pm ({sigma_m0:.2f}, {sigma_Lambda0:.2f})$', loc='upper left', borderpad=0.5)
+    # at = AnchoredText(fr'$\vb*{{\theta_{{\text{{best}}}}}} = ({Omega_m0_best:.2f}, {Omega_Lambda0_best:.2f})$', loc='upper left', borderpad=0.5)
+    # at.patch.set(boxstyle='round,pad=0.2', fc='w', ec='0.5', alpha=0.9)
+    # ax.add_artist(at)
+    
     # plt.show()
 
     # --- save fig ---
@@ -320,21 +327,24 @@ def main():
     Z = np.array(MATRIX_ana_like)
     X, Y = np.meshgrid(Omega_m0, Omega_Lambda0)
 
-    conf_int = [stats.chi2.cdf(s**2.0, 1) for s in range(1,5)]
+    conf_int = [stats.chi2.cdf(s**2.0, 1) for s in range(1,4)]
     lvls = [max_MATRIX_ana_like * np.exp(-0.5 * stats.chi2.ppf(ci, 2)) for ci in conf_int]
     lvls.sort()
-    lvl_labels = [f'${k}\sigma$'.format(k) for k in reversed(range(1,5))]
+    lvl_labels = [f'${k}\sigma$'.format(k) for k in reversed(range(1,4))]
 
     # --- plot 3D ---
     fig = plt.figure()
     ax = plt.axes(projection='3d')
 
-    ax.plot_wireframe(X, Y, Z, edgecolor='tab:blue', alpha=0.3)
-    ax.contour(X, Y, Z, zdir='z', levels=lvls, offset=0, cmap='coolwarm')
-    ax.scatter(Omega_m0_best, Omega_Lambda0_best, 0.0, 'o', color='red')
-    ax.set(xlabel=r'$\Omega_{\text{m},0}$', ylabel=r'$\Omega_{\Lambda,0}$', zlabel=r'$L_{\text{A}}(\Omega_{\text{m},0}, \Omega_{\Lambda,0} \vert D)$')
+    ax.plot_wireframe(X, Y, Z, edgecolor='tab:blue', alpha=0.3, linewidths=1.0)
+    ax.contour(X, Y, Z, zdir='z', levels=lvls, offset=0, cmap='coolwarm', linewidths=1.0)
+    ax.scatter(Omega_m0_best, Omega_Lambda0_best, 0.0, 'o', color='red', s=1.0)
+    ax.set_xlabel(xlabel=r'$\Omega_{\text{m},0}$', fontsize=14)
+    ax.set_ylabel(ylabel=r'$\Omega_{\Lambda,0}$', fontsize=14)
+    ax.set_zlabel(zlabel=r'$L_{\text{A}}(\Omega_{\text{m},0}, \Omega_{\Lambda,0} \vert D)$', fontsize=14)
+    ax.set_zlim(0.0,45.0)
     # plt.suptitle(r'$\texttt{Lambda-CDM-analytic-likelihood.py}$', fontsize=20)
-    # plt.title(rf'best fit values: $(\Omega_{{\text{{m}},0}}, \Omega_{{\Lambda,0}}) \pm (\sigma_{{\text{{m}},0}}, \sigma_{{\Lambda,0}}) = ({Omega_m0_best:.2f}, {Omega_Lambda0_best:.2f}) \pm ({sigma_m0:.2f}, {sigma_Lambda0:.2f})$')
+    ax.tick_params(axis='both', width=10, labelsize=8, pad=0)
     plt.grid(True)
     # plt.show()
 
@@ -348,28 +358,30 @@ def main():
     fig, ax = plt.subplots()
 
     flat_line = plt.plot([0.0, 1.0], [1.0, 0.0], linestyle='--', color='grey')
-    CP = ax.contour(X, Y, Z, levels=lvls, cmap='coolwarm')
-    plt.plot(Omega_m0_best, Omega_Lambda0_best, 'o', color='red')
+    CP = ax.contour(X, Y, Z, levels=lvls, cmap='coolwarm', linewidths=1.0)
+    plt.plot(Omega_m0_best, Omega_Lambda0_best, '.', color='red')
     fmt = {}
     for l, s in zip(CP.levels, lvl_labels):
         fmt[l] = s
     ax.clabel(CP, inline=True, fmt=fmt)
 
+    plt.xlabel(r'$\Omega_{\text{m},0}$', fontsize=12)
+    plt.ylabel(r'$\Omega_{\Lambda,0}$', fontsize=12)
+    # plt.suptitle(r'$\texttt{Lambda-CDM-analytic-likelihood.py}$', fontsize=20)
+    plt.title(fr'$\vb*{{\theta_{{\text{{best}}}}}} \pm (\sigma_{{\text{{m}}, 0}}, \sigma_{{\Lambda, 0}}) = ({Omega_m0_best:.2f}, {Omega_Lambda0_best:.2f}) \pm ({sigma_m0:.2f}, {sigma_Lambda0:.2f})$', fontsize=10)
+    ax.tick_params(labelsize=8)
+    plt.axis('scaled')
+    plt.grid(True)
+    
     text_location = np.array((0.51, 0.51))
     angle = 45
     trans_angle = plt.gca().transData.transform_angles(np.array((45,)), text_location.reshape((1, 2)))[0]
-    ax.text(*text_location, r'flat universe ($\Omega_{k,0} = 0$)', rotation=-45, rotation_mode='anchor', transform_rotates_text=True, color='grey', fontsize=20)
+    ax.text(*text_location, r'flat universe ($\Omega_{k,0} = 0$)', rotation=-45, rotation_mode='anchor', transform_rotates_text=True, color='grey', fontsize=12)
 
-    # at = AnchoredText(fr'$\vb*{{\theta_{{\text{{best}}}}}} = ({Omega_m0_best:.2f}, {Omega_Lambda0_best:.2f})$', loc='lower left', borderpad=0.5)
-    at = AnchoredText(fr'$(\Omega_{{\text{{m}}, 0, \text{{best}}}}, \Omega_{{\Lambda, 0, \text{{best}}}}) \pm (\sigma_{{\text{{m}}, 0}}, \sigma_{{\Lambda, 0}}) = ({Omega_m0_best:.2f}, {Omega_Lambda0_best:.2f}) \pm ({sigma_m0:.2f}, {sigma_Lambda0:.2f})$', loc='lower left', borderpad=0.5)
-    at.patch.set(boxstyle='round,pad=0.2', fc='w', ec='0.5', alpha=0.9)
-    ax.add_artist(at)
-
-    plt.xlabel(r'$\Omega_{\text{m},0}$')
-    plt.ylabel(r'$\Omega_{\Lambda,0}$')
-    # plt.suptitle(r'$\texttt{Lambda-CDM-analytic-likelihood.py}$', fontsize=20)
-    # plt.title(rf'best fit values: $(\Omega_{{\text{{m}},0}}, \Omega_{{\Lambda,0}}) \pm (\sigma_{{\text{{m}},0}}, \sigma_{{\Lambda,0}}) = ({Omega_m0_best:.2f}, {Omega_Lambda0_best:.2f}) \pm ({sigma_m0:.2f}, {sigma_Lambda0:.2f})$')
-    plt.grid(True)
+    # at = AnchoredText(fr'$\vb*{{\theta_{{\text{{best}}}}}} \pm (\sigma_{{\text{{m}}, 0}}, \sigma_{{\Lambda, 0}}) = ({Omega_m0_best:.2f}, {Omega_Lambda0_best:.2f}) \pm ({sigma_m0:.2f}, {sigma_Lambda0:.2f})$', loc='lower left', borderpad=0.5)
+    # at.patch.set(boxstyle='round,pad=0.2', fc='w', ec='0.5', alpha=0.9)
+    # ax.add_artist(at)
+    
     # plt.show()
 
     # --- save fig ---

@@ -25,7 +25,7 @@ import time                                                       #   for calcul
 # import tikzplotlib                                               #   for converting plot to tikz 
 
 plt.rcParams['font.family'] = 'serif'
-plt.rcParams['font.size'] = 16
+# plt.rcParams['font.size'] = 16
 plt.rcParams['text.usetex'] = True
 plt.rcParams['text.latex.preamble'] = r'''
 \usepackage{physics}
@@ -90,7 +90,7 @@ def theoretical_magnitude(mod_absolute_magnitude, mod_luminosity_distance):
 
 @njit
 def chi_square(magnitudes, error_magnitudes, theoretical_magnitudes):
-    return np.sum(np.square(theoretical_magnitudes - magnitudes) / error_magnitudes)
+    return np.sum(np.square((theoretical_magnitudes - magnitudes) / error_magnitudes))
 
 
 @njit
@@ -109,7 +109,7 @@ def likelihood(mod_absolute_magnitude, Omega_m0, redshifts, magnitudes, error_ma
 
 
 @timeit("Compute normalization factor")
-def normalization_factor(redshifts, magnitudes, error_magnitudes, guess=1.0, bounds_mod_absolute_magnitude=(15.0,17.0), bounds_Omega_m0=(0.0, 2.5)): 
+def normalization_factor(redshifts, magnitudes, error_magnitudes, guess=1.0, bounds_mod_absolute_magnitude=(15.7,15.9), bounds_Omega_m0=(0.0, 1.0)): 
     L = lambda mod_absolute_magnitude, Omega_m0: likelihood(mod_absolute_magnitude, Omega_m0, redshifts, magnitudes, error_magnitudes, L0=guess, zero_NaNs=True) 
     L0 = guess / dblquad(L, *bounds_Omega_m0, *bounds_mod_absolute_magnitude)[0] 
     return L0 
@@ -163,23 +163,23 @@ def main():
     # ====================================================================================
 
     # --- define variables ---
-    mod_absolute_magnitude = np.linspace(15.6, 16.0, 1000)
+    mod_absolute_magnitude = np.linspace(15.7, 15.9, 1000)
     Omega_m0               = np.linspace(0.0, 1.0, 1000)
     
     # --- compute normalization factor for marginalized likelihood ---
-    # L0 = normalization_factor(redshifts, magnitudes, error_magnitudes, guess=1e+30)   
-    L0 = 3.252509e+30
+    # L0 = normalization_factor(redshifts, magnitudes, error_magnitudes, guess=1e+124)   
+    L0 = 1.388170e+125 
+
+    # --- compute likelihood for every value in mod_absolute_magnitude and Omega_m0 ---
+    MATRIX_like = MATRIX_likelihood(mod_absolute_magnitude, Omega_m0, redshifts, magnitudes, error_magnitudes, L0)
     
     print()
     print("==========================")
     print(f"{L0 = :.6e}")
     print("==========================")
-    print()
-
-    # --- compute likelihood for every value in mod_absolute_magnitude and Omega_m0 ---
-    MATRIX_like = MATRIX_likelihood(mod_absolute_magnitude, Omega_m0, redshifts, magnitudes, error_magnitudes, L0)
-    
     print(f"Sanity check: Riemann integral of likelihoods = {np.nansum(MATRIX_like) * np.diff(mod_absolute_magnitude)[0] * np.diff(Omega_m0)[0]:.6f}")
+    print()
+    
     
     # --- find index of the value for Omega_m0 where likelihood has its maximum ---
     Omega_m0_index, mod_absolute_magnitude_index = find_best_fit_values(mod_absolute_magnitude, Omega_m0, MATRIX_like)
@@ -218,21 +218,24 @@ def main():
     ax = plt.axes(projection='3d')
 
     # ax.plot_surface(X, Y, Z, color='tab:blue', alpha=0.5)
-    ax.plot_wireframe(X, Y, Z, edgecolor='tab:blue', alpha=0.5)
-    ax.set(xlabel=r'$\mathcal{M}$', ylabel=r'$\Omega_{\text{m},0}$', zlabel=r'$L(\mathcal{M}, \Omega_{\text{m},0})$')
+    ax.plot_wireframe(X, Y, Z, edgecolor='tab:blue', alpha=0.5, linewidths=1.0)
+    ax.set_xlabel(xlabel=r'$\mathcal{M}$', fontsize=16)
+    ax.set_ylabel(ylabel=r'$\Omega_{\text{m},0}$', fontsize=16)
+    ax.set_zlabel(zlabel=r'$L(\mathcal{M}, \Omega_{\text{m},0} \vert D)$', fontsize=16)
+    ax.tick_params(axis='both', width=10, labelsize=12, pad=0)
     # plt.suptitle(r'$\texttt{MWE-likelihood.py}$', fontsize=20)
+    plt.grid(True)
 
     # at = AnchoredText(fr'$\vb*{{\theta_{{\text{{best}}}}}} = ({Omega_m0_best:.2f}, {Omega_Lambda0_best:.2f})$', loc='upper right', borderpad=0.5) 
     # at.patch.set(boxstyle='round,pad=0.2', fc='w', ec='0.5', alpha=0.9)
     # ax.add_artist(at)
 
-    plt.grid(True)
     # plt.show()
 
     # --- save fig ---
     fig.savefig('../thesis/figures/plots/EPS/MWE-likelihood_mod-absolute-magnitude-vs-Omega-m0-vs-likelihood.eps', format='eps', bbox_inches='tight')
-    fig.savefig('../thesis/figures/plots/PNG/MWE-likelihood_mod-absolute-magnitude-vs-Omega-m0-vs-likelihood.png', format = 'png', bbox_inches = 'tight', dpi = 250)
-    fig.savefig('../thesis/figures/plots/PDF/MWE-likelihood_mod-absolute-magnitude-vs-Omega-m0-vs-likelihood.pdf', format = 'pdf', bbox_inches = 'tight')
+    fig.savefig('../thesis/figures/plots/PNG/MWE-likelihood_mod-absolute-magnitude-vs-Omega-m0-vs-likelihood.png', format='png', bbox_inches='tight', dpi=250)
+    fig.savefig('../thesis/figures/plots/PDF/MWE-likelihood_mod-absolute-magnitude-vs-Omega-m0-vs-likelihood.pdf', format='pdf', bbox_inches='tight')
     # tikzplotlib.save('../thesis/figures/tikz/MWE-likelihood_mod-absolute-magnitude-vs-Omega-m0-vs-likelihood.tex')
     # ===============================================================
 
@@ -244,15 +247,16 @@ def main():
     fig, ax = plt.subplots()
 
     plt.plot(mod_absolute_magnitude, MATRIX_like[Omega_m0_index, :], color='tab:blue')
-    plt.xlabel(r'$\mathcal{M}$')
-    plt.ylabel(r'$L(\mathcal{M}, \Omega_{\text{m}, 0, \text{best}})$')
+    plt.xlabel(r'$\mathcal{M}$', fontsize=16)
+    plt.ylabel(r'$L(\mathcal{M}, \Omega_{\text{m}, 0, \text{best}} \vert D)$', fontsize=16)
     # plt.suptitle(r'$\texttt{MWE-likelihood.py}$', fontsize=20)
+    ax.tick_params(labelsize=14)
+    plt.grid(True)
 
-    at = AnchoredText(fr'$\vb*{{\theta_{{\text{{best}}}}}} = ({Omega_m0_best:.2f}, {Omega_Lambda0_best:.2f})$', loc='upper right', borderpad=0.5) 
+    at = AnchoredText(fr'$\vb*{{\theta_{{\text{{best}}}}}} = ({Omega_m0_best:.2f}, {Omega_Lambda0_best:.2f})$', loc='upper right', borderpad=0.5, prop=dict(fontsize=16)) 
     at.patch.set(boxstyle='round,pad=0.2', fc='w', ec='0.5', alpha=0.9)
     ax.add_artist(at)
 
-    plt.grid(True)
     # plt.show()
 
     # --- save fig ---
@@ -270,15 +274,16 @@ def main():
     fig, ax = plt.subplots()
 
     plt.plot(mod_absolute_magnitude, MATRIX_like_summed_Omega_m0, color='tab:blue')
-    plt.xlabel(r'$\mathcal{M}$')
-    plt.ylabel(r'$L_{\sum \Omega_{\text{m},0}}(\mathcal{M})$')
+    plt.xlabel(r'$\mathcal{M}$', fontsize=16)
+    plt.ylabel(r'$L_{\sum \Omega_{\text{m},0}}(\mathcal{M} \vert D)$', fontsize=16)
     # plt.suptitle(r'$\texttt{MWE-likelihood.py}$', fontsize=20)
+    ax.tick_params(labelsize=14)
+    plt.grid(True)
 
-    at = AnchoredText(fr'$\vb*{{\theta_{{\text{{best}}}}}} = ({Omega_m0_best:.2f}, {Omega_Lambda0_best:.2f})$', loc='upper right', borderpad=0.5) 
+    at = AnchoredText(fr'$\vb*{{\theta_{{\text{{best}}}}}} = ({Omega_m0_best:.2f}, {Omega_Lambda0_best:.2f})$', loc='upper right', borderpad=0.5, prop=dict(fontsize=16)) 
     at.patch.set(boxstyle='round,pad=0.2', fc='w', ec='0.5', alpha=0.9)
     ax.add_artist(at)
 
-    plt.grid(True)
     # plt.show()
 
     # --- save fig ---

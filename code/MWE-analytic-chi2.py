@@ -25,7 +25,7 @@ import time                                                       #   for calcul
 # import tikzplotlib                                               #   for converting plot to tikz
 
 plt.rcParams['font.family'] = 'serif'
-plt.rcParams['font.size'] = 16
+# plt.rcParams['font.size'] = 16
 plt.rcParams['text.usetex'] = True
 plt.rcParams['text.latex.preamble'] = r'''
 \usepackage{physics}
@@ -161,15 +161,16 @@ def main():
 
     plt.plot(LIST_Omega_m0, LIST_chi2, color='tab:blue')
     plt.plot(Omega_m0_best, chi2_best, 'o', color='tab:red')
-    plt.xlabel(r'$\Omega_{\text{m},0}$')
-    plt.ylabel(r'$\chi_{\text{A}}^{2}(\Omega_{\text{m},0} \vert D)$')
+    plt.xlabel(r'$\Omega_{\text{m},0}$', fontsize=16)
+    plt.ylabel(r'$\chi_{\text{A}}^{2}(\Omega_{\text{m},0} \vert D)$', fontsize=16)
     # plt.suptitle(r'$\texttt{MWE-analytic-chi2.py}$', fontsize=20)
+    ax.tick_params(labelsize=14)
+    plt.grid(True)
 
-    at = AnchoredText(fr'$\vb*{{\theta_{{\text{{best}}}}}} = ({Omega_m0_best:.2f}, {Omega_Lambda0_best:.2f})$', loc='upper left', borderpad=0.5)
+    at = AnchoredText(fr'$\vb*{{\theta_{{\text{{best}}}}}} = ({Omega_m0_best:.2f}, {Omega_Lambda0_best:.2f})$', loc='upper right', borderpad=0.5, prop=dict(fontsize=16))
     at.patch.set(boxstyle='round,pad=0.2', fc='w', ec='0.5', alpha=0.9)
     ax.add_artist(at)
 
-    plt.grid(True)
     # plt.show()
 
     # --- save fig ---
