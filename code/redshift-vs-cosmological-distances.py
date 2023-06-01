@@ -88,10 +88,10 @@ def main():
 
     # plt.show()
 
-    fig.savefig('../thesis/figures/plots/EPS/cosmological-distances-vs-redshift.eps', format='eps', bbox_inches='tight')
-    fig.savefig('../thesis/figures/plots/PNG/cosmological-distances-vs-redshift.png', format='png', bbox_inches='tight', dpi = 400)
-    fig.savefig('../thesis/figures/plots/PDF/cosmological-distances-vs-redshift.pdf', format='pdf', bbox_inches='tight')
-    # tikzplotlib.save('../thesis/figures/tikz/cosmological-distances-vs-redshift.tex')
+    fig.savefig('../thesis/figures/plots/EPS/redshift-vs-cosmological-distances.eps', format='eps', bbox_inches='tight')
+    fig.savefig('../thesis/figures/plots/PNG/redshift-vs-cosmological-distances.png', format='png', bbox_inches='tight', dpi = 400)
+    fig.savefig('../thesis/figures/plots/PDF/redshift-vs-cosmological-distances.pdf', format='pdf', bbox_inches='tight')
+    # tikzplotlib.save('../thesis/figures/tikz/redshift-vs-cosmological-distances.tex')
 
 
 if __name__ == "__main__":

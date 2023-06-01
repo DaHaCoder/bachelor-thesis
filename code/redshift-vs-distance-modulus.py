@@ -204,10 +204,10 @@ def main():
    
     # plt.show()
 
-    fig.savefig('../thesis/figures/plots/EPS/distance-modulus-vs-redshift.eps', format='eps', bbox_inches='tight')
-    fig.savefig('../thesis/figures/plots/PNG/distance-modulus-vs-redshift.png', format='png', bbox_inches='tight', dpi=250)
-    fig.savefig('../thesis/figures/plots/PDF/distance-modulus-vs-redshift.pdf', format='pdf', bbox_inches='tight')
-    # tikzplotlib.save('../thesis/figures/tikz/distance-modulus-vs-redshift.tex')
+    fig.savefig('../thesis/figures/plots/EPS/redshift-vs-distance-modulus.eps', format='eps', bbox_inches='tight')
+    fig.savefig('../thesis/figures/plots/PNG/redshift-vs-distance-modulus.png', format='png', bbox_inches='tight', dpi=250)
+    fig.savefig('../thesis/figures/plots/PDF/redshift-vs-distance-modulus.pdf', format='pdf', bbox_inches='tight')
+    # tikzplotlib.save('../thesis/figures/tikz/redshift-vs-distance-modulus.tex')
 
 if __name__ == "__main__":
     main()

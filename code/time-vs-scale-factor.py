@@ -113,10 +113,10 @@ def main():
 
     # plt.show()
 
-    fig.savefig('../thesis/figures/plots/EPS/scale-factor-vs-time.eps', format = 'eps', bbox_inches = 'tight')
-    fig.savefig('../thesis/figures/plots/PNG/scale-factor-vs-time.png', format = 'png', bbox_inches = 'tight', dpi = 400)
-    fig.savefig('../thesis/figures/plots/PDF/scale-factor-vs-time.pdf', format = 'pdf', bbox_inches = 'tight')
-    # tikzplotlib.save('../thesis/figures/tikz/scale-factor-vs-time.tex')
+    fig.savefig('../thesis/figures/plots/EPS/time-vs-scale-factor.eps', format = 'eps', bbox_inches = 'tight')
+    fig.savefig('../thesis/figures/plots/PNG/time-vs-scale-factor.png', format = 'png', bbox_inches = 'tight', dpi = 400)
+    fig.savefig('../thesis/figures/plots/PDF/time-vs-scale-factor.pdf', format = 'pdf', bbox_inches = 'tight')
+    # tikzplotlib.save('../thesis/figures/tikz/time-vs-scale-factor.tex')
 
 
 if __name__ == "__main__":
