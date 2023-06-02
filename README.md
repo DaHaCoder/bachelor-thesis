@@ -3,7 +3,7 @@
 
 ## Abstract
 
-In this thesis, we consider measurements of type Ia supernovae by the *Supernova Cosmology Project*, the dataset ["Union2.1"](https://supernova.lbl.gov/Union/) to obtain best-fit values to the free parameters of the $`\Lambda`$CDM-model, known as the "standard model of cosmology", and the DGP-model proposed by Gia Dvali, Gregory Gabadadze and Massimo Porrati.
+In this thesis, we consider measurements of type Ia supernovae by the *Supernova Cosmology Project*, the dataset ["Union2.1"](https://supernova.lbl.gov/Union/), to obtain best-fit values to the free parameters of the $`\Lambda`$CDM-model, known as the "standard model of cosmology", and the DGP-model proposed by Gia Dvali, Gregory Gabadadze and Massimo Porrati.
 While the $`\Lambda`$CDM-model describes the expansion of the universe by the existence of a cosmological constant $`\Lambda`$, the DGP-model introduces an additional spatial dimension to spacetime, in which gravity mimics the expansion of the universe by reaching the introduced crossover scale $`r_{\text{C}}`$.
 After introducing theoretical backgrounds on how to relate physical quantities we observe like magnitude and redshift with the cosmological parameters that both cosmological models contain, we estimate best-fit values for the parameters $`\boldsymbol{\theta} = (\Omega_{\text{m},0}, \Omega_{\Lambda,0})`$ and $`\boldsymbol{\theta} = (\Omega_{\text{m},0}, \alpha)`$, where $`\alpha`$ is an interpolation parameter for which $`\alpha = 0`$ describes the $`\Lambda`$CDM-model and $`\alpha = 1`$ the DGP-model, by minimizing the $`\chi^2`$-distribution using the "Union2.1" SN Ia dataset.
 
