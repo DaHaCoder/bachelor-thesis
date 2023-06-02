@@ -1,3 +1,4 @@
+
 # Estimation of Cosmological Parameters in $\Lambda$CDM- and DGP-Model Using Supernovae Type Ia Data
 
 ## Abstract
@@ -14,4 +15,7 @@ $\boldsymbol{\theta} = (\Omega_{\text{m},0}, \alpha)$ is not possible by minimiz
 
 ## Results
 
-![Results for $\boldsymbol{\theta} = (\Omega_{\text{m},0}, \Omega_{\Lambda,0})$](https://github.com/DaHaCoder/bachelor-thesis/blob/main/thesis/figures/plots/PNG/Lambda-CDM-analytic-likelihood_Omega-m0-vs-Omega-Lambda0.png) ![Results for $\boldsymbol{\theta} = (\Omega_{\text{m}, 0}, \alpha)$](https://github.com/DaHaCoder/bachelor-thesis/blob/main/thesis/figures/plots/PNG/DGP-analytic-chi2_Omega-m0-vs-alpha-full.png)
+![](https://github.com/DaHaCoder/bachelor-thesis/blob/main/thesis/figures/plots/PNG/Lambda-CDM-analytic-likelihood_Omega-m0-vs-Omega-Lambda0.png)
+Results for $\boldsymbol{\theta} = (\Omega_{\text{m}, 0}, \Omega_{\Lambda,0})$
+![](https://github.com/DaHaCoder/bachelor-thesis/blob/main/thesis/figures/plots/PNG/DGP-analytic-chi2_Omega-m0-vs-alpha-full.png)
+Results for $\boldsymbol{\theta} = (\Omega_{\text{m}, 0}, \alpha)$
